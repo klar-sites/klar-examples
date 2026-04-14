@@ -16,6 +16,280 @@
       rel="stylesheet">
   </head>
   <body>
+<style>#klar-hero-extraordinary {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #050510;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#klar-hero-bg-canvas {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 80, 255, 0.15), transparent),
+    radial-gradient(circle at 20% 80%, rgba(0, 180, 255, 0.06), transparent),
+    radial-gradient(circle at 80% 60%, rgba(255, 50, 150, 0.06), transparent);
+}
+
+#klar-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black, transparent);
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black, transparent);
+}
+
+#klar-hero-glow-orb-1, #klar-hero-glow-orb-2, #klar-hero-glow-orb-3 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: klar-hero-float 8s ease-in-out infinite;
+}
+
+#klar-hero-glow-orb-1 {
+  width: 400px; height: 400px;
+  background: rgba(120, 80, 255, 0.3);
+  top: -10%; left: 10%;
+  animation-delay: 0s;
+}
+
+#klar-hero-glow-orb-2 {
+  width: 300px; height: 300px;
+  background: rgba(0, 180, 255, 0.25);
+  bottom: -5%; right: 10%;
+  animation-delay: -3s;
+}
+
+#klar-hero-glow-orb-3 {
+  width: 250px; height: 250px;
+  background: rgba(255, 50, 150, 0.2);
+  top: 30%; right: 25%;
+  animation-delay: -5s;
+}
+
+@keyframes klar-hero-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+#klar-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  padding: 2rem;
+  animation: klar-hero-fadeUp 1s ease-out;
+}
+
+@keyframes klar-hero-fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#klar-hero-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 50px;
+  background: rgba(120, 80, 255, 0.1);
+  border: 1px solid rgba(120, 80, 255, 0.25);
+  color: rgba(180, 160, 255, 0.9);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-bottom: 2rem;
+  animation: klar-hero-fadeUp 1s ease-out 0.1s both;
+}
+
+#klar-hero-headline {
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+  margin: 0 0 1.5rem 0;
+  letter-spacing: -0.03em;
+  animation: klar-hero-fadeUp 1s ease-out 0.2s both;
+}
+
+#klar-hero-gradient-text {
+  background: linear-gradient(135deg, #7850ff, #00b4ff, #ff3296);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+#klar-hero-subtext {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: rgba(200, 200, 220, 0.7);
+  line-height: 1.7;
+  max-width: 580px;
+  margin: 0 auto 2.5rem auto;
+  animation: klar-hero-fadeUp 1s ease-out 0.35s both;
+}
+
+#klar-hero-cta-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+  animation: klar-hero-fadeUp 1s ease-out 0.5s both;
+}
+
+#klar-hero-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 36px;
+  background: linear-gradient(135deg, #7850ff, #5a30e0);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 30px rgba(120, 80, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+#klar-hero-cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(120, 80, 255, 0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+#klar-hero-cta-arrow {
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+#klar-hero-cta-primary:hover #klar-hero-cta-arrow {
+  transform: translateX(4px);
+}
+
+#klar-hero-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 36px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+#klar-hero-cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+#klar-hero-play-icon {
+  opacity: 0.8;
+}
+
+#klar-hero-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  animation: klar-hero-fadeUp 1s ease-out 0.65s both;
+}
+
+.klar-hero-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.klar-hero-stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.klar-hero-stat-label {
+  font-size: 0.8rem;
+  color: rgba(200, 200, 220, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.klar-hero-stat-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 640px) {
+  #klar-hero-stats { gap: 1.2rem; }
+  .klar-hero-stat-number { font-size: 1.2rem; }
+  #klar-hero-cta-group { flex-direction: column; align-items: center; }
+}</style>
+<section id="klar-hero-extraordinary">
+  <div id="klar-hero-bg-canvas"></div>
+  <div id="klar-hero-overlay"></div>
+  <div id="klar-hero-content">
+    <div id="klar-hero-badge">✦ Welcome to the future</div>
+    <h1 id="klar-hero-headline">
+      Build something
+      <span id="klar-hero-gradient-text">extraordinary</span>
+    </h1>
+    <p id="klar-hero-subtext">Craft stunning digital experiences that captivate your audience and elevate your brand beyond the ordinary.</p>
+    <div id="klar-hero-cta-group">
+      <a href="#" id="klar-hero-cta-primary">Get Started <span id="klar-hero-cta-arrow">→</span></a>
+      <a href="#" id="klar-hero-cta-secondary">Watch Demo <svg id="klar-hero-play-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></a>
+    </div>
+    <div id="klar-hero-stats">
+      <div class="klar-hero-stat-item"><span class="klar-hero-stat-number">10K+</span><span class="klar-hero-stat-label">Users</span></div>
+      <div class="klar-hero-stat-divider"></div>
+      <div class="klar-hero-stat-item"><span class="klar-hero-stat-number">99%</span><span class="klar-hero-stat-label">Uptime</span></div>
+      <div class="klar-hero-stat-divider"></div>
+      <div class="klar-hero-stat-item"><span class="klar-hero-stat-number">4.9★</span><span class="klar-hero-stat-label">Rating</span></div>
+    </div>
+  </div>
+  <div id="klar-hero-glow-orb-1"></div>
+  <div id="klar-hero-glow-orb-2"></div>
+  <div id="klar-hero-glow-orb-3"></div>
+</section>
+<script>// Parallax orb movement on mouse move
+document.addEventListener('mousemove', function(e) {
+  const orbs = document.querySelectorAll('#klar-hero-glow-orb-1, #klar-hero-glow-orb-2, #klar-hero-glow-orb-3');
+  const x = (e.clientX / window.innerWidth - 0.5) * 2;
+  const y = (e.clientY / window.innerHeight - 0.5) * 2;
+  orbs.forEach(function(orb, i) {
+    const speed = (i + 1) * 12;
+    orb.style.transform = 'translate(' + (x * speed) + 'px, ' + (y * speed) + 'px)';
+  });
+});
+
+// Animate stat numbers on scroll into view
+constklarHeroObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      const statNumbers = document.querySelectorAll('.klar-hero-stat-number');
+      statNumbers.forEach(function(el) {
+        el.style.animation = 'klar-hero-fadeUp 0.6s ease-out forwards';
+      });
+      klarHeroObserver.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+
+const klarHeroStats = document.getElementById('klar-hero-stats');
+if (klarHeroStats) klarHeroObserver.observe(klarHeroStats);</script>
+
 
     <!-- ========== NAV ========== -->
     <nav class="nav" id="nav">
