@@ -1,2215 +1,1937 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <title>Mob Timer — Focus Timer for macOS</title>
-    <meta name="description"
-      content="A minimal macOS timer designed for deep focus and mob programming. Start instantly, stay focused, get notified.">
-    <link rel="stylesheet" href="styles.css">
+    <title>Mob Timer - Focus & Productivity for macOS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
-      rel="stylesheet">
-  </head>
-  <body>
-    
-    <!-- ========== NAV ========== -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           CSS Variables & Design Tokens
+        ============================================ */
+        :root {
+            /* Colors - Dark Theme */
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-tertiary: #18181b;
+            --bg-elevated: #1c1c1f;
+            --bg-card: #141417;
+            --bg-card-hover: #1a1a1d;
+            
+            /* Accent Colors */
+            --accent-primary: #6366f1;
+            --accent-secondary: #818cf8;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-tertiary: #71717a;
+            --text-muted: #52525b;
+            
+            /* Border Colors */
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-light: rgba(255, 255, 255, 0.1);
+            --border-hover: rgba(255, 255, 255, 0.15);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 60px rgba(99, 102, 241, 0.3);
+            
+            /* Spacing */
+            --section-padding: 120px;
+            --section-padding-sm: 80px;
+            --container-max: 1280px;
+            --container-narrow: 900px;
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-full: 9999px;
+            
+            /* Transitions */
+            --transition-fast: 150ms ease;
+            --transition-base: 200ms ease;
+            --transition-slow: 300ms ease;
+            --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ============================================
+           Reset & Base Styles
+        ============================================ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        /* ============================================
+           Layout Components
+        ============================================ */
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .container-narrow {
+            max-width: var(--container-narrow);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: var(--section-padding) 0;
+        }
+
+        /* ============================================
+           Navigation
+        ============================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: var(--transition-base);
+        }
+
+        .nav.scrolled {
+            padding: 12px 0;
+            background: rgba(10, 10, 11, 0.95);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text-primary);
+        }
+
+        .nav-logo svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* ============================================
+           Buttons
+        ============================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            transition: var(--transition-base);
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+        }
+
+        .btn-large {
+            padding: 16px 32px;
+            font-size: 16px;
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ============================================
+           Hero Section
+        ============================================ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .hero-gradient {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+        }
+
+        .hero-gradient-1 {
+            top: -200px;
+            right: -200px;
+            background: var(--accent-primary);
+        }
+
+        .hero-gradient-2 {
+            bottom: -400px;
+            left: -200px;
+            background: #a855f7;
+            opacity: 0.2;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 7vw, 72px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        .hero-title-gradient {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-cta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .hero-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .hero-stat-label {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+        }
+
+        .hero-mockup {
+            position: relative;
+            border-radius: var(--radius-xl);
+            background: linear-gradient(145deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-xl), var(--shadow-glow);
+            overflow: hidden;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .mockup-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 20px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .mockup-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .mockup-dot-red { background: #ef4444; }
+        .mockup-dot-yellow { background: #eab308; }
+        .mockup-dot-green { background: #22c55e; }
+
+        .mockup-content {
+            padding: 32px;
+        }
+
+        .mockup-timer {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .timer-display {
+            font-size: 80px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .timer-label {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .mockup-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .mockup-btn {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .mockup-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        .mockup-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .mockup-progress {
+            margin-top: 32px;
+            height: 6px;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .mockup-progress-bar {
+            width: 65%;
+            height: 100%;
+            background: var(--accent-gradient);
+            border-radius: var(--radius-full);
+        }
+
+        /* ============================================
+           Features Section
+        ============================================ */
+        .features {
+            position: relative;
+            background: var(--bg-secondary);
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, var(--border-light));
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 64px;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-secondary);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(36px, 5vw, 48px);
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            position: relative;
+            padding: 32px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            transition: var(--transition-base);
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: var(--transition-base);
+        }
+
+        .feature-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.03;
+        }
+
+        .feature-icon {
+            position: relative;
+            z-index: 1;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-glow);
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+        }
+
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--accent-secondary);
+        }
+
+        .feature-title {
+            position: relative;
+            z-index: 1;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-description {
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* ============================================
+           How It Works Section
+        ============================================ */
+        .how-it-works {
+            position: relative;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            position: relative;
+        }
+
+        .steps-line {
+            position: absolute;
+            top: 40px;
+            left: calc(16.67% + 20px);
+            right: calc(16.67% + 20px);
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), #ec4899);
+            opacity: 0.3;
+        }
+
+        .step-card {
+            position: relative;
+            text-align: center;
+            padding: 32px 24px;
+        }
+
+        .step-number {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            background: var(--bg-card);
+            border: 2px solid var(--border-light);
+            border-radius: 50%;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent-secondary);
+            z-index: 10;
+        }
+
+        .step-card:hover .step-number {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            color: white;
+            transform: scale(1.05);
+            transition: var(--transition-spring);
+        }
+
+        .step-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .step-description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* ============================================
+           App Preview Section
+        ============================================ */
+        .app-preview {
+            position: relative;
+            background: var(--bg-secondary);
+            overflow: hidden;
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            perspective: 1000px;
+        }
+
+        .preview-item {
+            position: relative;
+            border-radius: var(--radius-lg);
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            transition: var(--transition-slow);
+        }
+
+        .preview-item:nth-child(1) {
+            transform: rotateY(-5deg) translateZ(20px);
+        }
+
+        .preview-item:nth-child(3) {
+            transform: rotateY(5deg) translateZ(20px);
+        }
+
+        .preview-item:hover {
+            transform: translateY(-8px) rotateY(0deg) !important;
+            box-shadow: var(--shadow-xl), var(--shadow-glow);
+        }
+
+        .preview-header {
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .preview-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .preview-content {
+            padding: 24px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-feature {
+            text-align: center;
+        }
+
+        .preview-feature-icon {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-glow);
+            border-radius: var(--radius-lg);
+            margin: 0 auto 16px;
+        }
+
+        .preview-feature-icon svg {
+            width: 32px;
+            height: 32px;
+            color: var(--accent-secondary);
+        }
+
+        .preview-feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .preview-feature-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* ============================================
+           Why Mob Timer Section
+        ============================================ */
+        .why-section {
+            position: relative;
+        }
+
+        .why-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .why-text h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-secondary);
+            margin-bottom: 16px;
+        }
+
+        .why-list {
+            list-style: none;
+            margin-top: 32px;
+        }
+
+        .why-list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .why-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .why-check {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-glow);
+            border-radius: 50%;
+        }
+
+        .why-check svg {
+            width: 14px;
+            height: 14px;
+            color: var(--accent-secondary);
+        }
+
+        .why-item-content h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .why-item-content p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .why-visual {
+            position: relative;
+        }
+
+        .why-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .why-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .why-card-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-gradient);
+            border-radius: var(--radius-md);
+        }
+
+        .why-card-icon svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .why-card-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .why-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .why-metric {
+            padding: 20px;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-md);
+        }
+
+        .why-metric-value {
+            font-size: 32px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .why-metric-label {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+        }
+
+        /* ============================================
+           Download CTA Section
+        ============================================ */
+        .download-cta {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-bg {
+            position: absolute;
+            inset: 0;
+            background: var(--accent-gradient);
+            opacity: 0.1;
+        }
+
+        .download-content {
+            position: relative;
+            text-align: center;
+            padding: 80px 40px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .download-title {
+            font-size: clamp(36px, 5vw, 48px);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .download-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .download-features {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .download-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .download-feature svg {
+            width: 16px;
+            height: 16px;
+            color: var(--accent-secondary);
+        }
+
+        /* ============================================
+           Footer
+        ============================================ */
+        .footer {
+            padding: 64px 0 32px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 48px;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .footer-logo svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .footer-tagline {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 64px;
+        }
+
+        .footer-column h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .footer-column a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-copyright {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .footer-social a:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .footer-social svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ============================================
+           Responsive Design
+        ============================================ */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .hero-text {
+                text-align: center;
+                max-width: 100%;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .steps-container {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .steps-line {
+                display: none;
+            }
+
+            .preview-container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .preview-item {
+                transform: none !important;
+            }
+
+            .preview-item:hover {
+                transform: translateY(-8px) !important;
+            }
+
+            .why-content {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .why-visual {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --section-padding: 80px;
+                --section-padding-sm: 60px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 24px;
+                align-items: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .download-features {
+                flex-direction: column;
+                gap: 16px;
+                align-items: center;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 32px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* ============================================
+           Animations
+        ============================================ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
     <nav class="nav" id="nav">
-      <div class="nav-inner">
-        <a href="#" class="nav-logo">
-          <img src="logo.png" alt="Mob Timer" width="28" height="28">
-          <span>Mob Timer</span>
-        </a>
-        <ul class="nav-links">
-          <li><a href="#mob-programming">Mob Programming</a></li>
-          <li><a href="#break-timer">Break Timer</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#how-it-works">How it works</a></li>
-          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
-        </ul>
-        <a href="#download" class="btn btn-sm btn-primary">Download</a>
-      </div>
+        <div class="container">
+            <div class="nav-inner">
+                <a href="#" class="nav-logo">
+                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="32" height="32" rx="8" fill="url(#logo-gradient)"/>
+                        <path d="M16 7V16L22 19" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="logo-gradient" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#6366f1"/>
+                                <stop offset="1" stop-color="#a855f7"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    Mob Timer
+                </a>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#how-it-works" class="nav-link">How It Works</a>
+                    <a href="#preview" class="nav-link">Preview</a>
+                    <a href="#download" class="nav-link">Download</a>
+                </div>
+                <div class="nav-cta">
+                    <button class="btn btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download
+                    </button>
+                </div>
+            </div>
+        </div>
     </nav>
 
-    <style>
-      /* Hero Section */
-      .klar2-hero {
-        position: relative;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #0a0a0f;
-        overflow: hidden;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      }
-
-      .klar2-hero-bg-overlay {
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 60%),
-          radial-gradient(ellipse 60% 50% at 20% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
-          radial-gradient(ellipse 60% 50% at 80% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
-      }
-
-      /* Floating Particles */
-      .klar2-hero-particles {
-        position: absolute;
-        inset: 0;
-        overflow: hidden;
-      }
-
-      .klar2-hero-particles span {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: rgba(167, 139, 250, 0.4);
-        border-radius: 50%;
-        animation: klar2-float-up linear infinite;
-      }
-
-      .klar2-hero-particles span:nth-child(1) {
-        left: 10%;
-        animation-duration: 12s;
-        animation-delay: 0s;
-        width: 3px;
-        height: 3px;
-      }
-
-      .klar2-hero-particles span:nth-child(2) {
-        left: 20%;
-        animation-duration: 15s;
-        animation-delay: -2s;
-        width: 5px;
-        height: 5px;
-        background: rgba(99, 102, 241, 0.3);
-      }
-
-      .klar2-hero-particles span:nth-child(3) {
-        left: 35%;
-        animation-duration: 10s;
-        animation-delay: -4s;
-      }
-
-      .klar2-hero-particles span:nth-child(4) {
-        left: 50%;
-        animation-duration: 18s;
-        animation-delay: -6s;
-        width: 6px;
-        height: 6px;
-        background: rgba(236, 72, 153, 0.3);
-      }
-
-      .klar2-hero-particles span:nth-child(5) {
-        left: 65%;
-        animation-duration: 14s;
-        animation-delay: -1s;
-        width: 3px;
-        height: 3px;
-      }
-
-      .klar2-hero-particles span:nth-child(6) {
-        left: 75%;
-        animation-duration: 11s;
-        animation-delay: -3s;
-        background: rgba(59, 130, 246, 0.3);
-      }
-
-      .klar2-hero-particles span:nth-child(7) {
-        left: 85%;
-        animation-duration: 16s;
-        animation-delay: -5s;
-        width: 5px;
-        height: 5px;
-      }
-
-      .klar2-hero-particles span:nth-child(8) {
-        left: 45%;
-        animation-duration: 13s;
-        animation-delay: -7s;
-        width: 3px;
-        height: 3px;
-        background: rgba(236, 72, 153, 0.25);
-      }
-
-      .klar2-hero-particles span:nth-child(9) {
-        left: 90%;
-        animation-duration: 17s;
-        animation-delay: -8s;
-      }
-
-      .klar2-hero-particles span:nth-child(10) {
-        left: 5%;
-        animation-duration: 14s;
-        animation-delay: -9s;
-        width: 5px;
-        height: 5px;
-        background: rgba(59, 130, 246, 0.25);
-      }
-
-      @keyframes klar2-float-up {
-        0% {
-          transform: translateY(100vh) scale(0);
-          opacity: 0;
-        }
-
-        10% {
-          opacity: 1;
-        }
-
-        90% {
-          opacity: 1;
-        }
-
-        100% {
-          transform: translateY(-10vh) scale(1);
-          opacity: 0;
-        }
-      }
-
-      /* Hero Content */
-      .klar2-hero-content {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        max-width: 800px;
-        padding: 2rem;
-        animation: klar2-fadeInUp 1s ease-out;
-      }
-
-      @keyframes klar2-fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(40px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .klar2-hero-tagline {
-        display: inline-block;
-        font-size: 0.85rem;
-        font-weight: 600;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: rgba(167, 139, 250, 0.9);
-        background: rgba(167, 139, 250, 0.1);
-        border: 1px solid rgba(167, 139, 250, 0.2);
-        padding: 0.5rem 1.25rem;
-        border-radius: 50px;
-        margin-bottom: 2rem;
-        animation: klar2-fadeInUp 1s ease-out 0.1s both;
-      }
-
-      .klar2-hero-title {
-        font-size: clamp(2.8rem, 7vw, 5.5rem);
-        font-weight: 800;
-        line-height: 1.1;
-        color: #ffffff;
-        margin: 0 0 1.5rem;
-        letter-spacing: -0.03em;
-        animation: klar2-fadeInUp 1s ease-out 0.2s both;
-      }
-
-      .klar2-hero-gradient-text {
-        background: linear-gradient(135deg, #818cf8 0%, #c084fc 40%, #f472b6 70%, #fb923c 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .klar2-hero-description {
-        font-size: clamp(1rem, 2vw, 1.25rem);
-        line-height: 1.7;
-        color: rgba(255, 255, 255, 0.55);
-        max-width: 580px;
-        margin: 0 auto 2.5rem;
-        animation: klar2-fadeInUp 1s ease-out 0.3s both;
-      }
-
-      /* Buttons */
-      .klar2-hero-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-bottom: 3.5rem;
-        animation: klar2-fadeInUp 1s ease-out 0.4s both;
-      }
-
-      .klar2-hero-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.9rem 2rem;
-        font-size: 1rem;
-        font-weight: 600;
-        text-decoration: none;
-        border-radius: 12px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-      }
-
-      .klar2-hero-btn-primary {
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
-        color: #fff;
-        box-shadow: 0 4px 25px rgba(99, 102, 241, 0.35), 0 0 0 0 rgba(99, 102, 241, 0);
-      }
-
-      .klar2-hero-btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 35px rgba(99, 102, 241, 0.5), 0 0 0 4px rgba(99, 102, 241, 0.1);
-      }
-
-      .klar2-hero-btn-primary svg {
-        transition: transform 0.3s ease;
-      }
-
-      .klar2-hero-btn-primary:hover svg {
-        transform: translateX(4px);
-      }
-
-      .klar2-hero-btn-secondary {
-        background: rgba(255, 255, 255, 0.05);
-        color: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-      }
-
-      .klar2-hero-btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.2);
-        color: #fff;
-        transform: translateY(-2px);
-      }
-
-      /* Stats */
-      .klar2-hero-stats {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 2rem;
-        animation: klar2-fadeInUp 1s ease-out 0.5s both;
-      }
-
-      .klar2-hero-stat {
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-      }
-
-      .klar2-hero-stat-number {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #ffffff;
-      }
-
-      .klar2-hero-stat-label {
-        font-size: 0.8rem;
-        color: rgba(255, 255, 255, 0.4);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-      }
-
-      .klar2-hero-stat-divider {
-        width: 1px;
-        height: 40px;
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      /* Glow Effect */
-      .klar2-hero-glow {
-        position: absolute;
-        width: 600px;
-        height: 600px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
-        pointer-events: none;
-        animation: klar2-pulse-glow 6s ease-in-out infinite;
-      }
-
-      @keyframes klar2-pulse-glow {
-
-        0%,
-        100% {
-          transform: translate(-50%, -50%) scale(1);
-          opacity: 0.5;
-        }
-
-        50% {
-          transform: translate(-50%, -50%) scale(1.3);
-          opacity: 1;
-        }
-      }
-
-      /* Responsive */
-      @media (max-width: 640px) {
-        .klar2-hero-content {
-          padding: 1.5rem;
-        }
-
-        .klar2-hero-tagline {
-          font-size: 0.75rem;
-          padding: 0.4rem 1rem;
-        }
-
-        .klar2-hero-description {
-          font-size: 0.95rem;
-        }
-
-        .klar2-hero-btn {
-          padding: 0.8rem 1.5rem;
-          font-size: 0.9rem;
-        }
-
-        .klar2-hero-stats {
-          gap: 1.25rem;
-        }
-
-        .klar2-hero-stat-number {
-          font-size: 1.25rem;
-        }
-      }
-    </style>
-    <div class="klar2-hero">
-      <div class="klar2-hero-bg-overlay"></div>
-      <div class="klar2-hero-particles">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-      </div>
-      <div class="klar2-hero-content">
-        <p class="klar2-hero-tagline">Welcome to the future</p>
-        <h1 class="klar2-hero-title">Build Something<br><span class="klar2-hero-gradient-text">Extraordinary</span></h1>
-        <p class="klar2-hero-description">Craft stunning digital experiences with elegance and precision. Your vision,
-          beautifully realized — pixel by pixel, line by line.</p>
-        <div class="klar2-hero-buttons">
-          <a href="#" class="klar2-hero-btn klar2-hero-btn-primary">Get Started <svg width="16" height="16"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg></a>
-          <a href="#" class="klar2-hero-btn klar2-hero-btn-secondary">Learn More</a>
-        </div>
-        <div class="klar2-hero-stats">
-          <div class="klar2-hero-stat">
-            <span class="klar2-hero-stat-number">10K+</span>
-            <span class="klar2-hero-stat-label">Users</span>
-          </div>
-          <div class="klar2-hero-stat-divider"></div>
-          <div class="klar2-hero-stat">
-            <span class="klar2-hero-stat-number">99%</span>
-            <span class="klar2-hero-stat-label">Satisfaction</span>
-          </div>
-          <div class="klar2-hero-stat-divider"></div>
-          <div class="klar2-hero-stat">
-            <span class="klar2-hero-stat-number">24/7</span>
-            <span class="klar2-hero-stat-label">Support</span>
-          </div>
-        </div>
-      </div>
-      <div class="klar2-hero-glow"></div>
-    </div>
-
-    <!-- ========== HERO ========== -->
+    <!-- Hero Section -->
     <section class="hero" id="hero">
-      <div class="hero-bg">
-        <div class="hero-glow hero-glow-1"></div>
-        <div class="hero-glow hero-glow-2"></div>
-        <div class="hero-grid"></div>
-      </div>
-
-      <div class="container">
-        <div class="hero-content">
-          <div class="hero-badge">
-            <span class="badge-dot"></span>Native macOS · Free Download
-          </div>
-
-          <h1 class="hero-title" data-klar-edit>The timer that<br>
-            <span class="gradient-text">gets out of your way</span>
-          </h1>
-
-          <p class="hero-subtitle">Mob Timer is a minimal macOS timer built for deep focus sessions and collaborative
-            mob programming. Start in seconds. Stay in the zone.</p>
-
-          <div class="hero-actions">
-            <a href="#download" class="btn btn-primary btn-lg">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
-              Download for Mac
-            </a>
-            <a href="/assets/Mob Timer.dmg" download="" class="btn btn-ghost btn-lg">
-              See features
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
-            </a>
-          </div>
-
-          <div class="hero-meta">
-            <span>macOS 13+</span>
-            <span class="meta-dot">·</span>
-            <span>Native SwiftUI</span>
-            <span class="meta-dot">·</span>
-            <span>No subscription</span>
-          </div>
+        <div class="hero-bg">
+            <div class="hero-gradient hero-gradient-1"></div>
+            <div class="hero-gradient hero-gradient-2"></div>
+            <div class="hero-grid"></div>
         </div>
-
-        <!-- App Window Mockup -->
-        <div class="hero-visual">
-          <div class="app-window app-window-mob">
-            <div class="window-chrome">
-              <div class="window-dots">
-                <span class="dot dot-red"></span>
-                <span class="dot dot-yellow"></span>
-                <span class="dot dot-green"></span>
-              </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <span class="hero-badge-dot"></span>
+                        Now available on macOS
+                    </div>
+                    <h1 class="hero-title">
+                        Focus without<br>
+                        <span class="hero-title-gradient">distractions</span>
+                    </h1>
+                    <p class="hero-description">
+                        A minimal, lightning-fast timer for macOS that helps you stay focused and productive. No clutter, no notifications—just you and your work.
+                    </p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary btn-large">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download for Mac
+                        </button>
+                        <a href="#features" class="btn btn-secondary btn-large">
+                            Learn More
+                        </a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <div class="hero-stat-value">50K+</div>
+                            <div class="hero-stat-label">Downloads</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-value">4.9</div>
+                            <div class="hero-stat-label">App Store Rating</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-value">2MB</div>
+                            <div class="hero-stat-label">App Size</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-mockup">
+                        <div class="mockup-header">
+                            <div class="mockup-dot mockup-dot-red"></div>
+                            <div class="mockup-dot mockup-dot-yellow"></div>
+                            <div class="mockup-dot mockup-dot-green"></div>
+                        </div>
+                        <div class="mockup-content">
+                            <div class="mockup-timer">
+                                <div class="timer-display">25:00</div>
+                                <div class="timer-label">Focus Session</div>
+                            </div>
+                            <div class="mockup-controls">
+                                <button class="mockup-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="5 3 19 12 5 21 5 3"/>
+                                    </svg>
+                                </button>
+                                <button class="mockup-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="6" y="4" width="4" height="16"/>
+                                        <rect x="14" y="4" width="4" height="16"/>
+                                    </svg>
+                                </button>
+                                <button class="mockup-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="23 4 23 10 17 10"/>
+                                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mockup-progress">
+                                <div class="mockup-progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="window-body mob-window-body">
-              <img src="images/app-screenshot.png" alt="Mob Timer app" class="app-screenshot">
-              <div class="screenshot-time-overlay" id="screenshot-timer">
-                07:28
-              </div>
-            </div>
-          </div>
-          <div class="window-reflection"></div>
         </div>
-      </div>
     </section>
 
-    <!-- ========== HERO ========== -->
-    <style>
-      /* Hero Section */
-      .klar2-hero {
-        position: relative;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #0a0a0f;
-        overflow: hidden;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      }
-
-      .klar2-hero-bg-overlay {
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 60%),
-          radial-gradient(ellipse 60% 50% at 20% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
-          radial-gradient(ellipse 60% 50% at 80% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
-      }
-
-      /* Floating Particles */
-      .klar2-hero-particles {
-        position: absolute;
-        inset: 0;
-        overflow: hidden;
-      }
-
-      .klar2-hero-particles span {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: rgba(167, 139, 250, 0.4);
-        border-radius: 50%;
-        animation: klar2-float-up linear infinite;
-      }
-
-      .klar2-hero-particles span:nth-child(1) {
-        left: 10%;
-        animation-duration: 12s;
-        animation-delay: 0s;
-        width: 3px;
-        height: 3px;
-      }
-
-      .klar2-hero-particles span:nth-child(2) {
-        left: 20%;
-        animation-duration: 15s;
-        animation-delay: -2s;
-        width: 5px;
-        height: 5px;
-        background: rgba(99, 102, 241, 0.3);
-      }
-
-      .klar2-hero-particles span:nth-child(3) {
-        left: 35%;
-        animation-duration: 10s;
-        animation-delay: -4s;
-      }
-
-      .klar2-hero-particles span:nth-child(4) {
-        left: 50%;
-        animation-duration: 18s;
-        animation-delay: -6s;
-        width: 6px;
-        height: 6px;
-        background: rgba(236, 72, 153, 0.3);
-      }
-
-      .klar2-hero-particles span:nth-child(5) {
-        left: 65%;
-        animation-duration: 14s;
-        animation-delay: -1s;
-        width: 3px;
-        height: 3px;
-      }
-
-      .klar2-hero-particles span:nth-child(6) {
-        left: 75%;
-        animation-duration: 11s;
-        animation-delay: -3s;
-        background: rgba(59, 130, 246, 0.3);
-      }
-
-      .klar2-hero-particles span:nth-child(7) {
-        left: 85%;
-        animation-duration: 16s;
-        animation-delay: -5s;
-        width: 5px;
-        height: 5px;
-      }
-
-      .klar2-hero-particles span:nth-child(8) {
-        left: 45%;
-        animation-duration: 13s;
-        animation-delay: -7s;
-        width: 3px;
-        height: 3px;
-        background: rgba(236, 72, 153, 0.25);
-      }
-
-      .klar2-hero-particles span:nth-child(9) {
-        left: 90%;
-        animation-duration: 17s;
-        animation-delay: -8s;
-      }
-
-      .klar2-hero-particles span:nth-child(10) {
-        left: 5%;
-        animation-duration: 14s;
-        animation-delay: -9s;
-        width: 5px;
-        height: 5px;
-        background: rgba(59, 130, 246, 0.25);
-      }
-
-      @keyframes klar2-float-up {
-        0% {
-          transform: translateY(100vh) scale(0);
-          opacity: 0;
-        }
-
-        10% {
-          opacity: 1;
-        }
-
-        90% {
-          opacity: 1;
-        }
-
-        100% {
-          transform: translateY(-10vh) scale(1);
-          opacity: 0;
-        }
-      }
-
-      /* Hero Content */
-      .klar2-hero-content {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        max-width: 800px;
-        padding: 2rem;
-        animation: klar2-fadeInUp 1s ease-out;
-      }
-
-      @keyframes klar2-fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(40px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .klar2-hero-tagline {
-        display: inline-block;
-        font-size: 0.85rem;
-        font-weight: 600;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: rgba(167, 139, 250, 0.9);
-        background: rgba(167, 139, 250, 0.1);
-        border: 1px solid rgba(167, 139, 250, 0.2);
-        padding: 0.5rem 1.25rem;
-        border-radius: 50px;
-        margin-bottom: 2rem;
-        animation: klar2-fadeInUp 1s ease-out 0.1s both;
-      }
-
-      .klar2-hero-title {
-        font-size: clamp(2.8rem, 7vw, 5.5rem);
-        font-weight: 800;
-        line-height: 1.1;
-        color: #ffffff;
-        margin: 0 0 1.5rem;
-        letter-spacing: -0.03em;
-        animation: klar2-fadeInUp 1s ease-out 0.2s both;
-      }
-
-      .klar2-hero-gradient-text {
-        background: linear-gradient(135deg, #818cf8 0%, #c084fc 40%, #f472b6 70%, #fb923c 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .klar2-hero-description {
-        font-size: clamp(1rem, 2vw, 1.25rem);
-        line-height: 1.7;
-        color: rgba(255, 255, 255, 0.55);
-        max-width: 580px;
-        margin: 0 auto 2.5rem;
-        animation: klar2-fadeInUp 1s ease-out 0.3s both;
-      }
-
-      /* Buttons */
-      .klar2-hero-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-bottom: 3.5rem;
-        animation: klar2-fadeInUp 1s ease-out 0.4s both;
-      }
-
-      .klar2-hero-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.9rem 2rem;
-        font-size: 1rem;
-        font-weight: 600;
-        text-decoration: none;
-        border-radius: 12px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-      }
-
-      .klar2-hero-btn-primary {
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
-        color: #fff;
-        box-shadow: 0 4px 25px rgba(99, 102, 241, 0.35), 0 0 0 0 rgba(99, 102, 241, 0);
-      }
-
-      .klar2-hero-btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 35px rgba(99, 102, 241, 0.5), 0 0 0 4px rgba(99, 102, 241, 0.1);
-      }
-
-      .klar2-hero-btn-primary svg {
-        transition: transform 0.3s ease;
-      }
-
-      .klar2-hero-btn-primary:hover svg {
-        transform: translateX(4px);
-      }
-
-      .klar2-hero-btn-secondary {
-        background: rgba(255, 255, 255, 0.05);
-        color: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-      }
-
-      .klar2-hero-btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.2);
-        color: #fff;
-        transform: translateY(-2px);
-      }
-
-      /* Stats */
-      .klar2-hero-stats {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 2rem;
-        animation: klar2-fadeInUp 1s ease-out 0.5s both;
-      }
-
-      .klar2-hero-stat {
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-      }
-
-      .klar2-hero-stat-number {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #ffffff;
-      }
-
-      .klar2-hero-stat-label {
-        font-size: 0.8rem;
-        color: rgba(255, 255, 255, 0.4);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-      }
-
-      .klar2-hero-stat-divider {
-        width: 1px;
-        height: 40px;
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      /* Glow Effect */
-      .klar2-hero-glow {
-        position: absolute;
-        width: 600px;
-        height: 600px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
-        pointer-events: none;
-        animation: klar2-pulse-glow 6s ease-in-out infinite;
-      }
-
-      @keyframes klar2-pulse-glow {
-
-        0%,
-        100% {
-          transform: translate(-50%, -50%) scale(1);
-          opacity: 0.5;
-        }
-
-        50% {
-          transform: translate(-50%, -50%) scale(1.3);
-          opacity: 1;
-        }
-      }
-
-      /* Responsive */
-      @media (max-width: 640px) {
-        .klar2-hero-content {
-          padding: 1.5rem;
-        }
-
-        .klar2-hero-tagline {
-          font-size: 0.75rem;
-          padding: 0.4rem 1rem;
-        }
-
-        .klar2-hero-description {
-          font-size: 0.95rem;
-        }
-
-        .klar2-hero-btn {
-          padding: 0.8rem 1.5rem;
-          font-size: 0.9rem;
-        }
-
-        .klar2-hero-stats {
-          gap: 1.25rem;
-        }
-
-        .klar2-hero-stat-number {
-          font-size: 1.25rem;
-        }
-      }
-    </style>
-    <div class="klar2-hero">
-      <div class="klar2-hero-bg-overlay"></div>
-      <div class="klar2-hero-particles">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-      </div>
-      <div class="klar2-hero-content">
-        <p class="klar2-hero-tagline">Welcome to the future</p>
-        <h1 class="klar2-hero-title">Build Something<br><span class="klar2-hero-gradient-text">Extraordinary</span></h1>
-        <p class="klar2-hero-description">Craft stunning digital experiences with elegance and precision. Your vision,
-          beautifully realized — pixel by pixel, line by line.</p>
-        <div class="klar2-hero-buttons">
-          <a href="#" class="klar2-hero-btn klar2-hero-btn-primary">Get Started <svg width="16" height="16"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-              stroke-linejoin="round">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg></a>
-          <a href="#" class="klar2-hero-btn klar2-hero-btn-secondary">Learn More</a>
+    <!-- Features Section -->
+    <section class="features section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                    Features
+                </div>
+                <h2 class="section-title">Everything you need to stay focused</h2>
+                <p class="section-description">
+                    Mob Timer is designed with one goal in mind: helping you focus on what matters. No bloat, no distractions—just essential features that work.
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Instant Timer Setup</h3>
+                    <p class="feature-description">
+                        Start a timer in one click. Choose from presets like Pomodoro, or set your own custom duration. No configuration needed.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Distraction-Free Interface</h3>
+                    <p class="feature-description">
+                        A clean, minimal interface that stays out of your way. No ads, no notifications, no interruptions—just you and your timer.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2"/>
+                            <path d="M6 8h.001"/>
+                            <path d="M10 8h.001"/>
+                            <path d="M14 8h.001"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Keyboard Shortcuts</h3>
+                    <p class="feature-description">
+                        Control your timer without touching the mouse. Global hotkeys work even when the app is in the background.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                            <path d="M8 7h6"/>
+                            <path d="M8 11h8"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Multiple Timer Presets</h3>
+                    <p class="feature-description">
+                        Create custom presets for different tasks. Focus sessions, breaks, workouts—all just a click away.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Native macOS Performance</h3>
+                    <p class="feature-description">
+                        Built with Swift for maximum performance and minimal battery drain. Integrates perfectly with macOS features.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="klar2-hero-stats">
-          <div class="klar2-hero-stat">
-            <span class="klar2-hero-stat-number">10K+</span>
-            <span class="klar2-hero-stat-label">Users</span>
-          </div>
-          <div class="klar2-hero-stat-divider"></div>
-          <div class="klar2-hero-stat">
-            <span class="klar2-hero-stat-number">99%</span>
-            <span class="klar2-hero-stat-label">Satisfaction</span>
-          </div>
-          <div class="klar2-hero-stat-divider"></div>
-          <div class="klar2-hero-stat">
-            <span class="klar2-hero-stat-number">24/7</span>
-            <span class="klar2-hero-stat-label">Support</span>
-          </div>
-        </div>
-      </div>
-      <div class="klar2-hero-glow"></div>
-    </div>
-
-    <!-- ========== HERO ========== -->
-    <section id="klar-hero-section">
-      <div id="klar-hero-overlay"></div>
-      <div id="klar-hero-content">
-        <p id="klar-hero-tagline">Welcome to the future</p>
-        <h1 id="klar-hero-title">Build Something<br><span id="klar-hero-highlight">Extraordinary</span></h1>
-        <p id="klar-hero-description">Craft stunning digital experiences with precision, speed, and elegance. Your
-          vision, beautifully realized.</p>
-        <div id="klar-hero-buttons">
-          <a href="#" id="klar-hero-cta-primary">Get Started</a>
-          <a href="#" id="klar-hero-cta-secondary">Learn More →</a>
-        </div>
-      </div>
-      <div id="klar-hero-glow-orb-1"></div>
-      <div id="klar-hero-glow-orb-2"></div>
-    </section>
-    <style>
-      #klar-hero-section {
-        position: relative;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #0a0a0f;
-        overflow: hidden;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      }
-
-      #klar-hero-overlay {
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
-          radial-gradient(ellipse at 80% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
-        pointer-events: none;
-      }
-
-      #klar-hero-glow-orb-1 {
-        position: absolute;
-        width: 500px;
-        height: 500px;
-        top: -150px;
-        left: -100px;
-        background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-        border-radius: 50%;
-        filter: blur(60px);
-        animation: klar-hero-float 8s ease-in-out infinite;
-        pointer-events: none;
-      }
-
-      #klar-hero-glow-orb-2 {
-        position: absolute;
-        width: 400px;
-        height: 400px;
-        bottom: -100px;
-        right: -80px;
-        background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
-        border-radius: 50%;
-        filter: blur(60px);
-        animation: klar-hero-float 10s ease-in-out infinite reverse;
-        pointer-events: none;
-      }
-
-      @keyframes klar-hero-float {
-
-        0%,
-        100% {
-          transform: translateY(0px) scale(1);
-        }
-
-        50% {
-          transform: translateY(-30px) scale(1.05);
-        }
-      }
-
-      #klar-hero-content {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        max-width: 800px;
-        padding: 2rem;
-      }
-
-      #klar-hero-tagline {
-        display: inline-block;
-        font-size: 0.85rem;
-        font-weight: 600;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: #a78bfa;
-        background: rgba(139, 92, 246, 0.1);
-        border: 1px solid rgba(139, 92, 246, 0.2);
-        border-radius: 50px;
-        padding: 0.5rem 1.5rem;
-        margin-bottom: 2rem;
-      }
-
-      #klar-hero-title {
-        font-size: clamp(2.8rem, 7vw, 5.5rem);
-        font-weight: 800;
-        line-height: 1.1;
-        color: #f0f0f5;
-        margin: 0 0 1.5rem 0;
-        letter-spacing: -0.03em;
-      }
-
-      #klar-hero-highlight {
-        background: linear-gradient(135deg, #818cf8, #a78bfa, #c084fc);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      #klar-hero-description {
-        font-size: 1.2rem;
-        line-height: 1.7;
-        color: #8888a4;
-        max-width: 560px;
-        margin: 0 auto 2.5rem auto;
-      }
-
-      #klar-hero-buttons {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1.2rem;
-        flex-wrap: wrap;
-      }
-
-      #klar-hero-cta-primary {
-        display: inline-block;
-        padding: 0.9rem 2.2rem;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #fff;
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
-        border-radius: 12px;
-        text-decoration: none;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        box-shadow: 0 4px 25px rgba(99, 102, 241, 0.35);
-      }
-
-      #klar-hero-cta-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 35px rgba(99, 102, 241, 0.5);
-      }
-
-      #klar-hero-cta-secondary {
-        display: inline-block;
-        padding: 0.9rem 2.2rem;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #c4c4d8;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        text-decoration: none;
-        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
-      }
-
-      #klar-hero-cta-secondary:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-        transform: translateY(-2px);
-      }
-    </style>
-
-    <!-- ========== SOCIAL PROOF ========== -->
-    <section class="social-proof" id="social-proof">
-      <div class="container">
-        <p class="proof-label">Built for developers who value focus</p>
-        <div class="proof-stats">
-          <div class="stat">
-            <span class="stat-num">3</span>
-            <span class="stat-desc">Timer presets</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-num">∞</span>
-            <span class="stat-desc">Custom durations</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-num">0</span>
-            <span class="stat-desc">Subscriptions</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-num">100%</span>
-            <span class="stat-desc">Native macOS</span>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- ========== MOB PROGRAMMING ========== -->
-    <section class="mob-section" id="mob-programming">
-      <div class="mob-bg">
-        <div class="mob-glow mob-glow-1"></div>
-        <div class="mob-glow mob-glow-2"></div>
-      </div>
-      <div class="container">
-        <div class="mob-layout">
-          <div class="mob-copy">
-            <div class="section-tag">Core Feature</div>
-            <h2 class="section-title" style="text-align: left">
-              Mob programming,<br><span class="gradient-text">perfectly in sync</span>
-            </h2>
-            <p class="mob-lead">
-              Mob Timer is built around a single shared countdown that every
-              teammate sees at the same time—no drift, no confusion about whose
-              turn it is.
-            </p>
-
-            <div class="mob-steps" data-klar-list>
-              <div class="mob-step">
-                <div class="mob-step-num">1</div>
-                <div>
-                  <strong>Create a session</strong>
-                  <p>Start a new session in one click. Get a shareable code instantly, or give it a permanent name your
-                    team can always find. hehe</p>
+    <!-- How It Works Section -->
+    <section class="how-it-works section" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    How It Works
                 </div>
-              </div>
-              <div class="mob-step">
-                <div class="mob-step-num">2</div>
-                <div>
-                  <strong>Share the code</strong>
-                  <p>Every team member opens Mob Timer and joinsss with the code. The timer and queue sync across all
-                    Macs in real time.</p>
-                </div>
-              </div>
-              <div class="mob-step">
-                <div class="mob-step-num">3</div>
-                <div>
-                  <strong>Auto-rotate drivers</strong>
-                  <p>
-                    When a turn ends, everyone gets notified and the next driver
-                    is automatically highlighted. No manual coordination needed.
-                  </p>
-                </div>
-              </div>
+                <h2 class="section-title">Focus in three simple steps</h2>
+                <p class="section-description">
+                    No learning curve. No complicated setup. Just open the app and start focusing.
+                </p>
             </div>
-
-            <div class="mob-tags" data-list><span class="mob-tag">Real-time sync</span>
-              <span class="mob-tag">Persistent named sessions</span>
-              <span class="mob-tag">Auto-rotation</span>
+            <div class="steps-container">
+                <div class="steps-line"></div>
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Set Your Timer</h3>
+                    <p class="step-description">
+                        Choose from preset durations or set a custom time. Select from focus, short break, long break, or any custom duration.
+                    </p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Focus on Your Work</h3>
+                    <p class="step-description">
+                        Start the timer and dive into your task. The app stays minimized in your menu bar, keeping your workspace clean.
+                    </p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Get Notified</h3>
+                    <p class="step-description">
+                        When time's up, you'll receive a gentle notification. Take a break, then repeat. Build better work habits over time.
+                    </p>
+                </div>
             </div>
-          </div>
-
-          <div class="mob-visual">
-            <div class="mob-flow">
-              <!-- Settings / Join card -->
-              <div class="flow-card flow-card-create">
-                <div class="flow-settings-title">Settings</div>
-                <div class="flow-settings-section">
-                  <div class="flow-settings-label">MOB TIMER SESSION</div>
-                  <div class="flow-settings-desc">
-                    A shared timer for your whole team. Everyone sees the same
-                    countdown and knows whose turn it is to drive.
-                  </div>
-                  <div class="flow-input-field">Session code or name</div>
-                  <button class="flow-join-btn">Join Session</button>
-                  <div class="flow-or-divider">or create</div>
-                  <div class="flow-input-field">Session name (optional)</div>
-                  <button class="flow-create-btn">Create Session</button>
-                </div>
-              </div>
-
-              <!-- Arrow -->
-              <div class="flow-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round"></path>
-                </svg>
-              </div>
-
-              <!-- Active Mob Timer card -->
-              <div class="flow-card flow-card-active">
-                <div class="flow-app-tabs">
-                  <span class="flow-app-tab active">Mob Timer</span>
-                  <span class="flow-app-tab">Break Timer</span>
-                </div>
-
-                <div class="flow-ring-wrap">
-                  <svg viewBox="0 0 100 100" class="flow-ring-svg">
-                    <circle cx="50" cy="50" r="42" class="ring-track"></circle>
-                    <circle cx="50" cy="50" r="42" class="ring-progress flow-ring-progress" style="--progress: 0.55">
-                    </circle>
-                  </svg>
-                  <div class="flow-ring-inner">
-                    <div class="flow-driver-name">SUZANNE</div>
-                    <span class="flow-time" id="flow-time">05:06</span>
-                    <div class="flow-driving-sub">Now driving</div>
-                  </div>
-                </div>
-
-                <div class="flow-next-label">Next: Gabriel</div>
-
-                <div style="flex: 1"></div>
-
-                <div class="flow-participants-bar">
-                  <span class="flow-p-label">PARTICIPANTS</span>
-                  <span class="flow-session-code">Session: NEWSWEB</span>
-                </div>
-                <div class="flow-chips">
-                  <span class="flow-chip">Siri ×</span>
-                  <span class="flow-chip flow-chip-active">● Suzanne ×</span>
-                  <span class="flow-chip">Gabriel ×</span>
-                  <span class="flow-chip">Richard ×</span>
-                  <span class="flow-chip flow-chip-add">+</span>
-                </div>
-
-                <!-- Notification toast -->
-                <div class="flow-toast" id="flow-toast">
-                  <span class="flow-toast-icon">🔔</span>
-                  <div class="flow-toast-text">
-                    <strong>Turn complete!</strong>
-                    <span>Gabriel is now driving.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Sync indicator -->
-            <div class="mob-sync-bar">
-              <div class="sync-dot"></div>
-              <span>Synced across all team members</span>
-              <span class="sync-sep">·</span>
-              <span class="sync-ts">Updated just now</span>
-            </div>
-          </div>
         </div>
-      </div>
     </section>
 
-    <!-- ========== BREAK TIMER ========== -->
-    <section class="app-showcase" id="break-timer">
-      <div class="container">
-        <div class="app-showcase-inner">
-          <div class="app-showcase-content">
-            <div class="section-tag">Break Timer</div>
-            <h2 class="section-title" style="text-align: left">Work deeply.<br>Rest intentionally.</h2>
-            <p class="app-showcase-desc">
-              Mob Timer's Break Timer keeps your work sessions structured. Pick
-              a cycle preset — Pomodoro, Deep Work, or your own custom rhythm —
-              and let the app handle the rest. A gentle ring tracks your
-              progress so you stay in the zone without watching the clock.
-            </p>
-            <ul class="app-showcase-points">
-              <li>Pomodoro, Deep Work, Quick, and Custom presets</li>
-              <li>Visual ring progress — always glanceable</li>
-              <li>Shared across your whole team in real time</li>
-            </ul>
-          </div>
-          <div class="app-showcase-visual">
-            <img src="images/app-break-timer.png" alt="Mob Timer Break Timer" class="app-showcase-img">
-          </div>
+    <!-- App Preview Section -->
+    <section class="app-preview section" id="preview">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    Preview
+                </div>
+                <h2 class="section-title">Beautiful on every screen</h2>
+                <p class="section-description">
+                    Designed to look stunning on any display. From Retina to external monitors, every pixel is crisp.
+                </p>
+            </div>
+            <div class="preview-container">
+                <div class="preview-item">
+                    <div class="preview-header">
+                        <div class="preview-dot" style="background: #ef4444;"></div>
+                        <div class="preview-dot" style="background: #eab308;"></div>
+                        <div class="preview-dot" style="background: #22c55e;"></div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-feature">
+                            <div class="preview-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="3" y1="9" x2="21" y2="9"/>
+                                    <line x1="9" y1="21" x2="9" y2="9"/>
+                                </svg>
+                            </div>
+                            <h4 class="preview-feature-title">Menu Bar Timer</h4>
+                            <p class="preview-feature-desc">Quick access from anywhere</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="preview-item">
+                    <div class="preview-header">
+                        <div class="preview-dot" style="background: #ef4444;"></div>
+                        <div class="preview-dot" style="background: #eab308;"></div>
+                        <div class="preview-dot" style="background: #22c55e;"></div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-feature">
+                            <div class="preview-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                            </div>
+                            <h4 class="preview-feature-title">Focus Mode</h4>
+                            <p class="preview-feature-desc">Distraction-free experience</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="preview-item">
+                    <div class="preview-header">
+                        <div class="preview-dot" style="background: #ef4444;"></div>
+                        <div class="preview-dot" style="background: #eab308;"></div>
+                        <div class="preview-dot" style="background: #22c55e;"></div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-feature">
+                            <div class="preview-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                                </svg>
+                            </div>
+                            <h4 class="preview-feature-title">Smart Notifications</h4>
+                            <p class="preview-feature-desc">Gentle reminders when done</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <!-- ========== FEATURES ========== -->
-    <section class="features" id="features">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-tag">Features</div>
-          <h2 class="section-title">Everything you need,<br>nothing you don't</h2>
-          <p class="section-subtitle">
-            Mob Timer strips away the noise so you can focus on what matters.
-            Every feature is intentional.
-          </p>
+    <!-- Why Mob Timer Section -->
+    <section class="why-section section" id="why">
+        <div class="container">
+            <div class="why-content">
+                <div class="why-text">
+                    <h3>Why Mob Timer?</h3>
+                    <h2 class="section-title" style="text-align: left; margin-bottom: 24px;">
+                        Better than the rest
+                    </h2>
+                    <p class="section-description" style="text-align: left;">
+                        Most timer apps are cluttered with features you'll never use. Mob Timer is different—we stripped away everything except what you actually need.
+                    </p>
+                    <ul class="why-list">
+                        <li class="why-list-item">
+                            <div class="why-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <div class="why-item-content">
+                                <h4>Pure Simplicity</h4>
+                                <p>One screen. One timer. No menus within menus. Just open and start.</p>
+                            </div>
+                        </li>
+                        <li class="why-list-item">
+                            <div class="why-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <div class="why-item-content">
+                                <h4>Lightning Fast</h4>
+                                <p>Launches in under 100ms. Uses minimal memory (< 30MB). No lag, ever.</p>
+                            </div>
+                        </li>
+                        <li class="why-list-item">
+                            <div class="why-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <div class="why-item-content">
+                                <h4>Native Experience</h4>
+                                <p>Built with Swift for macOS. Respects your system preferences and looks like it belongs.</p>
+                            </div>
+                        </li>
+                        <li class="why-list-item">
+                            <div class="why-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <div class="why-item-content">
+                                <h4>Privacy First</h4>
+                                <p>No accounts. No data collection. No internet required. Your time is yours.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="why-visual">
+                    <div class="why-card">
+                        <div class="why-card-header">
+                            <div class="why-card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 20V10"/>
+                                    <path d="M18 20V4"/>
+                                    <path d="M6 20v-4"/>
+                                </svg>
+                            </div>
+                            <h4 class="why-card-title">Productivity at a glance</h4>
+                        </div>
+                        <div class="why-metrics">
+                            <div class="why-metric">
+                                <div class="why-metric-value">40%</div>
+                                <div class="why-metric-label">More focused</div>
+                            </div>
+                            <div class="why-metric">
+                                <div class="why-metric-value">2x</div>
+                                <div class="why-metric-label">Daily output</div>
+                            </div>
+                            <div class="why-metric">
+                                <div class="why-metric-value">60%</div>
+                                <div class="why-metric-label">Less procrastination</div>
+                            </div>
+                            <div class="why-metric">
+                                <div class="why-metric-value">100%</div>
+                                <div class="why-metric-label">Satisfaction</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="features-grid">
-          <div class="feature-card feature-card-large">
-            <div class="feature-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M11 3C7.134 3 4 6.134 4 10s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" stroke="currentColor"
-                  stroke-width="1.5"></path>
-                <path d="M11 7v4l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-              </svg>
-            </div>
-            <h3>Persistent Sessions</h3>
-            <p>
-              Name your session and it's always there. Rejoin tomorrow with the
-              same code, same queue, same team—pick up exactly where you left
-              off.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <rect x="3" y="3" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.5"></rect>
-                <path d="M8 11h6M11 8v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-              </svg>
-            </div>
-            <h3>Mob Programming</h3>
-            <p>
-              Shared sessions sync across multiple Macs in real time. Every team
-              member stays perfectly in sync—down to the millisecond.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M7 4h8M5 8h12M9 12h4M11 16v0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                </path>
-              </svg>
-            </div>
-            <h3>Distraction-Free</h3>
-            <p>
-              Frameless floating window lives quietly in your corner. A status
-              bar icon shows your remaining time without stealing focus.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M4 11a7 7 0 0 1 7-7M18 11a7 7 0 0 1-7 7" stroke="currentColor" stroke-width="1.5"
-                  stroke-linecap="round"></path>
-                <path d="M15 7l3-3 1 4-4-1M7 15l-3 3-1-4 4 1" stroke="currentColor" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            </div>
-            <h3>Turn Rotation</h3>
-            <p>
-              When a turn ends, the next driver is automatically highlighted and
-              everyone gets notified. Fair, effortless, zero manual
-              coordination.
-            </p>
-          </div>
-
-          <div class="feature-card feature-card-accent">
-            <div class="feature-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.5"></circle>
-                <path d="M11 6v5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-              </svg>
-            </div>
-            <h3>Instant Timer Setup</h3>
-            <p>
-              One click to start a Pomodoro, Deep Work, or Quick session. No
-              configuration hell—just focused work from the moment you open the
-              app.
-            </p>
-            <div class="feature-pill">Pomodoro · Deep Work · Quick</div>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- ========== HOW IT WORKS ========== -->
-    <section class="how-it-works" id="how-it-works">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-tag">How it works</div>
-          <h2 class="section-title">Three steps to<br>pure focus</h2>
+    <!-- Download CTA Section -->
+    <section class="download-cta section" id="download">
+        <div class="container">
+            <div class="download-bg"></div>
+            <div class="download-content">
+                <h2 class="download-title">Ready to focus?</h2>
+                <p class="download-subtitle">
+                    Download Mob Timer for macOS and start accomplishing more with less distraction. Free forever.
+                </p>
+                <div class="download-buttons">
+                    <button class="btn btn-primary btn-large">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download Mob Timer
+                    </button>
+                </div>
+                <div class="download-features">
+                    <div class="download-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Free forever
+                    </div>
+                    <div class="download-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        No account required
+                    </div>
+                    <div class="download-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        macOS 12+ supported
+                    </div>
+                    <div class="download-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Apple Silicon ready
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="steps">
-          <div class="step">
-            <div class="step-number">01</div>
-            <div class="step-content">
-              <h3>Share a session</h3>
-              <p>
-                Create a session and share the code with your team. Everyone
-                joins instantly — no accounts, no setup required.
-              </p>
-            </div>
-            <div class="step-visual">
-              <div class="step-card step-card-session">
-                <div class="app-settings-label">MOB TIMER SESSION</div>
-                <div class="app-settings-desc">
-                  A shared timer for your whole team. Everyone sees the same
-                  countdown and knows whose turn it is to drive.
-                </div>
-                <div class="app-input-field">Session code or name</div>
-                <button class="app-join-btn">Join Session</button>
-                <div class="app-divider">or create</div>
-                <div class="app-input-field">Session name (optional)</div>
-                <button class="app-create-btn">Create Session</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="step-connector">
-            <div class="connector-line"></div>
-          </div>
-
-          <div class="step">
-            <div class="step-number">02</div>
-            <div class="step-content">
-              <h3>Focus on your work</h3>
-              <p>
-                Once your session is running, Mob Timer stays out of your way. A
-                countdown in the menu bar keeps everyone on track—no switching
-                windows, no interruptions.
-              </p>
-            </div>
-            <div class="step-visual">
-              <div class="step-card step-card-timer">
-                <div class="step-menubar">
-                  <span class="step-menubar-spacer"></span>
-                  <span class="step-menubar-item" id="step-menubar-time">Gabriel: 07:28</span>
-                </div>
-                <div class="app-ring-container">
-                  <svg viewBox="0 0 100 100" class="app-ring-svg">
-                    <circle cx="50" cy="50" r="42" class="app-ring-track"></circle>
-                    <circle cx="50" cy="50" r="42" class="app-ring-progress" id="step-ring-progress"
-                      style="--progress: 0.5"></circle>
-                  </svg>
-                  <div class="app-ring-inner">
-                    <div class="app-ring-name">GABRIEL</div>
-                    <div class="app-ring-time">03:28</div>
-                    <div class="app-ring-label">Now driving</div>
-                  </div>
-                </div>
-                <div class="app-next-label">Next: Siri</div>
-                <div class="app-participants-row">
-                  <span class="app-participant">Siri</span>
-                  <span class="app-participant active">Gabriel</span>
-                  <span class="app-participant">Bekhal</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="step-connector">
-            <div class="connector-line"></div>
-          </div>
-
-          <div class="step">
-            <div class="step-number">03</div>
-            <div class="step-content">
-              <h3>Set your work and break intervals</h3>
-              <p>
-                Choose how long to focus and how long to rest. Mob Timer handles
-                the countdown and alerts you when it's time to take a break.
-              </p>
-            </div>
-            <div class="step-visual">
-              <div class="step-card step-card-presets">
-                <div class="app-settings-label">CYCLE PRESET</div>
-                <div class="app-preset-grid">
-                  <div class="app-preset-item">
-                    <div class="app-preset-name">Pomodoro</div>
-                    <div class="app-preset-sub">25 / 5</div>
-                  </div>
-                  <div class="app-preset-item">
-                    <div class="app-preset-name">Deep Work</div>
-                    <div class="app-preset-sub">50 / 10</div>
-                  </div>
-                  <div class="app-preset-item active">
-                    <div class="app-preset-name">Quick</div>
-                    <div class="app-preset-sub">15 / 3</div>
-                  </div>
-                  <div class="app-preset-item">
-                    <div class="app-preset-name">Custom</div>
-                    <div class="app-preset-sub">28 / 5</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- ========== APP PREVIEW ========== -->
-    <section class="preview" id="preview" style="display: none">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-tag">App Preview</div>
-          <h2 class="section-title">
-            Built for the way<br>you actually work
-          </h2>
-          <p class="section-subtitle">
-            Every pixel designed to minimize friction and maximize focus.
-          </p>
-        </div>
-
-        <div class="preview-grid">
-          <!-- Mob Timer Preview -->
-          <div class="preview-window preview-window-main">
-            <div class="window-chrome">
-              <div class="window-dots">
-                <span class="dot dot-red"></span>
-                <span class="dot dot-yellow"></span>
-                <span class="dot dot-green"></span>
-              </div>
-            </div>
-            <div class="window-body preview-body">
-              <div class="app-tabs">
-                <button class="app-tab active">Mob Timer</button>
-                <button class="app-tab">Break Timer</button>
-                <button class="app-tab app-tab-icon">
-                  <svg width="16" height="12" viewBox="0 0 20 14" fill="none">
-                    <ellipse cx="10" cy="10" rx="4" ry="4" fill="#4a9eff" opacity="0.3"></ellipse>
-                    <circle cx="10" cy="10" r="3" fill="#4a9eff"></circle>
-                    <ellipse cx="4" cy="9" rx="3" ry="3" fill="#4a9eff" opacity="0.6"></ellipse>
-                    <ellipse cx="16" cy="9" rx="3" ry="3" fill="#4a9eff" opacity="0.6"></ellipse>
-                  </svg>
-                </button>
-              </div>
-              <div class="pv-ring-wrap">
-                <svg viewBox="0 0 180 180" class="pv-ring-svg">
-                  <circle cx="90" cy="90" r="75" class="pv-ring-track"></circle>
-                  <circle cx="90" cy="90" r="75" class="pv-ring-progress pv-ring-green" style="--progress: 0.78">
-                  </circle>
-                </svg>
-                <div class="pv-ring-inner">
-                  <div class="pv-driver-name">GABRIEL</div>
-                  <div class="pv-time pv-time-green">03:28</div>
-                  <div class="pv-sublabel">Now driving</div>
-                </div>
-              </div>
-              <div class="pv-next">Next: Siri</div>
-              <div class="pv-duration-row">
-                <span class="pv-dur-btn">−</span>
-                <span class="pv-dur-val">15 min</span>
-                <span class="pv-dur-btn">+</span>
-              </div>
-              <div class="pv-controls">
-                <button class="pv-ctrl-btn">↺</button>
-                <button class="pv-ctrl-btn pv-ctrl-main pv-ctrl-green">
-                  ⏸
-                </button>
-                <button class="pv-ctrl-btn">⏭</button>
-              </div>
-              <div class="pv-participants-section">
-                <div class="pv-participants-header">
-                  <span class="pv-participants-label">PARTICIPANTS</span>
-                  <span class="pv-session-tag">Session: NEWSWEB <span class="pv-dot-green">●</span></span>
-                </div>
-                <div class="pv-chips">
-                  <span class="pv-chip">Siri ×</span>
-                  <span class="pv-chip">Bekhal ×</span>
-                  <span class="pv-chip pv-chip-active">● Gabriel ×</span>
-                  <span class="pv-chip pv-chip-add">+</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Break Timer Preview -->
-          <div class="preview-window preview-window-side">
-            <div class="window-chrome">
-              <div class="window-dots">
-                <span class="dot dot-red"></span>
-                <span class="dot dot-yellow"></span>
-                <span class="dot dot-green"></span>
-              </div>
-            </div>
-            <div class="window-body preview-body">
-              <div class="app-tabs">
-                <button class="app-tab">Mob Timer</button>
-                <button class="app-tab active">Break Timer</button>
-                <button class="app-tab app-tab-icon">
-                  <svg width="16" height="12" viewBox="0 0 20 14" fill="none">
-                    <ellipse cx="10" cy="10" rx="4" ry="4" fill="#4a9eff" opacity="0.3"></ellipse>
-                    <circle cx="10" cy="10" r="3" fill="#4a9eff"></circle>
-                    <ellipse cx="4" cy="9" rx="3" ry="3" fill="#4a9eff" opacity="0.6"></ellipse>
-                    <ellipse cx="16" cy="9" rx="3" ry="3" fill="#4a9eff" opacity="0.6"></ellipse>
-                  </svg>
-                </button>
-              </div>
-              <div class="pv-ring-wrap">
-                <svg viewBox="0 0 180 180" class="pv-ring-svg">
-                  <circle cx="90" cy="90" r="75" class="pv-ring-track"></circle>
-                  <circle cx="90" cy="90" r="75" class="pv-ring-progress pv-ring-blue" style="--progress: 0"></circle>
-                </svg>
-                <div class="pv-ring-inner">
-                  <div class="pv-driver-name">WORK</div>
-                  <div class="pv-time pv-time-blue">28:00</div>
-                  <div class="pv-sublabel">Locked in. Keep it up.</div>
-                </div>
-              </div>
-              <div class="pv-duration-row">
-                <span class="pv-dur-btn">−</span>
-                <span class="pv-dur-val">28 min</span>
-                <span class="pv-dur-btn">+</span>
-              </div>
-              <div class="pv-controls">
-                <button class="pv-ctrl-btn">↺</button>
-                <button class="pv-ctrl-btn pv-ctrl-main pv-ctrl-blue">▶</button>
-                <button class="pv-ctrl-btn">⏭</button>
-              </div>
-              <div class="pv-participants-section">
-                <div class="pv-participants-header">
-                  <span class="pv-participants-label">CYCLE PRESET</span>
-                  <span class="pv-session-tag">Session: NEWSWEB <span class="pv-dot-green">●</span></span>
-                </div>
-                <div class="pv-preset-grid">
-                  <div class="pv-preset">
-                    Pomodoro<br><small>25 / 5</small>
-                  </div>
-                  <div class="pv-preset">
-                    Deep Work<br><small>50 / 10</small>
-                  </div>
-                  <div class="pv-preset">Quick<br><small>15 / 3</small></div>
-                  <div class="pv-preset pv-preset-active">
-                    Custom<br><small>28 / 5</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Settings Preview -->
-          <div class="preview-menubar">
-            <div class="menubar-window pv-settings-panel">
-              <div class="pv-settings-title">Settings</div>
-              <div class="pv-settings-section">
-                <div class="pv-settings-section-title">Mob Timer Session</div>
-                <div class="pv-settings-section-desc">
-                  A shared timer for your whole team. Everyone sees the same
-                  countdown and knows whose turn it is to drive.
-                </div>
-                <div class="pv-connected-row">
-                  <div>
-                    <div class="pv-connected-label">CONNECTED</div>
-                    <div class="pv-connected-name">NEWSWEB</div>
-                  </div>
-                  <div class="pv-connected-actions">
-                    <button class="pv-icon-btn">⎘</button>
-                    <button class="pv-leave-btn">Leave</button>
-                  </div>
-                </div>
-              </div>
-              <div class="pv-settings-section">
-                <div class="pv-settings-section-title">Break Timer Sync</div>
-                <div class="pv-settings-section-desc">
-                  Join a session to sync your break timer with teammates. Break
-                  phases are shared across all participants.
-                </div>
-                <div class="pv-connected-row">
-                  <div>
-                    <div class="pv-connected-label">CONNECTED</div>
-                    <div class="pv-connected-name">NEWSWEB</div>
-                  </div>
-                  <div class="pv-connected-actions">
-                    <button class="pv-icon-btn">⎘</button>
-                    <button class="pv-leave-btn">Leave</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== WHY MOB TIMER ========== -->
-    <section class="why" id="why">
-      <div class="container">
-        <div class="why-grid">
-          <div class="why-content">
-            <div class="section-tag">Why Mob Timer</div>
-            <h2 class="section-title">Timers shouldn't<br>add friction</h2>
-            <p class="why-body">
-              Most timers demand your attention. They fight for screen space,
-              interrupt your flow, and drown you in settings. Mob Timer takes
-              the opposite approach.
-            </p>
-            <p class="why-body">
-              It launches instantly, stays out of the way, and does exactly one
-              job exceptionally well: keeping track of time while you focus on
-              the work that matters.
-            </p>
-            <div class="why-points">
-              <div class="why-point">
-                <div class="why-check">✓</div>
-                <div>
-                  <strong>Native, not Electron</strong>
-                  <p>
-                    Pure SwiftUI. Lightweight, fast, and battery-friendly by
-                    default.
-                  </p>
-                </div>
-              </div>
-              <div class="why-point">
-                <div class="why-check">✓</div>
-                <div>
-                  <strong>No account required</strong>
-                  <p>
-                    Download and run. No sign-ups, no onboarding flows, no
-                    friction.
-                  </p>
-                </div>
-              </div>
-              <div class="why-point">
-                <div class="why-check">✓</div>
-                <div>
-                  <strong>Designed for deep work</strong>
-                  <p>
-                    Every design decision optimizes for minimizing interruptions
-                    and maximizing flow.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="why-compare">
-            <div class="compare-card">
-              <div class="compare-header compare-bad">
-                <span>Other timers</span>
-              </div>
-              <ul class="compare-list">
-                <li class="compare-item bad">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 2l10 10M12 2L2 12" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"></path>
-                  </svg>
-                  Cluttered interfaces
-                </li>
-                <li class="compare-item bad">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 2l10 10M12 2L2 12" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"></path>
-                  </svg>
-                  Web-based (slow)
-                </li>
-                <li class="compare-item bad">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 2l10 10M12 2L2 12" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"></path>
-                  </svg>
-                  Require subscriptions
-                </li>
-                <li class="compare-item bad">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 2l10 10M12 2L2 12" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"></path>
-                  </svg>
-                  No team sync
-                </li>
-                <li class="compare-item bad">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 2l10 10M12 2L2 12" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"></path>
-                  </svg>
-                  Generic, not macOS-native
-                </li>
-              </ul>
-            </div>
-            <div class="compare-card compare-card-good">
-              <div class="compare-header compare-good">
-                <span>Mob Timer</span>
-                <span class="compare-badge">You're here</span>
-              </div>
-              <ul class="compare-list">
-                <li class="compare-item good">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-                  </svg>
-                  Minimal, focused UI
-                </li>
-                <li class="compare-item good">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-                  </svg>
-                  Native SwiftUI app
-                </li>
-                <li class="compare-item good">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-                  </svg>
-                  Free forever
-                </li>
-                <li class="compare-item good">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-                  </svg>
-                  Real-time mob sync
-                </li>
-                <li class="compare-item good">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-                  </svg>
-                  Designed for macOS
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== DOWNLOAD CTA ========== -->
-    <section class="download-cta" id="download">
-      <div class="cta-bg">
-        <div class="cta-glow"></div>
-      </div>
-      <div class="container">
-        <div class="cta-content">
-          <div class="cta-icon">
-            <img src="logo-large.png" alt="Mob Timer" width="72" height="72"
-              style="filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5))">
-          </div>
-          <h2 class="cta-title">Start focusing today.</h2>
-          <p class="cta-subtitle">
-            Free. Native. No sign-up required. Just download and run.
-          </p>
-          <a href="#" id="download-btn" class="btn btn-cta">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M9 1v11M4 8l5 5 5-5M2 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round"></path>
-            </svg>
-            Download Mob Timer for macOS
-          </a>
-          <p class="cta-meta">Requires macOS 13 Ventura or later · Free</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== CONTACT ========== -->
-    <script>
-      // Contact form interaction
-      const contactForm = document.getElementById('contact-form');
-      if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-
-          const submitBtn = contactForm.querySelector('.contact-submit');
-          const submitText = contactForm.querySelector('.contact-submit-text');
-          const successMsg = document.getElementById('contact-success');
-
-          // Disable button and show loading state
-          submitBtn.disabled = true;
-          submitBtn.style.opacity = '0.7';
-          submitText.textContent = 'Sending...';
-
-          // Simulate send delay
-          setTimeout(() => {
-            // Show success
-            successMsg.classList.add('visible');
-            submitText.textContent = 'Send Message';
-            submitBtn.style.opacity = '1';
-            submitBtn.disabled = false;
-
-            // Reset form
-            contactForm.reset();
-
-            // Hide success after 5s
-            setTimeout(() => {
-              successMsg.classList.remove('visible');
-            }, 5000);
-          }, 1500);
-        });
-      }
-    </script>
-    <style>
-      /* =============================================
-   CONTACT SECTION
-   ============================================= */
-
-      .contact-section {
-        padding: 120px 0;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .contact-section::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 800px;
-        height: 600px;
-        background: radial-gradient(ellipse,
-            rgba(64, 140, 255, 0.06) 0%,
-            rgba(99, 102, 241, 0.03) 40%,
-            transparent 70%);
-        filter: blur(60px);
-        pointer-events: none;
-      }
-
-      .contact-layout {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 80px;
-        align-items: start;
-        position: relative;
-        z-index: 1;
-      }
-
-      .contact-info .section-tag {
-        display: inline-block;
-        margin-bottom: 20px;
-      }
-
-      .contact-info .section-title {
-        text-align: left;
-        margin-bottom: 20px;
-      }
-
-      .contact-desc {
-        font-size: 16px;
-        color: var(--text-2);
-        line-height: 1.7;
-        margin-bottom: 40px;
-        max-width: 420px;
-      }
-
-      .contact-details {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .contact-detail-item {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-      }
-
-      .contact-detail-icon {
-        width: 44px;
-        height: 44px;
-        background: rgba(64, 140, 255, 0.1);
-        border: 1px solid rgba(64, 140, 255, 0.2);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--accent);
-        flex-shrink: 0;
-      }
-
-      .contact-detail-item strong {
-        display: block;
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--text);
-        margin-bottom: 2px;
-      }
-
-      .contact-detail-item span {
-        font-size: 13px;
-        color: var(--text-2);
-      }
-
-      /* Form card */
-      .contact-form-wrap {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-lg);
-        padding: 36px;
-        box-shadow: var(--shadow);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .contact-form-wrap::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.03) 0%,
-            transparent 60%);
-        pointer-events: none;
-      }
-
-      .contact-form {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        position: relative;
-      }
-
-      .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-      }
-
-      .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-
-      .form-label {
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--text-2);
-        letter-spacing: -0.01em;
-      }
-
-      .form-input {
-        width: 100%;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        padding: 12px 14px;
-        font-size: 14px;
-        color: var(--text);
-        font-family: var(--font);
-        outline: none;
-        transition: all var(--transition);
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .form-input::placeholder {
-        color: var(--text-3);
-      }
-
-      .form-input:hover {
-        border-color: var(--border-hover);
-        background: rgba(255, 255, 255, 0.06);
-      }
-
-      .form-input:focus {
-        border-color: var(--accent);
-        background: rgba(64, 140, 255, 0.04);
-        box-shadow: 0 0 0 3px rgba(64, 140, 255, 0.1);
-      }
-
-      .form-textarea {
-        resize: vertical;
-        min-height: 120px;
-        line-height: 1.6;
-      }
-
-      .contact-submit {
-        align-self: flex-start;
-        margin-top: 4px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .contact-submit-icon {
-        transition: transform var(--transition);
-      }
-
-      .contact-submit:hover .contact-submit-icon {
-        transform: translate(2px, -2px);
-      }
-
-      /* Success message */
-      .contact-success {
-        display: none;
-        align-items: center;
-        gap: 10px;
-        padding: 14px 18px;
-        background: rgba(74, 222, 128, 0.08);
-        border: 1px solid rgba(74, 222, 128, 0.2);
-        border-radius: var(--radius-sm);
-        font-size: 14px;
-        font-weight: 500;
-        color: var(--accent-green);
-        animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-      }
-
-      .contact-success.visible {
-        display: flex;
-      }
-
-      /* Responsive */
-      @media (max-width: 900px) {
-        .contact-layout {
-          grid-template-columns: 1fr;
-          gap: 48px;
-        }
-
-        .contact-info .section-title {
-          text-align: center;
-        }
-
-        .contact-info .section-tag {
-          display: block;
-          text-align: center;
-        }
-
-        .contact-desc {
-          text-align: center;
-          margin: 0 auto 40px;
-        }
-
-        .contact-details {
-          align-items: center;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .form-row {
-          grid-template-columns: 1fr;
-        }
-
-        .contact-form-wrap {
-          padding: 24px;
-        }
-
-        .contact-submit {
-          width: 100%;
-          justify-content: center;
-        }
-      }
-    </style>
-    <section id="contact" class="contact-section">
-      <div class="container">
-        <div class="contact-layout">
-          <div class="contact-info">
-            <span class="section-tag">Get in Touch</span>
-            <h2 class="section-title">Let's start a<br><span class="gradient-text">conversation</span></h2>
-            <p class="contact-desc">Have a question, feedback, or just want to say hello? We'd love to hear from you.
-              Fill out the form and we'll get back to you shortly.</p>
-            <div class="contact-details">
-              <div class="contact-detail-item">
-                <div class="contact-detail-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                  </svg>
-                </div>
-                <div>
-                  <strong>Email us</strong>
-                  <span>hello@mobtimer.app</span>
-                </div>
-              </div>
-              <div class="contact-detail-item">
-                <div class="contact-detail-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
-                    <circle cx="12" cy="9" r="2.5"></circle>
-                  </svg>
-                </div>
-                <div>
-                  <strong>Based in</strong>
-                  <span>San Francisco, CA</span>
-                </div>
-              </div>
-              <div class="contact-detail-item">
-                <div class="contact-detail-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
-                </div>
-                <div>
-                  <strong>Response time</strong>
-                  <span>Within 24 hours</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="contact-form-wrap">
-            <form id="contact-form" class="contact-form" onsubmit="return false;">
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label" for="contact-name">Name</label>
-                  <input class="form-input" type="text" id="contact-name" placeholder="Your name" required="">
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="contact-email">Email</label>
-                  <input class="form-input" type="email" id="contact-email" placeholder="you@example.com" required="">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="contact-subject">Subject</label>
-                <input class="form-input" type="text" id="contact-subject" placeholder="What's this about?">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="contact-message">Message</label>
-                <textarea class="form-input form-textarea" id="contact-message" rows="5" placeholder="Tell us more..."
-                  required=""></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary btn-lg contact-submit">
-                <span class="contact-submit-text">Send Message</span>
-                <svg class="contact-submit-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="22" y1="2" x2="11" y2="13"></line>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-              </button>
-              <div id="contact-success" class="contact-success">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Message sent! We'll get back to you soon.</span>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== FOOTER ========== -->
+    <!-- Footer -->
     <footer class="footer">
-      <div class="container">
-        <div class="footer-inner">
-          <div class="footer-brand">
-            <img src="logo.png" alt="Mob Timer" width="24" height="24" style="border-radius: 6px; flex-shrink: 0">
-            <span class="footer-name">Mob Timer</span>
-          </div>
-          <p class="footer-copy">
-            © 2026 Mob Timer. Built with ♥ for focused teams.
-          </p>
-          <div class="footer-links">
-            <a href="#">Privacy</a>
-            <a href="#">GitHub</a>
-            <a href="#">Support</a>
-          </div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" rx="8" fill="url(#footer-logo-gradient)"/>
+                            <path d="M16 7V16L22 19" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <defs>
+                                <linearGradient id="footer-logo-gradient" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#6366f1"/>
+                                    <stop offset="1" stop-color="#a855f7"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        Mob Timer
+                    </a>
+                    <p class="footer-tagline">
+                        A minimal, distraction-free timer for macOS. Focus on what matters.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#how-it-works">How It Works</a></li>
+                            <li><a href="#preview">Preview</a></li>
+                            <li><a href="#download">Download</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Connect</h4>
+                        <ul>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    © 2024 Mob Timer. All rights reserved.
+                </p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Twitter">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                            <rect x="2" y="9" width="4" height="12"/>
+                            <circle cx="4" cy="4" r="2"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
     </footer>
 
-    <!-- Password modal -->
-    <div id="download-modal" class="dl-modal-overlay">
-      <div class="dl-modal-box">
-        <h3 class="dl-modal-title">Enter password to download</h3>
-        <input id="dl-password" class="dl-modal-input" type="password" placeholder="Password" autocomplete="off">
-        <p id="dl-error" class="dl-modal-error">Incorrect password</p>
-        <div class="dl-modal-actions">
-          <button id="dl-cancel" class="dl-btn-cancel">Cancel</button>
-          <button id="dl-confirm" class="dl-btn-confirm">Download</button>
-        </div>
-      </div>
-    </div>
+    <script>
+        // ============================================
+        // JavaScript - Interactions & Animations
+        // ============================================
 
-    <script src="main.js"></script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation scroll effect
+            const nav = document.getElementById('nav');
+            let lastScroll = 0;
 
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+                
+                lastScroll = currentScroll;
+            });
 
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offsetTop = target.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
 
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
 
-  </body>
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in-up');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.feature-card, .step-card, .preview-item').forEach(el => {
+                el.style.opacity = '0';
+                observer.observe(el);
+            });
+
+            // Button ripple effect
+            document.querySelectorAll('.btn-primary').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        background: rgba(255, 255, 255, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                        left: ${x}px;
+                        top: ${y}px;
+                        width: 100px;
+                        height: 100px;
+                        margin-left: -50px;
+                        margin-top: -50px;
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+
+            // Add ripple animation styles
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Timer functionality simulation
+            const timerDisplay = document.querySelector('.timer-display');
+            if (timerDisplay) {
+                let time = 25 * 60; // 25 minutes in seconds
+                let isRunning = false;
+                let interval;
+
+                const updateDisplay = () => {
+                    const minutes = Math.floor(time / 60);
+                    const seconds = time % 60;
+                    timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                };
+
+                const playButton = document.querySelector('.mockup-controls button:first-child');
+                if (playButton) {
+                    playButton.addEventListener('click', function() {
+                        if (!isRunning) {
+                            isRunning = true;
+                            interval = setInterval(() => {
+                                if (time > 0) {
+                                    time--;
+                                    updateDisplay();
+                                } else {
+                                    clearInterval(interval);
+                                    isRunning = false;
+                                }
+                            }, 1000);
+                        } else {
+                            clearInterval(interval);
+                            isRunning = false;
+                        }
+                    });
+                }
+            }
+
+            // Parallax effect on hero gradients
+            document.addEventListener('mousemove', function(e) {
+                const gradients = document.querySelectorAll('.hero-gradient');
+                const x = (e.clientX - window.innerWidth / 2) / window.innerWidth;
+                const y = (e.clientY - window.innerHeight / 2) / window.innerHeight;
+                
+                gradients.forEach((gradient, index) => {
+                    const speed = (index + 1) * 20;
+                    gradient.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+                });
+            });
+        });
+    </script>
+</body>
 </html>
