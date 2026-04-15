@@ -1229,6 +1229,831 @@
     </style>
 </head>
 <body>
+<style>/* ===== KLAR HERO SECTION ===== */
+
+#klar-hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 140px 24px 60px;
+  overflow: hidden;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#klar-hero-bg-gradients {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#klar-hero-glow-tr {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: -200px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, rgba(251, 146, 60, 0.06) 40%, transparent 70%);
+  filter: blur(80px);
+  animation: klar-hero-glow-1 10s ease-in-out infinite;
+}
+
+#klar-hero-glow-br {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  bottom: -150px;
+  right: -50px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.10) 0%, rgba(192, 132, 252, 0.05) 40%, transparent 70%);
+  filter: blur(80px);
+  animation: klar-hero-glow-2 12s ease-in-out infinite;
+}
+
+#klar-hero-glow-bl {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  bottom: -100px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.08) 0%, rgba(251, 146, 60, 0.04) 40%, transparent 70%);
+  filter: blur(60px);
+  animation: klar-hero-glow-1 14s ease-in-out infinite reverse;
+}
+
+@keyframes klar-hero-glow-1 {
+  0%, 100% { transform: scale(1) translateY(0); opacity: 0.7; }
+  50% { transform: scale(1.15) translateY(-20px); opacity: 1; }
+}
+
+@keyframes klar-hero-glow-2 {
+  0%, 100% { transform: scale(1) translateX(0); opacity: 0.6; }
+  50% { transform: scale(1.1) translateX(15px); opacity: 1; }
+}
+
+.klar-hero-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* ===== PILL BADGE ===== */
+#klar-hero-pill {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8888a4;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 7px 18px;
+  border-radius: 50px;
+  margin-bottom: 28px;
+}
+
+/* ===== HEADING ===== */
+#klar-hero-heading {
+  font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #f0f2ff;
+  text-align: center;
+  margin: 0 0 20px;
+  letter-spacing: -0.03em;
+}
+
+/* ===== SUBTITLE ===== */
+#klar-hero-subtitle {
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.45);
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto 32px;
+}
+
+/* ===== CTA BUTTON ===== */
+#klar-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 36px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f0f2ff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    0 0 0 0 rgba(255, 255, 255, 0);
+  transition: all 0.3s ease;
+  margin-bottom: 56px;
+}
+
+#klar-hero-cta:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.3),
+    0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+
+/* ===== MOCKUP WINDOW ===== */
+#klar-hero-mockup {
+  width: 100%;
+  max-width: 1050px;
+  background: rgba(20, 22, 35, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 40px 80px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+#klar-mockup-chrome {
+  display: flex;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+#klar-mockup-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.klar-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.klar-dot-red { background: #ff5f57; }
+.klar-dot-yellow { background: #febc2e; }
+.klar-dot-green { background: #28c840; }
+
+#klar-mockup-body {
+  display: flex;
+  min-height: 420px;
+}
+
+/* ===== SIDEBAR ===== */
+#klar-mockup-sidebar {
+  display: flex;
+  width: 220px;
+  min-width: 220px;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+#klar-sidebar-icon-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 8px;
+  gap: 10px;
+}
+
+#klar-sidebar-icon {
+  width: 28px;
+  height: 28px;
+  background: #1a1a2e;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 800;
+  color: #818cf8;
+}
+
+.klar-sidebar-icon-row {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+#klar-sidebar-plus {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: rgba(148, 163, 184, 0.6);
+}
+
+#klar-sidebar-content {
+  flex: 1;
+  padding: 12px 0;
+  overflow: hidden;
+}
+
+#klar-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #c4c4d8;
+}
+
+#klar-sidebar-header span:last-child {
+  font-size: 10px;
+  color: rgba(148, 163, 184, 0.4);
+}
+
+.klar-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.65);
+  cursor: default;
+  transition: background 0.15s;
+}
+
+.klar-sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.klar-sidebar-item-new {
+  color: rgba(148, 163, 184, 0.8);
+}
+
+#klar-badge-new {
+  font-size: 9px;
+  font-weight: 700;
+  color: #a78bfa;
+  background: rgba(129, 92, 247, 0.15);
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-left: auto;
+  letter-spacing: 0.05em;
+}
+
+.klar-sidebar-count {
+  margin-left: auto;
+  font-size: 10px;
+  color: rgba(100, 116, 139, 0.4);
+  font-weight: 500;
+  min-width: 12px;
+  text-align: right;
+}
+
+#klar-sidebar-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.05);
+  margin: 8px 14px;
+}
+
+.klar-sidebar-section-label {
+  padding: 4px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.4);
+  letter-spacing: 0.02em;
+}
+
+.klar-sidebar-user {
+  color: rgba(148, 163, 184, 0.75);
+}
+
+.klar-sidebar-channel {
+  color: rgba(148, 163, 184, 0.55);
+}
+
+.klar-avatar-small {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.klar-icon-magic {
+  font-size: 10px;
+  color: #a78bfa;
+}
+
+.klar-channel-fire {
+  font-size: 11px;
+}
+
+/* ===== CHAT AREA ===== */
+#klar-mockup-chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#klar-chat-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 13px;
+  font-weight: 500;
+  color: #8888a4;
+}
+
+.klar-chat-header-hash {
+  color: rgba(100, 116, 139, 0.4);
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.klar-header-icon {
+  cursor: default;
+}
+
+#klar-chat-messages {
+  flex: 1;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.klar-message {
+  display: flex;
+  gap: 10px;
+}
+
+.klar-message-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.klar-message-avatar-large {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.klar-message-body {
+  flex: 1;
+}
+
+#klar-msg-1-text {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(148, 163, 184, 0.75);
+  margin: 0 0 6px;
+}
+
+.klar-mention {
+  font-size: 12px;
+  color: #60a5fa;
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+.klar-reactions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.klar-reaction {
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 2px 8px;
+  cursor: default;
+  transition: background 0.15s;
+}
+
+.klar-reaction:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.klar-reaction small {
+  color: rgba(148, 163, 184, 0.5);
+  margin-left: 2px;
+}
+
+/* Second message */
+.klar-sender-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+#klar-msg-2-text {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(148, 163, 184, 0.75);
+  margin: 4px 0 2px;
+}
+
+#klar-embed-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  margin-top: 10px;
+  width: fit-content;
+}
+
+#klar-embed-btn {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8888a4;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: default;
+  white-space: nowrap;
+}
+
+/* ===== INFO PANEL ===== */
+#klar-mockup-info {
+  width: 230px;
+  min-width: 230px;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#klar-info-tabs {
+  display: flex;
+  padding: 12px 14px 0;
+  gap: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.klar-info-tab {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(100, 116, 139, 0.45);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: default;
+  transition: all 0.15s;
+}
+
+.klar-info-tab-active {
+  background: rgba(255, 255, 255, 0.06);
+  color: #c4c4d8;
+}
+
+#klar-info-content {
+  padding: 14px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+#klar-info-main-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: rgba(100, 116, 139, 0.35);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  margin-top: 12px;
+}
+
+#klar-info-main-label:first-child {
+  margin-top: 0;
+}
+
+.klar-info-row {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.55);
+  gap: 4px;
+}
+
+.klar-info-label {
+  font-size: 11px;
+  color: rgba(100, 116, 139, 0.45);
+  min-width: fit-content;
+}
+
+#klar-info-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #4ade80;
+  font-size: 11px;
+}
+
+#klar-status-dot {
+  color: #4ade80;
+  font-size: 14px;
+  line-height: 1;
+}
+
+#klar-info-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.05);
+  margin: 10px 0;
+}
+
+#klar-activity-dots {
+  display: flex;
+  gap: 3px;
+  margin-top: 8px;
+}
+
+.klar-act-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 960px) {
+  #klar-mockup-body {
+    flex-direction: column;
+  }
+
+  #klar-mockup-sidebar {
+    width: 100%;
+    min-width: unset;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    max-height: 120px;
+  }
+
+  #klar-sidebar-icon-wrap {
+    flex-direction: row;
+    padding: 8px 12px;
+  }
+
+  #klar-sidebar-content {
+    display: none;
+  }
+
+  #klar-mockup-info {
+    width: 100%;
+    min-width: unset;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  #klar-hero-mockup {
+    max-height: 70vh;
+  }
+}
+
+@media (max-width: 640px) {
+  #klar-hero-section {
+    padding: 120px 16px 40px;
+  }
+
+  #klar-hero-heading {
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+  }
+
+  #klar-hero-cta {
+    padding: 12px 28px;
+    font-size: 0.95rem;
+  }
+
+  #klar-mockup-body {
+    min-height: 320px;
+  }
+}</style>
+<!-- Klar Hero Section -->
+<section id="klar-hero-section">
+  <div id="klar-hero-bg-gradients">
+    <div id="klar-hero-glow-tr"></div>
+    <div id="klar-hero-glow-br"></div>
+    <div id="klar-hero-glow-bl"></div>
+  </div>
+
+  <div class="klar-hero-container">
+    <!-- Top Badge Pill -->
+    <span id="klar-hero-pill">POWER SMARTER CONVERSATIONS</span>
+
+    <!-- Main Heading -->
+    <h1 id="klar-hero-heading">Build Stronger Relationships,<br>One Message at a Time</h1>
+
+    <!-- Subtitle -->
+    <p id="klar-hero-subtitle">Bridge the gap between support and service with conversations that build loyalty from day one.</p>
+
+    <!-- CTA Button -->
+    <a href="#download" id="klar-hero-cta">Get Started</a>
+
+    <!-- App Mockup Window -->
+    <div id="klar-hero-mockup">
+      <div id="klar-mockup-chrome">
+        <div id="klar-mockup-dots">
+          <span class="klar-dot klar-dot-red"></span>
+          <span class="klar-dot klar-dot-yellow"></span>
+          <span class="klar-dot klar-dot-green"></span>
+        </div>
+      </div>
+      <div id="klar-mockup-body">
+        <!-- Left Sidebar -->
+        <div id="klar-mockup-sidebar">
+          <div id="klar-sidebar-icon-wrap">
+            <div id="klar-sidebar-icon"></div>
+            <div class="klar-sidebar-icon-row" style="margin-top:8px"></div>
+            <div class="klar-sidebar-icon-row"></div>
+            <div id="klar-sidebar-plus">+</div>
+          </div>
+          <div id="klar-sidebar-content">
+            <div id="klar-sidebar-header">
+              <span>Team Name</span>
+              <span>▾</span>
+            </div>
+            <div class="klar-sidebar-item klar-sidebar-item-new">
+              <span class="klar-icon-magic">✦</span><span>Assistant</span><span id="klar-badge-new">NEW</span>
+            </div>
+            <div class="klar-sidebar-item"><span>📄</span><span>Drafts</span></div>
+            <div class="klar-sidebar-item"><span>💾</span><span>Saved items</span></div>
+            <div class="klar-sidebar-item">
+              <span>📥</span><span>Inbox</span><span class="klar-sidebar-count">8</span>
+            </div>
+            <div class="klar-sidebar-item">
+              <span>💬</span><span>Direct messages</span><span class="klar-sidebar-count">1</span>
+            </div>
+            <div id="klar-sidebar-divider"></div>
+            <div class="klar-sidebar-section-label" style="display:flex;justify-content:space-between;align-items:center">
+              <span>Favorites</span><span>▾</span>
+            </div>
+            <div class="klar-sidebar-item klar-sidebar-user">
+              <span class="klar-avatar-small" style="background:linear-gradient(135deg,#c084fc,#f472b6)"></span>
+              <span>Sophia Wilson</span><span class="klar-sidebar-count">2</span>
+            </div>
+            <div class="klar-sidebar-item klar-sidebar-channel">
+              <span>#</span><span>Front-end</span><span class="klar-sidebar-count">4</span>
+            </div>
+            <div id="klar-sidebar-divider"></div>
+            <div class="klar-sidebar-section-label" style="display:flex;justify-content:space-between;align-items:center">
+              <span>Channels</span><span style="font-size:12px;color:rgba(148,163,184,0.4)+,">+</span>
+            </div>
+            <div class="klar-sidebar-item klar-sidebar-channel">
+              <span class="klar-channel-fire">🔥</span><span>General</span><span class="klar-sidebar-count">1</span>
+            </div>
+            <div class="klar-sidebar-item klar-sidebar-channel">
+              <span>#</span><span>Front-end</span><span class="klar-sidebar-count">4</span>
+            </div>
+            <div class="klar-sidebar-item klar-sidebar-channel">
+              <span></span><span>Website</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center Chat Area -->
+        <div id="klar-mockup-chat">
+          <div id="klar-chat-header">
+            <span class="klar-chat-header-hash">#</span>
+            <span>Website</span>
+            <span style="color:rgba(100,116,139,0.4);margin:0 4px">/</span>
+            <span>v3.0</span>
+            <span style="color:rgba(100,116,139,0.4);margin:0 4px">/</span>
+            <span>UI-kit design</span>
+            <span class="klar-header-icon" style="margin-left:auto;color:rgba(100,116,139,0.4)">ℹ</span>
+          </div>
+          <div id="klar-chat-messages">
+            <!-- First message -->
+            <div class="klar-message">
+              <div id="klar-msg-1-avatars">
+                <span class="klar-message-avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)"></span>
+              </div>
+              <div class="klar-message-body">
+                <p id="klar-msg-1-text">Hey team, I wanted to discuss the custom UI-kit we're developing for the site redesign. We need to finalize some components and make key design decisions to ensure consistency across the board. Let's make sure we cover colors, typography, buttons, and any other essential UI elements.</p>
+                <span class="klar-mention">@UX/UI @Sophia</span>
+                <div class="klar-reactions">
+                  <span class="klar-reaction">👍 <small>2</small></span>
+                  <span class="klar-reaction">😊</span>
+                </div>
+              </div>
+            </div>
+            <!-- Second message -->
+            <div class="klar-message">
+              <span class="klar-message-avatar-large" style="background:linear-gradient(135deg,#22c55e,#16a34a)"></span>
+              <div class="klar-message-body">
+                <div class="klar-sender-row">
+                  <strong style="color:#c4c4d8">Diana T.</strong>
+                  <span style="color:rgba(100,116,139,0.5);font-size:11px;margin-left:6px">2d ago</span>
+                </div>
+                <p id="klar-msg-2-text">I have already prepared all style components according to our standards during the design phase, so the UI kit is 80% complete. All that remains is to add some polish to the interactive elements and ensure the Lottie files for animations.</p>
+                <span class="klar-mention">@Emily D.</span>
+                <span style="color:rgba(100,116,139,0.5);font-size:12px">please take a look and let me know if you have any questions.</span>
+                <!-- Embedded preview card -->
+                <div id="klar-embed-card">
+                  <div style="width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);flex-shrink:0"></div>
+                  <div style="flex:1">
+                    <span style="font-size:12px;color:#c4c4d8;font-weight:500">Conseptzilla Website #3.0</span><br>
+                    <span style="font-size:10px;color:rgba(100,116,139,0.5)">www.figma.com</span>
+                  </div>
+                  <span id="klar-embed-btn">Quick view</span>
+                </div>
+                <div class="klar-reactions">
+                  <span class="klar-reaction">❤️</span>
+                  <span class="klar-reaction">😊</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Info Panel -->
+        <div id="klar-mockup-info">
+          <div id="klar-info-tabs">
+            <span class="klar-info-tab klar-info-tab-active">Info</span>
+            <span class="klar-info-tab">Files</span>
+            <span class="klar-info-tab">Links</span>
+          </div>
+          <div id="klar-info-content">
+            <div id="klar-info-main-label">Main info</div>
+            <div class="klar-info-row">
+              <span class="klar-info-label">👤 Creator</span>
+              <span style="color:#8888a4">Andrew M</span>
+            </div>
+            <div class="klar-info-row">
+              <span class="klar-info-label">📅 Date of creation</span>
+              <span style="color:#8888a4">28 May</span>
+            </div>
+            <div class="klar-info-row">
+              <span class="klar-info-label">✦ Status</span>
+              <span id="klar-info-status">
+                <span id="klar-status-dot">•</span> Active
+              </span>
+            </div>
+            <div class="klar-info-row">
+              <span class="klar-info-label">🔖 Tags</span>
+              <span style="color:#8888a4">13 ›</span>
+            </div>
+            <div class="klar-info-row">
+              <span class="klar-info-label">⊙ Tasks</span>
+              <span style="color:#8888a4">4 ›</span>
+            </div>
+            <div id="klar-info-divider"></div>
+            <div id="klar-info-main-label">Linked threads</div>
+            <div class="klar-info-row">
+              <span>#</span>
+              <span style="color:#8888a4">Front-end</span>
+              <span style="color:rgba(100,116,139,0.4);font-size:11px;margin-left:auto">4</span>
+            </div>
+            <div class="klar-info-row">
+              <span>#</span>
+              <span style="color:#8888a4">UI-kit design standards</span>
+              <span style="color:rgba(100,116,139,0.4);font-size:11px;margin-left:auto">7</span>
+            </div>
+            <div id="klar-info-divider"></div>
+            <div id="klar-info-main-label">Thread activity</div>
+            <div id="klar-activity-dots">
+              <span class="klar-act-dot" style="background:#818cf8"></span>
+              <span class="klar-act-dot" style="background:#818cf8"></span>
+              <span class="klar-act-dot" style="background:#818cf8"></span>
+              <span class="klar-act-dot" style="background:rgba(129,140,248,0.6)"></span>
+              <span class="klar-act-dot" style="background:rgba(129,140,248,0.4)"></span>
+              <span class="klar-act-dot" style="background:rgba(129,140,248,0.4)"></span>
+              <span class="klar-act-dot" style="background:rgba(129,140,248,0.3)"></span>
+              <span class="klar-act-dot" style="background:rgba(129,140,248,0.2)"></span>
+              <span class="klar-act-dot" style="background:rgba(129,140,248,0.2)"></span>
+              <span class="klar-act-dot" style="background:rgba(129,140,248,0.15)"></span>
+              <span class="klar-act-dot" style="background:rgba(129,140,248,0.1)"></span>
+              <span class="klar-act-dot" style="background:rgba(129,140,248,0.1)"></span>
+              <span class="klar-act-dot" style="background:rgba(129,140,248,0.1)"></span>
+              <span class="klar-act-dot" style="background:rgba(129,140,248,0.08)"></span>
+              <span class="klar-act-dot" style="background:rgba(129,140,248,0.06)"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
     <!-- Navigation -->
     <nav class="nav" id="nav">
         <div class="container">
