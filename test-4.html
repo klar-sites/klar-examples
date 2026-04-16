@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexova — Strategic Digital Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --nexova-primary: #4F46E5;
+            --nexova-primary-dark: #3730A3;
+            --nexova-primary-light: #818CF8;
+            --nexova-accent: #06B6D4;
+            --nexova-dark: #0F172A;
+            --nexova-dark-mid: #1E293B;
+            --nexova-dark-light: #334155;
+            --nexova-gray-100: #F1F5F9;
+            --nexova-gray-200: #E2E8F0;
+            --nexova-gray-300: #CBD5E1;
+            --nexova-gray-400: #94A3B8;
+            --nexova-gray-500: #64748B;
+            --nexova-gray-600: #475569;
+            --nexova-white: #FFFFFF;
+            --nexova-font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --nexova-transition: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--nexova-font);
+            color: var(--nexova-dark);
+            background: var(--nexova-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ========== NAVIGATION ========== */
+        .nexova-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.25rem 0;
+            transition: all 0.4s var(--nexova-transition);
+            background: transparent;
+        }
+
+        .nexova-navbar.nexova-navbar--scrolled {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 0.75rem 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .nexova-navbar__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nexova-navbar__logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--nexova-white);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nexova-navbar__logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--nexova-primary), var(--nexova-accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .nexova-navbar__links {
+            display: flex;
+            align-items: center;
+            gap: 2.25rem;
+            list-style: none;
+        }
+
+        .nexova-navbar__links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 0.925rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nexova-navbar__links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--nexova-primary-light);
+            transition: width 0.3s var(--nexova-transition);
+        }
+
+        .nexova-navbar__links a:hover {
+            color: var(--nexova-white);
+        }
+
+        .nexova-navbar__links a:hover::after {
+            width: 100%;
+        }
+
+        .nexova-navbar__cta {
+            background: var(--nexova-primary);
+            color: var(--nexova-white) !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600 !important;
+            transition: background 0.3s, transform 0.2s !important;
+        }
+
+        .nexova-navbar__cta::after {
+            display: none !important;
+        }
+
+        .nexova-navbar__cta:hover {
+            background: var(--nexova-primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .nexova-navbar__hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .nexova-navbar__hamburger span {
+            width: 26px;
+            height: 2.5px;
+            background: var(--nexova-white);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        /* ========== HERO SECTION ========== */
+        .nexova-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--nexova-dark);
+        }
+
+        .nexova-hero__bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .nexova-hero__gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+        }
+
+        .nexova-hero__gradient-orb--1 {
+            width: 600px;
+            height: 600px;
+            background: var(--nexova-primary);
+            top: -15%;
+            right: -10%;
+        }
+
+        .nexova-hero__gradient-orb--2 {
+            width: 500px;
+            height: 500px;
+            background: var(--nexova-accent);
+            bottom: -20%;
+            left: -10%;
+        }
+
+        .nexova-hero__gradient-orb--3 {
+            width: 300px;
+            height: 300px;
+            background: #A855F7;
+            top: 50%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+        }
+
+        .nexova-hero__pattern {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .nexova-hero__content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 820px;
+            padding: 0 2rem;
+        }
+
+        .nexova-hero__badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(79, 70, 229, 0.15);
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            color: var(--nexova-primary-light);
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            animation: nexovaFadeInDown 0.8s var(--nexova-transition) both;
+        }
+
+        .nexova-hero__badge i {
+            font-size: 0.75rem;
+        }
+
+        .nexova-hero__title {
+            font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+            font-weight: 800;
+            color: var(--nexova-white);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1.5px;
+            animation: nexovaFadeInDown 0.8s 0.15s var(--nexova-transition) both;
+        }
+
+        .nexova-hero__title-highlight {
+            background: linear-gradient(135deg, var(--nexova-primary-light), var(--nexova-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nexova-hero__subtitle {
+            font-size: 1.2rem;
+            color: var(--nexova-gray-400);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+            animation: nexovaFadeInDown 0.8s 0.3s var(--nexova-transition) both;
+        }
+
+        .nexova-hero__actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: nexovaFadeInDown 0.8s 0.45s var(--nexova-transition) both;
+        }
+
+        .nexova-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--nexova-primary);
+            color: var(--nexova-white);
+            padding: 0.95rem 2.25rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s var(--nexova-transition);
+            box-shadow: 0 4px 25px rgba(79, 70, 229, 0.4);
+        }
+
+        .nexova-btn-primary:hover {
+            background: var(--nexova-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 35px rgba(79, 70, 229, 0.5);
+        }
+
+        .nexova-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--nexova-white);
+            padding: 0.95rem 2.25rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            cursor: pointer;
+            transition: all 0.3s var(--nexova-transition);
+        }
+
+        .nexova-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .nexova-btn-secondary .nexova-play-icon {
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+        }
+
+        /* ========== TRUST STRIP ========== */
+        .nexova-trust {
+            padding: 4rem 0;
+            background: var(--nexova-gray-100);
+            border-top: 1px solid var(--nexova-gray-200);
+        }
+
+        .nexova-trust__label {
+            text-align: center;
+            font-size: 0.825rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--nexova-gray-400);
+            margin-bottom: 2.5rem;
+        }
+
+        .nexova-trust__logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3.5rem;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nexova-trust__logo-item {
+            opacity: 0.3;
+            transition: opacity 0.3s;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--nexova-gray-500);
+            letter-spacing: -0.5px;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            filter: grayscale(100%);
+        }
+
+        .nexova-trust__logo-item:hover {
+            opacity: 0.55;
+        }
+
+        .nexova-trust__logo-item i {
+            font-size: 1.4rem;
+        }
+
+        /* ========== SERVICES TABS ========== */
+        .nexova-services {
+            padding: 7rem 0;
+            background: var(--nexova-white);
+        }
+
+        .nexova-section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nexova-section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .nexova-section-tag {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--nexova-primary);
+            margin-bottom: 1rem;
+        }
+
+        .nexova-section-title {
+            font-size: clamp(2rem, 3.5vw, 2.75rem);
+            font-weight: 800;
+            color: var(--nexova-dark);
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+
+        .nexova-section-desc {
+            font-size: 1.1rem;
+            color: var(--nexova-gray-500);
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .nexova-tabs__nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .nexova-tabs__btn {
+            padding: 0.85rem 1.75rem;
+            border: 2px solid var(--nexova-gray-200);
+            background: var(--nexova-white);
+            color: var(--nexova-gray-500);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s var(--nexova-transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nexova-tabs__btn:hover {
+            border-color: var(--nexova-primary-light);
+            color: var(--nexova-primary);
+        }
+
+        .nexova-tabs__btn.nexova-tabs__btn--active {
+            background: var(--nexova-primary);
+            border-color: var(--nexova-primary);
+            color: var(--nexova-white);
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .nexova-tabs__content-wrapper {
+            position: relative;
+            min-height: 320px;
+        }
+
+        .nexova-tabs__panel {
+            display: none;
+            animation: nexovaTabFadeIn 0.5s var(--nexova-transition) both;
+        }
+
+        .nexova-tabs__panel.nexova-tabs__panel--active {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .nexova-tabs__panel-text h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--nexova-dark);
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .nexova-tabs__panel-text p {
+            color: var(--nexova-gray-500);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .nexova-tabs__features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .nexova-tabs__features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--nexova-gray-600);
+            font-weight: 500;
+        }
+
+        .nexova-tabs__features li i {
+            color: var(--nexova-primary);
+            font-size: 0.8rem;
+            width: 22px;
+            height: 22px;
+            background: rgba(79, 70, 229, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .nexova-tabs__panel-visual {
+            background: linear-gradient(135deg, var(--nexova-gray-100), rgba(79, 70, 229, 0.05));
+            border-radius: 20px;
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 320px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nexova-tabs__panel-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(var(--nexova-gray-300) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+
+        .nexova-tabs__visual-icon {
+            position: relative;
+            font-size: 5rem;
+            color: var(--nexova-primary);
+            opacity: 0.2;
+        }
+
+        .nexova-tabs__visual-card {
+            position: relative;
+            background: var(--nexova-white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .nexova-tabs__visual-card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--nexova-primary), var(--nexova-primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .nexova-tabs__visual-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--nexova-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .nexova-tabs__visual-card p {
+            font-size: 0.85rem;
+            color: var(--nexova-gray-400);
+            line-height: 1.6;
+        }
+
+        .nexova-tabs__visual-bar {
+            height: 6px;
+            background: var(--nexova-gray-200);
+            border-radius: 3px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .nexova-tabs__visual-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--nexova-primary), var(--nexova-accent));
+            width: 0;
+            animation: nexovaBarFill 1.5s 0.3s var(--nexova-transition) forwards;
+        }
+
+        /* ========== STATS / COUNTERS ========== */
+        .nexova-stats {
+            padding: 6rem 0;
+            background: var(--nexova-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nexova-stats__bg-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .nexova-stats__orb {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+        }
+
+        .nexova-stats__orb--left {
+            background: var(--nexova-primary);
+            left: -200px;
+            top: -100px;
+        }
+
+        .nexova-stats__orb--right {
+            background: var(--nexova-accent);
+            right: -200px;
+            bottom: -100px;
+        }
+
+        .nexova-stats__grid {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .nexova-stats__card {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s var(--nexova-transition);
+        }
+
+        .nexova-stats__card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-4px);
+        }
+
+        .nexova-stats__card-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 1.25rem;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .nexova-stats__card:nth-child(1) .nexova-stats__card-icon {
+            background: rgba(79, 70, 229, 0.15);
+            color: var(--nexova-primary-light);
+        }
+        .nexova-stats__card:nth-child(2) .nexova-stats__card-icon {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--nexova-accent);
+        }
+        .nexova-stats__card:nth-child(3) .nexova-stats__card-icon {
+            background: rgba(168, 85, 247, 0.15);
+            color: #A855F7;
+        }
+        .nexova-stats__card:nth-child(4) .nexova-stats__card-icon {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22C55E;
+        }
+
+        .nexova-stats__number {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--nexova-white);
+            letter-spacing: -1px;
+            margin-bottom: 0.25rem;
+        }
+
+        .nexova-stats__label {
+            font-size: 0.95rem;
+            color: var(--nexova-gray-400);
+            font-weight: 500;
+        }
+
+        /* ========== TEAM SLIDER ========== */
+        .nexova-team {
+            padding: 7rem 0;
+            background: var(--nexova-gray-100);
+        }
+
+        .nexova-team__slider-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            overflow: hidden;
+        }
+
+        .nexova-team__slider-track {
+            display: flex;
+            gap: 2rem;
+            transition: transform 0.5s var(--nexova-transition);
+        }
+
+        .nexova-team__card {
+            min-width: calc(25% - 1.5rem);
+            background: var(--nexova-white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s var(--nexova-transition);
+            border: 1px solid var(--nexova-gray-200);
+        }
+
+        .nexova-team__card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .nexova-team__card-img {
+            width: 100%;
+            height: 260px;
+            background: linear-gradient(135deg, var(--nexova-dark-mid), var(--nexova-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nexova-team__card-img::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 15px 15px;
+        }
+
+        .nexova-team__card-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--nexova-primary), var(--nexova-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.25rem;
+            color: var(--nexova-white);
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nexova-team__card-body {
+            padding: 1.75rem;
+            text-align: center;
+        }
+
+        .nexova-team__card-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--nexova-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .nexova-team__card-role {
+            font-size: 0.875rem;
+            color: var(--nexova-primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .nexova-team__card-bio {
+            font-size: 0.85rem;
+            color: var(--nexova-gray-500);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .nexova-team__card-linkedin {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(79, 70, 229, 0.08);
+            color: var(--nexova-primary);
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nexova-team__card-linkedin:hover {
+            background: var(--nexova-primary);
+            color: var(--nexova-white);
+            transform: scale(1.05);
+        }
+
+        .nexova-team__slider-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        .nexova-team__slider-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            border: 2px solid var(--nexova-gray-200);
+            background: var(--nexova-white);
+            color: var(--nexova-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .nexova-team__slider-btn:hover {
+            background: var(--nexova-primary);
+            border-color: var(--nexova-primary);
+            color: var(--nexova-white);
+        }
+
+        .nexova-team__slider-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nexova-team__slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--nexova-gray-300);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nexova-team__slider-dot.nexova-team__slider-dot--active {
+            background: var(--nexova-primary);
+            width: 28px;
+            border-radius: 5px;
+        }
+
+        /* ========== MEGA FOOTER ========== */
+        .nexova-footer {
+            background: var(--nexova-dark);
+            padding: 5rem 0 0;
+        }
+
+        .nexova-footer__container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nexova-footer__top {
+            display: grid;
+            grid-template-columns: 1.5fr repeat(4, 1fr);
+            gap: 3rem;
+            padding-bottom: 4rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .nexova-footer__brand p {
+            color: var(--nexova-gray-500);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-top: 1rem;
+            max-width: 280px;
+        }
+
+        .nexova-footer__brand-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--nexova-white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nexova-footer__brand-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--nexova-primary), var(--nexova-accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: var(--nexova-white);
+        }
+
+        .nexova-footer__socials {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .nexova-footer__social-link {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--nexova-gray-400);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nexova-footer__social-link:hover {
+            background: var(--nexova-primary);
+            color: var(--nexova-white);
+            transform: translateY(-2px);
+        }
+
+        .nexova-footer__column h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--nexova-white);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nexova-footer__links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .nexova-footer__links a {
+            color: var(--nexova-gray-500);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .nexova-footer__links a:hover {
+            color: var(--nexova-white);
+            gap: 0.4rem;
+        }
+
+        .nexova-footer__links a::before {
+            content: '';
+            width: 0;
+            height: 1px;
+            background: var(--nexova-primary-light);
+            transition: width 0.3s;
+        }
+
+        .nexova-footer__links a:hover::before {
+            width: 12px;
+        }
+
+        .nexova-footer__bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 0;
+            margin-top: 0;
+        }
+
+        .nexova-footer__bottom p {
+            color: var(--nexova-gray-600);
+            font-size: 0.85rem;
+        }
+
+        .nexova-footer__bottom-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nexova-footer__bottom-links a {
+            color: var(--nexova-gray-600);
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nexova-footer__bottom-links a:hover {
+            color: var(--nexova-gray-400);
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes nexovaFadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes nexovaTabFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes nexovaBarFill {
+            to {
+                width: var(--fill-width, 75%);
+            }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .nexova-tabs__panel.nexova-tabs__panel--active {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .nexova-stats__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nexova-team__card {
+                min-width: calc(50% - 1rem);
+            }
+
+            .nexova-footer__top {
+                grid-template-columns: 1fr 1fr;
+                gap: 2.5rem;
+            }
+
+            .nexova-footer__brand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nexova-navbar__links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--nexova-dark);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.25rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.06);
+            }
+
+            .nexova-navbar__links.nexova-navbar__links--open {
+                display: flex;
+            }
+
+            .nexova-navbar__hamburger {
+                display: flex;
+            }
+
+            .nexova-tabs__nav {
+                gap: 0.4rem;
+            }
+
+            .nexova-tabs__btn {
+                padding: 0.65rem 1.1rem;
+                font-size: 0.85rem;
+            }
+
+            .nexova-stats__grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .nexova-stats__number {
+                font-size: 2rem;
+            }
+
+            .nexova-team__card {
+                min-width: calc(85%);
+            }
+
+            .nexova-footer__top {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .nexova-footer__bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .nexova-trust__logos {
+                gap: 2rem;
+            }
+
+            .nexova-trust__logo-item {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nexova-hero__actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nexova-btn-primary,
+            .nexova-btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .nexova-stats__grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nexova-footer__top {
+                grid-template-columns: 1fr;
+            }
+
+            .nexova-team__card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== NAVIGATION ========== -->
+    <nav class="nexova-navbar" id="nexovaNavbar">
+        <div class="nexova-navbar__container">
+            <a href="#" class="nexova-navbar__logo">
+                <span class="nexova-navbar__logo-icon"><i class="fas fa-bolt"></i></span>
+                Nexova
+            </a>
+            <ul class="nexova-navbar__links" id="nexovaNavLinks">
+                <li><a href="#nexova-services">Services</a></li>
+                <li><a href="#nexova-stats">Results</a></li>
+                <li><a href="#nexova-team">Team</a></li>
+                <li><a href="#nexova-footer">Contact</a></li>
+                <li><a href="#" class="nexova-navbar__cta">Get Started</a></li>
+            </ul>
+            <button class="nexova-navbar__hamburger" id="nexovaHamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="nexova-hero" id="nexova-hero">
+        <div class="nexova-hero__bg">
+            <div class="nexova-hero__gradient-orb nexova-hero__gradient-orb--1"></div>
+            <div class="nexova-hero__gradient-orb nexova-hero__gradient-orb--2"></div>
+            <div class="nexova-hero__gradient-orb nexova-hero__gradient-orb--3"></div>
+            <div class="nexova-hero__pattern"></div>
+        </div>
+        <div class="nexova-hero__content">
+            <div class="nexova-hero__badge">
+                <i class="fas fa-sparkles"></i>
+                Now Offering AI-Powered Analytics
+            </div>
+            <h1 class="nexova-hero__title">
+                Transform Your Business<br>
+                With <span class="nexova-hero__title-highlight">Strategic Digital</span> Solutions
+            </h1>
+            <p class="nexova-hero__subtitle">
+                We partner with forward-thinking companies to design, build, and scale digital products that drive measurable growth and lasting impact.
+            </p>
+            <div class="nexova-hero__actions">
+                <a href="#" class="nexova-btn-primary">
+                    Request a Demo
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#" class="nexova-btn-secondary">
+                    <span class="nexova-play-icon"><i class="fas fa-play"></i></span>
+                    Watch Video
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TRUST STRIP ========== -->
+    <section class="nexova-trust">
+        <div class="nexova-trust__label">Trusted by industry leaders worldwide</div>
+        <div class="nexova-trust__logos">
+            <div class="nexova-trust__logo-item"><i class="fab fa-stripe"></i> Stripe</div>
+            <div class="nexova-trust__logo-item"><i class="fab fa-slack"></i> Slack</div>
+            <div class="nexova-trust__logo-item"><i class="fab fa-shopify"></i> Shopify</div>
+            <div class="nexova-trust__logo-item"><i class="fab fa-spotify"></i> Spotify</div>
+            <div class="nexova-trust__logo-item"><i class="fab fa-figma"></i> Figma</div>
+            <div class="nexova-trust__logo-item"><i class="fab fa-google"></i> Google</div>
+        </div>
+    </section>
+
+    <!-- ========== SERVICES TABS ========== -->
+    <section class="nexova-services" id="nexova-services">
+        <div class="nexova-section-container">
+            <div class="nexova-section-header">
+                <span class="nexova-section-tag">What We Do</span>
+                <h2 class="nexova-section-title">Services Tailored to Your Needs</h2>
+                <p class="nexova-section-desc">Explore our comprehensive suite of services designed to accelerate your digital transformation journey.</p>
+            </div>
+
+            <div class="nexova-tabs__nav" id="nexovaTabsNav">
+                <button class="nexova-tabs__btn nexova-tabs__btn--active" data-nexova-tab="consulting">
+                    <i class="fas fa-lightbulb"></i> Consulting
+                </button>
+                <button class="nexova-tabs__btn" data-nexova-tab="audit">
+                    <i class="fas fa-search-plus"></i> Audit
+                </button>
+                <button class="nexova-tabs__btn" data-nexova-tab="development">
+                    <i class="fas fa-code"></i> Development
+                </button>
+                <button class="nexova-tabs__btn" data-nexova-tab="marketing">
+                    <i class="fas fa-chart-line"></i> Marketing
+                </button>
+            </div>
+
+            <div class="nexova-tabs__content-wrapper" id="nexovaTabsContent">
+                <!-- Consulting Panel -->
+                <div class="nexova-tabs__panel nexova-tabs__panel--active" data-nexova-panel="consulting">
+                    <div class="nexova-tabs__panel-text">
+                        <h3>Strategic Consulting</h3>
+                        <p>Our expert consultants work hand-in-hand with your leadership team to identify opportunities, eliminate bottlenecks, and craft a roadmap that aligns technology with your business goals.</p>
+                        <ul class="nexova-tabs__features">
+                            <li><i class="fas fa-check"></i> Digital transformation strategy</li>
+                            <li><i class="fas fa-check"></i> Technology stack assessment</li>
+                            <li><i class="fas fa-check"></i> Process optimization & automation</li>
+                            <li><i class="fas fa-check"></i> Change management support</li>
+                        </ul>
+                    </div>
+                    <div class="nexova-tabs__panel-visual">
+                        <div class="nexova-tabs__visual-card">
+                            <div class="nexova-tabs__visual-card-icon"><i class="fas fa-lightbulb"></i></div>
+                            <h4>Strategy Score</h4>
+                            <p>Your organization's digital maturity assessment</p>
+                            <div class="nexova-tabs__visual-bar">
+                                <div class="nexova-tabs__visual-bar-fill" style="--fill-width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audit Panel -->
+                <div class="nexova-tabs__panel" data-nexova-panel="audit">
+                    <div class="nexova-tabs__panel-text">
+                        <h3>Comprehensive Audit</h3>
+                        <p>We conduct deep-dive audits across your digital ecosystem — from infrastructure security to UX performance — delivering actionable insights that reduce risk and improve efficiency.</p>
+                        <ul class="nexova-tabs__features">
+                            <li><i class="fas fa-check"></i> Security vulnerability assessment</li>
+                            <li><i class="fas fa-check"></i> Performance & scalability audit</li>
+                            <li><i class="fas fa-check"></i> Compliance & regulatory review</li>
+                            <li><i class="fas fa-check"></i> UX/UI heuristic evaluation</li>
+                        </ul>
+                    </div>
+                    <div class="nexova-tabs__panel-visual">
+                        <div class="nexova-tabs__visual-card">
+                            <div class="nexova-tabs__visual-card-icon" style="background: linear-gradient(135deg, #06B6D4, #22D3EE)"><i class="fas fa-shield-alt"></i></div>
+                            <h4>Security Rating</h4>
+                            <p>Real-time vulnerability & compliance tracking</p>
+                            <div class="nexova-tabs__visual-bar">
+                                <div class="nexova-tabs__visual-bar-fill" style="--fill-width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Development Panel -->
+                <div class="nexova-tabs__panel" data-nexova-panel="development">
+                    <div class="nexova-tabs__panel-text">
+                        <h3>Custom Development</h3>
+                        <p>From MVPs to enterprise platforms, our engineering team builds robust, scalable solutions using modern technologies and agile methodologies tailored to your unique requirements.</p>
+                        <ul class="nexova-tabs__features">
+                            <li><i class="fas fa-check"></i> Full-stack web & mobile development</li>
+                            <li><i class="fas fa-check"></i> Cloud-native architecture</li>
+                            <li><i class="fas fa-check"></i> API design & integration</li>
+                            <li><i class="fas fa-check"></i> CI/CD & DevOps automation</li>
+                        </ul>
+                    </div>
+                    <div class="nexova-tabs__panel-visual">
+                        <div class="nexova-tabs__visual-card">
+                            <div class="nexova-tabs__visual-card-icon" style="background: linear-gradient(135deg, #A855F7, #C084FC)"><i class="fas fa-code"></i></div>
+                            <h4>Sprint Velocity</h4>
+                            <p>Development progress & deployment frequency</p>
+                            <div class="nexova-tabs__visual-bar">
+                                <div class="nexova-tabs__visual-bar-fill" style="--fill-width: 78%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketing Panel -->
+                <div class="nexova-tabs__panel" data-nexova-panel="marketing">
+                    <div class="nexova-tabs__panel-text">
+                        <h3>Growth Marketing</h3>
+                        <p>Data-driven marketing strategies that attract, convert, and retain customers. We blend creativity with analytics to maximize your ROI across every digital channel.</p>
+                        <ul class="nexova-tabs__features">
+                            <li><i class="fas fa-check"></i> SEO & content marketing</li>
+                            <li><i class="fas fa-check"></i> Paid media & PPC management</li>
+                            <li><i class="fas fa-check"></i> Marketing automation & CRM</li>
+                            <li><i class="fas fa-check"></i> Analytics & conversion optimization</li>
+                        </ul>
+                    </div>
+                    <div class="nexova-tabs__panel-visual">
+                        <div class="nexova-tabs__visual-card">
+                            <div class="nexova-tabs__visual-card-icon" style="background: linear-gradient(135deg, #22C55E, #4ADE80)"><i class="fas fa-chart-line"></i></div>
+                            <h4>Growth Rate</h4>
+                            <p>Monthly traffic & conversion improvements</p>
+                            <div class="nexova-tabs__visual-bar">
+                                <div class="nexova-tabs__visual-bar-fill" style="--fill-width: 88%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== STATS ========== -->
+    <section class="nexova-stats" id="nexova-stats">
+        <div class="nexova-stats__bg-pattern"></div>
+        <div class="nexova-stats__orb nexova-stats__orb--left"></div>
+        <div class="nexova-stats__orb nexova-stats__orb--right"></div>
+        <div class="nexova-stats__grid">
+            <div class="nexova-stats__card">
+                <div class="nexova-stats__card-icon"><i class="fas fa-users"></i></div>
+                <div class="nexova-stats__number"><span class="nexova-counter" data-nexova-target="500">0</span>+</div>
+                <div class="nexova-stats__label">Clients Worldwide</div>
+            </div>
+            <div class="nexova-stats__card">
+                <div class="nexova-stats__card-icon"><i class="fas fa-server"></i></div>
+                <div class="nexova-stats__number"><span class="nexova-counter" data-nexova-target="99.9" data-nexova-decimal="true">0</span>%</div>
+                <div class="nexova-stats__label">Platform Uptime</div>
+            </div>
+            <div class="nexova-stats__card">
+                <div class="nexova-stats__card-icon"><i class="fas fa-project-diagram"></i></div>
+                <div class="nexova-stats__number"><span class="nexova-counter" data-nexova-target="1200">0</span>+</div>
+                <div class="nexova-stats__label">Projects Delivered</div>
+            </div>
+            <div class="nexova-stats__card">
+                <div class="nexova-stats__card-icon"><i class="fas fa-trophy"></i></div>
+                <div class="nexova-stats__number"><span class="nexova-counter" data-nexova-target="35">0</span>+</div>
+                <div class="nexova-stats__label">Industry Awards</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TEAM SLIDER ========== -->
+    <section class="nexova-team" id="nexova-team">
+        <div class="nexova-section-container">
+            <div class="nexova-section-header">
+                <span class="nexova-section-tag">Our Team</span>
+                <h2 class="nexova-section-title">Meet the Experts</h2>
+                <p class="nexova-section-desc">A diverse team of strategists, designers, and engineers committed to your success.</p>
+            </div>
+        </div>
+        <div class="nexova-team__slider-container" id="nexovaTeamSlider">
+            <div class="nexova-team__slider-track" id="nexovaTeamTrack">
+                <div class="nexova-team__card">
+                    <div class="nexova-team__card-img">
+                        <div class="nexova-team__card-avatar">SR</div>
+                    </div>
+                    <div class="nexova-team__card-body">
+                        <h3 class="nexova-team__card-name">Sarah Reynolds</h3>
+                        <p class="nexova-team__card-role">Chief Executive Officer</p>
+                        <p class="nexova-team__card-bio">15+ years leading digital transformation for Fortune 500 companies across three continents.</p>
+                        <a href="#" class="nexova-team__card-linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="nexova-team__card">
+                    <div class="nexova-team__card-img">
+                        <div class="nexova-team__card-avatar" style="background: linear-gradient(135deg, #06B6D4, #0891B2)">MK</div>
+                    </div>
+                    <div class="nexova-team__card-body">
+                        <h3 class="nexova-team__card-name">Marcus Kim</h3>
+                        <p class="nexova-team__card-role">Head of Engineering</p>
+                        <p class="nexova-team__card-bio">Former Google engineer with deep expertise in cloud architecture and distributed systems.</p>
+                        <a href="#" class="nexova-team__card-linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="nexova-team__card">
+                    <div class="nexova-team__card-img">
+                        <div class="nexova-team__card-avatar" style="background: linear-gradient(135deg, #A855F7, #7C3AED)">EP</div>
+                    </div>
+                    <div class="nexova-team__card-body">
+                        <h3 class="nexova-team__card-name">Elena Petrova</h3>
+                        <p class="nexova-team__card-role">Design Director</p>
+                        <p class="nexova-team__card-bio">Award-winning designer passionate about creating intuitive, user-centered digital experiences.</p>
+                        <a href="#" class="nexova-team__card-linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="nexova-team__card">
+                    <div class="nexova-team__card-img">
+                        <div class="nexova-team__card-avatar" style="background: linear-gradient(135deg, #22C55E, #16A34A)">JC</div>
+                    </div>
+                    <div class="nexova-team__card-body">
+                        <h3 class="nexova-team__card-name">James Chen</h3>
+                        <p class="nexova-team__card-role">VP of Strategy</p>
+                        <p class="nexova-team__card-bio">McKinsey alumnus specializing in data-driven growth strategies for B2B SaaS companies.</p>
+                        <a href="#" class="nexova-team__card-linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="nexova-team__slider-controls">
+                <button class="nexova-team__slider-btn" id="nexovaSliderPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                <div class="nexova-team__slider-dots" id="nexovaSliderDots">
+                    <button class="nexova-team__slider-dot nexova-team__slider-dot--active" data-nexova-slide="0" aria-label="Slide 1"></button>
+                    <button class="nexova-team__slider-dot" data-nexova-slide="1" aria-label="Slide 2"></button>
+                    <button class="nexova-team__slider-dot" data-nexova-slide="2" aria-label="Slide 3"></button>
+                    <button class="nexova-team__slider-dot" data-nexova-slide="3" aria-label="Slide 4"></button>
+                </div>
+                <button class="nexova-team__slider-btn" id="nexovaSliderNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== MEGA FOOTER ========== -->
+    <footer class="nexova-footer" id="nexova-footer">
+        <div class="nexova-footer__container">
+            <div class="nexova-footer__top">
+                <div class="nexova-footer__brand">
+                    <div class="nexova-footer__brand-logo">
+                        <span class="nexova-footer__brand-logo-icon"><i class="fas fa-bolt"></i></span>
+                        Nexova
+                    </div>
+                    <p>Empowering businesses with intelligent digital solutions that drive growth, efficiency, and innovation at scale.</p>
+                    <div class="nexova-footer__socials">
+                        <a href="#" class="nexova-footer__social-link" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" class="nexova-footer__social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="nexova-footer__social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" class="nexova-footer__social-link" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                    </div>
+                </div>
+
+                <div class="nexova-footer__column">
+                    <h4>Company</h4>
+                    <ul class="nexova-footer__links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                        <li><a href="#">Partners</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="nexova-footer__column">
+                    <h4>Solutions</h4>
+                    <ul class="nexova-footer__links">
+                        <li><a href="#">Consulting</a></li>
+                        <li><a href="#">Development</a></li>
+                        <li><a href="#">Cloud Services</a></li>
+                        <li><a href="#">AI & Analytics</a></li>
+                        <li><a href="#">Cybersecurity</a></li>
+                    </ul>
+                </div>
+
+                <div class="nexova-footer__column">
+                    <h4>Resources</h4>
+                    <ul class="nexova-footer__links">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Webinars</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+
+                <div class="nexova-footer__column">
+                    <h4>Legal</h4>
+                    <ul class="nexova-footer__links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">GDPR</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="nexova-footer__bottom">
+                <p>&copy; 2025 Nexova. All rights reserved.</p>
+                <div class="nexova-footer__bottom-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========== STICKY NAVBAR ==========
+        const nexovaNavbar = document.getElementById('nexovaNavbar');
+        let nexovaLastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const nexovaCurrentScroll = window.pageYOffset;
+            if (nexovaCurrentScroll > 50) {
+                nexovaNavbar.classList.add('nexova-navbar--scrolled');
+            } else {
+                nexovaNavbar.classList.remove('nexova-navbar--scrolled');
+            }
+            nexovaLastScroll = nexovaCurrentScroll;
+        });
+
+        // ========== HAMBURGER MENU ==========
+        const nexovaHamburger = document.getElementById('nexovaHamburger');
+        const nexovaNavLinks = document.getElementById('nexovaNavLinks');
+
+        nexovaHamburger.addEventListener('click', () => {
+            nexovaNavLinks.classList.toggle('nexova-navbar__links--open');
+        });
+
+        // Close menu on link click
+        nexovaNavLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nexovaNavLinks.classList.remove('nexova-navbar__links--open');
+            });
+        });
+
+        // ========== TABS SYSTEM ==========
+        const nexovaTabButtons = document.querySelectorAll('.nexova-tabs__btn');
+        const nexovaTabPanels = document.querySelectorAll('.nexova-tabs__panel');
+
+        nexovaTabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const nexovaTargetTab = btn.dataset.nexovaTab;
+
+                // Update buttons
+                nexovaTabButtons.forEach(b => b.classList.remove('nexova-tabs__btn--active'));
+                btn.classList.add('nexova-tabs__btn--active');
+
+                // Update panels
+                nexovaTabPanels.forEach(panel => {
+                    panel.classList.remove('nexova-tabs__panel--active');
+                    if (panel.dataset.nexovaPanel === nexovaTargetTab) {
+                        panel.classList.add('nexova-tabs__panel--active');
+                        // Re-trigger bar animation
+                        const bar = panel.querySelector('.nexova-tabs__visual-bar-fill');
+                        if (bar) {
+                            bar.style.animation = 'none';
+                            bar.offsetHeight; // Trigger reflow
+                            bar.style.animation = 'nexovaBarFill 1.5s 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                        }
+                    }
+                });
+            });
+        });
+
+        // ========== ANIMATED COUNTERS ==========
+        const nexovaCounters = document.querySelectorAll('.nexova-counter');
+        let nexovaCountersStarted = false;
+
+        function nexovaAnimateCounters() {
+            nexovaCounters.forEach(counter => {
+                const nexovaTarget = parseFloat(counter.dataset.nexovaTarget);
+                const nexovaIsDecimal = counter.dataset.nexovaDecimal === 'true';
+                const nexovaDuration = 2000;
+                const nexovaStep = 16;
+                const nexovaTotalSteps = nexovaDuration / nexovaStep;
+                let nexovaCurrentStep = 0;
+
+                const nexovaTimer = setInterval(() => {
+                    nexovaCurrentStep++;
+                    const nexovaProgress = nexovaCurrentStep / nexovaTotalSteps;
+                    // Ease out cubic
+                    const nexovaEasedProgress = 1 - Math.pow(1 - nexovaProgress, 3);
+                    const nexovaCurrentValue = nexovaTarget * nexovaEasedProgress;
+
+                    if (nexovaIsDecimal) {
+                        counter.textContent = nexovaCurrentValue.toFixed(1);
+                    } else {
+                        counter.textContent = Math.floor(nexovaCurrentValue).toLocaleString();
+                    }
+
+                    if (nexovaCurrentStep >= nexovaTotalSteps) {
+                        if (nexovaIsDecimal) {
+                            counter.textContent = nexovaTarget.toFixed(1);
+                        } else {
+                            counter.textContent = nexovaTarget.toLocaleString();
+                        }
+                        clearInterval(nexovaTimer);
+                    }
+                }, nexovaStep);
+            });
+        }
+
+        // Intersection Observer for counters
+        const nexovaStatsSection = document.getElementById('nexova-stats');
+        const nexovaStatsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !nexovaCountersStarted) {
+                    nexovaCountersStarted = true;
+                    nexovaAnimateCounters();
+                }
+            });
+        }, { threshold: 0.3 });
+
+        nexovaStatsObserver.observe(nexovaStatsSection);
+
+        // ========== TEAM SLIDER ==========
+        const nexovaTrack = document.getElementById('nexovaTeamTrack');
+        const nexovaPrevBtn = document.getElementById('nexovaSliderPrev');
+        const nexovaNextBtn = document.getElementById('nexovaSliderNext');
+        const nexovaDots = document.querySelectorAll('.nexova-team__slider-dot');
+        const nexovaCards = document.querySelectorAll('.nexova-team__card');
+        let nexovaCurrentSlide = 0;
+
+        function nexovaGetSlidesVisible() {
+            if (window.innerWidth <= 480) return 1;
+            if (window.innerWidth <= 1024) return 2;
+            return 4;
+        }
+
+        function nexovaGetMaxSlide() {
+            const visible = nexovaGetSlidesVisible();
+            return Math.max(0, nexovaCards.length - visible);
+        }
+
+        function nexovaUpdateSlider() {
+            const nexovaSliderContainer = document.getElementById('nexovaTeamSlider');
+            const containerWidth = nexovaSliderContainer.offsetWidth - 64; // padding
+            const visible = nexovaGetSlidesVisible();
+            const gap = 32; // 2rem
+            const cardWidth = (containerWidth - (gap * (visible - 1))) / visible;
+            const offset = nexovaCurrentSlide * (cardWidth + gap);
+
+            nexovaTrack.style.transform = `translateX(-${offset}px)`;
+
+            nexovaDots.forEach((dot, i) => {
+                dot.classList.toggle('nexova-team__slider-dot--active', i === nexovaCurrentSlide);
+            });
+        }
+
+        nexovaNextBtn.addEventListener('click', () => {
+            const maxSlide = nexovaGetMaxSlide();
+            nexovaCurrentSlide = nexovaCurrentSlide >= maxSlide ? 0 : nexovaCurrentSlide + 1;
+            nexovaUpdateSlider();
+        });
+
+        nexovaPrevBtn.addEventListener('click', () => {
+            const maxSlide = nexovaGetMaxSlide();
+            nexovaCurrentSlide = nexovaCurrentSlide <= 0 ? maxSlide : nexovaCurrentSlide - 1;
+            nexovaUpdateSlider();
+        });
+
+        nexovaDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                nexovaCurrentSlide = parseInt(dot.dataset.nexovaSlide);
+                const maxSlide = nexovaGetMaxSlide();
+                if (nexovaCurrentSlide > maxSlide) nexovaCurrentSlide = maxSlide;
+                nexovaUpdateSlider();
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            const maxSlide = nexovaGetMaxSlide();
+            if (nexovaCurrentSlide > maxSlide) nexovaCurrentSlide = maxSlide;
+            nexovaUpdateSlider();
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetEl = document.querySelector(targetId);
+                if (targetEl) {
+                    e.preventDefault();
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
