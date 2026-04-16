@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina | Specialized Orthopaedic Clinic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a2a3a;
+            --accent: #8e9aaf;
+            --teal: #7fb3b3;
+            --bg-gradient: linear-gradient(135deg, #f8fafd 0%, #e9eff5 100%);
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+            --text-main: #2d3436;
+            --text-light: #636e72;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 200vh;
+        }
+
+        /* Abstract Background Elements */
+        .bg-glow {
+            position: fixed;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(127, 179, 179, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+            top: -10vw;
+            right: -10vw;
+            z-index: -1;
+            border-radius: 50%;
+            filter: blur(80px);
+        }
+
+        .bg-glow-2 {
+            position: fixed;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(142, 154, 175, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
+            bottom: -5vw;
+            left: -5vw;
+            z-index: -1;
+            border-radius: 50%;
+            filter: blur(80px);
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            font-weight: 300;
+            color: var(--text-light);
+            font-size: 1.05rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            padding: 1rem 10%;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--teal);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1.2s forwards 0.2s;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1.2rem 2.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: var(--transition);
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            border: 1px solid var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid rgba(26, 42, 58, 0.2);
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Glass Cards */
+        .section {
+            padding: 10rem 10%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.6);
+            border-color: var(--teal);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            background: rgba(127, 179, 179, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--teal);
+        }
+
+        /* About Section */
+        .about-layout {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .image-frame {
+            width: 100%;
+            height: 500px;
+            background: url('https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=1000') center/cover;
+            border-radius: 300px 300px 0 0;
+            filter: grayscale(0.2);
+            border: 10px solid var(--glass-bg);
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            text-align: left;
+            position: relative;
+        }
+
+        .quote-icon {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--teal);
+            opacity: 0.2;
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+        }
+
+        /* Contact Form */
+        .contact-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 1rem 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus {
+            border-bottom-color: var(--teal);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 10%;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .about-layout { flex-direction: column-reverse; }
+            .contact-container { grid-template-columns: 1fr; padding: 2rem; }
+            .section { padding: 5rem 5%; }
+            .btn-outline { margin-left: 0; margin-top: 1rem; width: 100%; }
+            .btn-primary { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+
+    <nav id="navbar">
+        <div class="logo">Lumina</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#services">Specialties</a>
+            <a href="#why">Philosophy</a>
+            <a href="#contact">Consultation</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Specialists in Shoulder & Hand Surgery</h1>
+            <p>Providing world-class orthopaedic care through precision, innovation, and a commitment to restoring your freedom of movement.</p>
+            <div class="hero-btns">
+                <a href="#contact" class="btn btn-primary">Book Consultation</a>
+                <a href="#services" class="btn btn-outline">Explore Expertise</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="about-layout">
+            <div class="about-image reveal">
+                <div class="image-frame"></div>
+            </div>
+            <div class="about-text reveal">
+                <h2 style="margin-bottom: 1.5rem;">Clinical Excellence, Redefined</h2>
+                <p style="margin-bottom: 1.5rem;">At Lumina, we believe that high-end healthcare should be as comforting as it is advanced. Our private clinic is designed for those who seek uncompromising medical expertise in an environment of absolute tranquility.</p>
+                <p>Led by internationally recognized surgeons, we specialize exclusively in the complex architecture of the upper limb, ensuring every patient receives a bespoke recovery plan tailored to their lifestyle.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="services">
+        <div class="section-header reveal">
+            <h2>Our Specializations</h2>
+            <p>Focused expertise for superior outcomes.</p>
+        </div>
+        <div class="grid">
+            <div class="glass-card reveal">
+                <div class="card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>
+                </div>
+                <h3>Shoulder Care</h3>
+                <p>Advanced arthroscopic techniques for rotator cuff repairs and stabilization.</p>
+            </div>
+            <div class="glass-card reveal">
+                <div class="card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
+                </div>
+                <h3>Hand & Wrist</h3>
+                <p>Microsurgical precision for carpal tunnel, fractures, and ligament reconstruction.</p>
+            </div>
+            <div class="glass-card reveal">
+                <div class="card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <h3>Sports Injury</h3>
+                <p>Elite-level treatment designed to return athletes to their peak performance safely.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="why" style="background: rgba(127, 179, 179, 0.03);">
+        <div class="section-header reveal">
+            <h2>The Lumina Standard</h2>
+        </div>
+        <div class="grid">
+            <div class="reveal">
+                <h3 style="margin-bottom: 1rem; font-family: 'Inter'; font-weight: 500; font-size: 1.1rem; text-transform: uppercase; color: var(--teal);">01. Personalized Path</h3>
+                <p>No two injuries are identical. We craft bespoke surgical and non-surgical pathways for every individual.</p>
+            </div>
+            <div class="reveal">
+                <h3 style="margin-bottom: 1rem; font-family: 'Inter'; font-weight: 500; font-size: 1.1rem; text-transform: uppercase; color: var(--teal);">02. Accelerated Recovery</h3>
+                <p>Utilizing minimally invasive protocols to ensure faster healing and minimal scarring.</p>
+            </div>
+            <div class="reveal">
+                <h3 style="margin-bottom: 1rem; font-family: 'Inter'; font-weight: 500; font-size: 1.1rem; text-transform: uppercase; color: var(--teal);">03. Pioneer Technology</h3>
+                <p>Investing in the latest diagnostic imaging and robotic-assisted surgical equipment.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="grid">
+            <div class="glass-card testimonial-card reveal">
+                <span class="quote-icon">“</span>
+                <p style="font-style: italic; margin-bottom: 2rem; position: relative; z-index: 1;">"Returning to professional tennis after my shoulder injury felt impossible. The precision and care at Lumina gave me my career back."</p>
+                <div style="font-weight: 500;">Alexander V.</div>
+                <div style="font-size: 0.8rem; color: var(--teal);">Professional Athlete</div>
+            </div>
+            <div class="glass-card testimonial-card reveal">
+                <span class="quote-icon">“</span>
+                <p style="font-style: italic; margin-bottom: 2rem; position: relative; z-index: 1;">"The most professional medical experience I've had. The atmosphere is more like a luxury boutique hotel than a clinic."</p>
+                <div style="font-weight: 500;">Sarah Elizabeth</div>
+                <div style="font-size: 0.8rem; color: var(--teal);">Patient</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="contact-container reveal">
+            <div>
+                <h2 style="margin-bottom: 1.5rem;">Request a Consultation</h2>
+                <p style="margin-bottom: 2rem;">Discretion and excellence start with your first inquiry. Contact our concierge to schedule a private assessment.</p>
+                <div style="margin-bottom: 1rem;">
+                    <strong>Location</strong><br>
+                    <span style="font-size: 0.9rem;">12 Harley Street, London</span>
+                </div>
+                <div>
+                    <strong>Direct Line</strong><br>
+                    <span style="font-size: 0.9rem;">+44 20 7946 0123</span>
+                </div>
+            </div>
+            <form id="contactForm">
+                <div class="form-group">
+                    <input type="text" placeholder="FULL NAME" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="EMAIL ADDRESS" required>
+                </div>
+                <div class="form-group">
+                    <textarea rows="4" placeholder="HOW CAN WE ASSIST YOU?"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Inquiry</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo" style="font-size: 1rem; margin-bottom: 1rem;">Lumina</div>
+        <p>&copy; 2024 Lumina Specialized Orthopaedics. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Reveal animations on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            for (let i = 0; i < revealElements.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = revealElements[i].getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    revealElements[i].classList.add('active');
+                }
+            }
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        // Trigger once on load
+        revealOnScroll();
+
+        // Form Submission micro-interaction
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = form.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = 'Sending...';
+            btn.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                btn.innerText = 'Thank You';
+                btn.style.background = 'var(--teal)';
+                btn.style.borderColor = 'var(--teal)';
+                form.reset();
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = 'var(--primary)';
+                    btn.style.borderColor = 'var(--primary)';
+                    btn.style.opacity = '1';
+                }, 3000);
+            }, 1500);
+        });
+
+        // Smooth scroll for anchors
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
