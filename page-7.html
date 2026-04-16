@@ -1,0 +1,2302 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEX FITNESS — Build Your Strongest Self</title>
+    <style>
+        /* ========================================
+           CSS VARIABLES & THEMING
+        ======================================== */
+        :root {
+            --transition-speed: 0.4s;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-gradient-1: #0a0a0f;
+            --bg-gradient-2: #1a0a2e;
+            --bg-gradient-3: #0f1923;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6a6a7a;
+            --accent-primary: #00f0ff;
+            --accent-secondary: #7b2ff7;
+            --accent-tertiary: #ff2d55;
+            --accent-glow: rgba(0, 240, 255, 0.3);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: rgba(0, 0, 0, 0.3);
+            --glass-hover-bg: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --nav-bg: rgba(10, 10, 15, 0.8);
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --input-border: rgba(255, 255, 255, 0.15);
+            --hero-overlay: rgba(10, 10, 15, 0.6);
+            --orb-1: rgba(123, 47, 247, 0.15);
+            --orb-2: rgba(0, 240, 255, 0.1);
+            --orb-3: rgba(255, 45, 85, 0.1);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f0f2f5;
+            --bg-secondary: #ffffff;
+            --bg-gradient-1: #f0f2f5;
+            --bg-gradient-2: #e8e0f0;
+            --bg-gradient-3: #e0eef5;
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --text-muted: #8a8a9a;
+            --accent-primary: #7b2ff7;
+            --accent-secondary: #00b4d8;
+            --accent-tertiary: #ff2d55;
+            --accent-glow: rgba(123, 47, 247, 0.3);
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-shadow: rgba(0, 0, 0, 0.08);
+            --glass-hover-bg: rgba(255, 255, 255, 0.8);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --nav-bg: rgba(240, 242, 245, 0.8);
+            --input-bg: rgba(255, 255, 255, 0.7);
+            --input-border: rgba(0, 0, 0, 0.1);
+            --hero-overlay: rgba(240, 242, 245, 0.5);
+            --orb-1: rgba(123, 47, 247, 0.08);
+            --orb-2: rgba(0, 180, 216, 0.08);
+            --orb-3: rgba(255, 45, 85, 0.06);
+        }
+
+        /* ========================================
+           RESET & BASE STYLES
+        ======================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ========================================
+           UTILITY CLASSES
+        ======================================== */
+        .apex-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .apex-section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .apex-section-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .apex-section-title span {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .apex-section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 3.5rem;
+        }
+
+        /* Glass Morphism Card */
+        .apex-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .apex-glass:hover {
+            background: var(--glass-hover-bg);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px var(--glass-shadow);
+        }
+
+        /* Animated Background Orbs */
+        .apex-bg-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .apex-bg-orbs .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: apex-float 20s infinite ease-in-out;
+        }
+
+        .apex-bg-orbs .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--orb-1);
+            top: -10%;
+            right: -10%;
+            animation-delay: 0s;
+        }
+
+        .apex-bg-orbs .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--orb-2);
+            bottom: 10%;
+            left: -10%;
+            animation-delay: -7s;
+        }
+
+        .apex-bg-orbs .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: var(--orb-3);
+            top: 40%;
+            right: 20%;
+            animation-delay: -14s;
+        }
+
+        @keyframes apex-float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.05); }
+            50% { transform: translate(-30px, 30px) scale(0.95); }
+            75% { transform: translate(40px, 20px) scale(1.02); }
+        }
+
+        /* Scroll Reveal Animation */
+        .apex-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .apex-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .apex-reveal-delay-1 { transition-delay: 0.1s; }
+        .apex-reveal-delay-2 { transition-delay: 0.2s; }
+        .apex-reveal-delay-3 { transition-delay: 0.3s; }
+        .apex-reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ========================================
+           NAVIGATION
+        ======================================== */
+        .apex-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .apex-nav.scrolled {
+            padding: 0.6rem 0;
+            box-shadow: 0 4px 30px var(--glass-shadow);
+        }
+
+        .apex-nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .apex-nav-logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .apex-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .apex-nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .apex-nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-primary);
+            transition: width 0.3s ease;
+        }
+
+        .apex-nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .apex-nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Theme Toggle */
+        .apex-theme-toggle {
+            position: relative;
+            width: 52px;
+            height: 28px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 0 4px;
+        }
+
+        .apex-theme-toggle:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .apex-theme-toggle-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+        }
+
+        [data-theme="light"] .apex-theme-toggle-circle {
+            transform: translateX(24px);
+        }
+
+        /* Mobile Menu Toggle */
+        .apex-mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .apex-mobile-toggle span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .apex-mobile-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .apex-mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .apex-mobile-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        @media (max-width: 768px) {
+            .apex-mobile-toggle {
+                display: flex;
+            }
+
+            .apex-nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                flex-direction: column;
+                background: var(--bg-secondary);
+                backdrop-filter: blur(30px);
+                -webkit-backdrop-filter: blur(30px);
+                padding: 5rem 2rem 2rem;
+                gap: 1.5rem;
+                transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                border-left: 1px solid var(--glass-border);
+                box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
+                z-index: 1001;
+            }
+
+            .apex-nav-links.open {
+                right: 0;
+            }
+        }
+
+        /* ========================================
+           HERO SECTION
+        ======================================== */
+        .apex-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 8rem 1.5rem 4rem;
+        }
+
+        .apex-hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, var(--orb-1) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, var(--orb-2) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 80%, var(--orb-3) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        /* Animated grid lines */
+        .apex-hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--glass-border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.3;
+            z-index: 0;
+            animation: apex-grid-move 30s linear infinite;
+        }
+
+        @keyframes apex-grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .apex-hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .apex-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent-primary);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            animation: apex-pulse-border 3s ease-in-out infinite;
+        }
+
+        @keyframes apex-pulse-border {
+            0%, 100% { border-color: var(--glass-border); }
+            50% { border-color: var(--accent-primary); }
+        }
+
+        .apex-hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            animation: apex-pulse 2s infinite;
+        }
+
+        @keyframes apex-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .apex-hero-title {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .apex-hero-title .highlight {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: apex-gradient-shift 4s ease infinite;
+        }
+
+        @keyframes apex-gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .apex-hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .apex-hero-cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Buttons */
+        .apex-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .apex-btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #fff;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .apex-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .apex-btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .apex-btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .apex-btn-outline {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .apex-btn-outline:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Stats */
+        .apex-hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .apex-hero-stat {
+            text-align: center;
+        }
+
+        .apex-hero-stat-number {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .apex-hero-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ========================================
+           ABOUT SECTION
+        ======================================== */
+        .apex-about {
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+        }
+
+        .apex-about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .apex-about-card {
+            padding: 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .apex-about-card-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transition: transform 0.3s ease;
+        }
+
+        .apex-about-card:hover .apex-about-card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .apex-about-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .apex-about-card-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .apex-about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+
+        .apex-about-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* ========================================
+           SERVICES / PROGRAMS
+        ======================================== */
+        .apex-services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .apex-service-card {
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            group: true;
+        }
+
+        .apex-service-card-image {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .apex-service-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .apex-service-card:hover .apex-service-card-image img {
+            transform: scale(1.1);
+        }
+
+        .apex-service-card-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5));
+            z-index: 1;
+        }
+
+        .apex-service-card-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .apex-service-card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .apex-service-card-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .apex-service-card-link {
+            color: var(--accent-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: gap 0.3s ease;
+        }
+
+        .apex-service-card:hover .apex-service-card-link {
+            gap: 0.6rem;
+        }
+
+        /* ========================================
+           PRICING SECTION
+        ======================================== */
+        .apex-pricing {
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+        }
+
+        .apex-pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .apex-pricing-card {
+            padding: 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .apex-pricing-card.popular {
+            transform: scale(1.05);
+            border-color: var(--accent-primary);
+            box-shadow: 0 8px 40px var(--accent-glow);
+        }
+
+        .apex-pricing-card.popular::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .apex-pricing-popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.35rem 1.2rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .apex-pricing-plan {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .apex-pricing-price {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 0.25rem;
+            line-height: 1;
+        }
+
+        .apex-pricing-price-currency {
+            font-size: 1.5rem;
+            vertical-align: super;
+            font-weight: 700;
+        }
+
+        .apex-pricing-period {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .apex-pricing-features {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .apex-pricing-features li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .apex-pricing-features li .check {
+            color: var(--accent-primary);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .apex-pricing-features li .cross {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .apex-pricing-card .apex-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ========================================
+           TRAINERS SECTION
+        ======================================== */
+        .apex-trainers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .apex-trainer-card {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .apex-trainer-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            overflow: hidden;
+            border: 3px solid var(--glass-border);
+            position: relative;
+            transition: border-color 0.3s ease;
+        }
+
+        .apex-trainer-card:hover .apex-trainer-avatar {
+            border-color: var(--accent-primary);
+        }
+
+        .apex-trainer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .apex-trainer-avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .apex-trainer-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .apex-trainer-specialty {
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .apex-trainer-bio {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .apex-trainer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .apex-trainer-social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .apex-trainer-social-link:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* ========================================
+           TESTIMONIALS SECTION
+        ======================================== */
+        .apex-testimonials {
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+        }
+
+        .apex-testimonial-slider {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .apex-testimonial-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .apex-testimonial-slide {
+            min-width: 100%;
+            padding: 0 1rem;
+        }
+
+        .apex-testimonial-card {
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .apex-testimonial-stars {
+            color: #ffd700;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.2em;
+        }
+
+        .apex-testimonial-quote {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-style: italic;
+            position: relative;
+        }
+
+        .apex-testimonial-quote::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-style: normal;
+            line-height: 1;
+            opacity: 0.4;
+        }
+
+        .apex-testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .apex-testimonial-author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--accent-primary);
+        }
+
+        .apex-testimonial-author-avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .apex-testimonial-author-info {
+            text-align: left;
+        }
+
+        .apex-testimonial-author-name {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .apex-testimonial-author-title {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .apex-testimonial-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            align-items: center;
+        }
+
+        .apex-testimonial-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .apex-testimonial-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: #fff;
+        }
+
+        .apex-testimonial-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .apex-testimonial-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--glass-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .apex-testimonial-dot.active {
+            background: var(--accent-primary);
+            box-shadow: 0 0 10px var(--accent-glow);
+            transform: scale(1.2);
+        }
+
+        /* ========================================
+           CONTACT SECTION
+        ======================================== */
+        .apex-contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .apex-contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .apex-contact-form {
+            padding: 2.5rem;
+        }
+
+        .apex-form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .apex-form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .apex-form-input,
+        .apex-form-textarea {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .apex-form-input:focus,
+        .apex-form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .apex-form-textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .apex-contact-info {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .apex-contact-info-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .apex-contact-info-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .apex-contact-info-title {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .apex-contact-info-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .apex-contact-hours {
+            margin-top: auto;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .apex-contact-hours-title {
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .apex-contact-hours-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+        .apex-footer {
+            border-top: 1px solid var(--glass-border);
+            padding: 3rem 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .apex-footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .apex-footer-logo {
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .apex-footer-copyright {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .apex-footer-socials {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .apex-footer-social {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .apex-footer-social:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        /* ========================================
+           SCROLL TO TOP BUTTON
+        ======================================== */
+        .apex-scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            color: #fff;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            z-index: 999;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .apex-scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .apex-scroll-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        /* ========================================
+           FORM SUCCESS ANIMATION
+        ======================================== */
+        .apex-form-success {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .apex-form-success.show {
+            display: block;
+            animation: apex-fade-in 0.5s ease;
+        }
+
+        .apex-form-success-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: apex-bounce 0.6s ease;
+        }
+
+        @keyframes apex-bounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes apex-fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+        @media (max-width: 768px) {
+            .apex-section {
+                padding: 4rem 0;
+            }
+
+            .apex-hero {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .apex-hero-stats {
+                gap: 2rem;
+            }
+
+            .apex-pricing-card.popular {
+                transform: scale(1);
+            }
+
+            .apex-pricing-grid {
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .apex-hero-title {
+                font-size: 2.2rem;
+            }
+
+            .apex-hero-cta-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .apex-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ========================================
+           LOADING ANIMATION
+        ======================================== */
+        .apex-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .apex-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .apex-loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--glass-border);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: apex-spin 0.8s linear infinite;
+        }
+
+        @keyframes apex-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Counter animation */
+        .apex-counter {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div class="apex-loader" id="apexLoader">
+        <div class="apex-loader-spinner"></div>
+    </div>
+
+    <!-- Animated Background Orbs -->
+    <div class="apex-bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- ========================================
+         NAVIGATION
+    ======================================== -->
+    <nav class="apex-nav" id="apexNav">
+        <div class="apex-nav-inner">
+            <a href="#" class="apex-nav-logo">APEX</a>
+
+            <div class="apex-nav-links" id="apexNavLinks">
+                <a href="#apex-about">About</a>
+                <a href="#apex-services">Programs</a>
+                <a href="#apex-pricing">Pricing</a>
+                <a href="#apex-trainers">Trainers</a>
+                <a href="#apex-testimonials">Reviews</a>
+                <a href="#apex-contact">Contact</a>
+                <div class="apex-theme-toggle" id="apexThemeToggle" title="Toggle theme" role="button" tabindex="0" aria-label="Toggle light/dark mode">
+                    <div class="apex-theme-toggle-circle" id="apexThemeCircle">🌙</div>
+                </div>
+            </div>
+
+            <button class="apex-mobile-toggle" id="apexMobileToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ========================================
+         HERO SECTION
+    ======================================== -->
+    <section class="apex-hero" id="apex-hero">
+        <div class="apex-hero-bg"></div>
+        <div class="apex-hero-grid"></div>
+
+        <div class="apex-hero-content">
+            <div class="apex-hero-badge apex-reveal">
+                <span class="apex-hero-badge-dot"></span>
+                Now Open — Limited Founding Member Spots
+            </div>
+
+            <h1 class="apex-hero-title apex-reveal apex-reveal-delay-1">
+                Build Your<br><span class="highlight">Strongest Self</span>
+            </h1>
+
+            <p class="apex-hero-subtitle apex-reveal apex-reveal-delay-2">
+                Transform your body and mind with world-class training, cutting-edge equipment, and a community that pushes you beyond limits.
+            </p>
+
+            <div class="apex-hero-cta-group apex-reveal apex-reveal-delay-3">
+                <a href="#apex-pricing" class="apex-btn apex-btn-primary">
+                    Join Now →
+                </a>
+                <a href="#apex-about" class="apex-btn apex-btn-outline">
+                    Explore More
+                </a>
+            </div>
+
+            <div class="apex-hero-stats apex-reveal apex-reveal-delay-4">
+                <div class="apex-hero-stat">
+                    <div class="apex-hero-stat-number"><span class="apex-counter" data-target="5000">0</span>+</div>
+                    <div class="apex-hero-stat-label">Members</div>
+                </div>
+                <div class="apex-hero-stat">
+                    <div class="apex-hero-stat-number"><span class="apex-counter" data-target="50">0</span>+</div>
+                    <div class="apex-hero-stat-label">Classes Weekly</div>
+                </div>
+                <div class="apex-hero-stat">
+                    <div class="apex-hero-stat-number"><span class="apex-counter" data-target="15">0</span>+</div>
+                    <div class="apex-hero-stat-label">Expert Trainers</div>
+                </div>
+                <div class="apex-hero-stat">
+                    <div class="apex-hero-stat-number"><span class="apex-counter" data-target="98">0</span>%</div>
+                    <div class="apex-hero-stat-label">Satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         ABOUT SECTION
+    ======================================== -->
+    <section class="apex-section apex-about" id="apex-about">
+        <div class="apex-container">
+            <h2 class="apex-section-title apex-reveal">Why Choose <span>APEX</span>?</h2>
+            <p class="apex-section-subtitle apex-reveal">
+                More than a gym — we're a movement. Built for those who refuse to settle for average.
+            </p>
+
+            <div class="apex-about-grid">
+                <div class="apex-glass apex-about-card apex-reveal apex-reveal-delay-1">
+                    <div class="apex-about-card-icon">💪</div>
+                    <h3 class="apex-about-card-title">Strength</h3>
+                    <p class="apex-about-card-text">
+                        State-of-the-art equipment and proven methodologies to help you build real, functional strength that translates to everyday life.
+                    </p>
+                </div>
+
+                <div class="apex-glass apex-about-card apex-reveal apex-reveal-delay-2">
+                    <div class="apex-about-card-icon">🤝</div>
+                    <h3 class="apex-about-card-title">Community</h3>
+                    <p class="apex-about-card-text">
+                        Join a tribe of like-minded individuals who motivate, support, and celebrate each other's victories — big and small.
+                    </p>
+                </div>
+
+                <div class="apex-glass apex-about-card apex-reveal apex-reveal-delay-3">
+                    <div class="apex-about-card-icon">🏆</div>
+                    <h3 class="apex-about-card-title">Results</h3>
+                    <p class="apex-about-card-text">
+                        Data-driven training programs and personalized nutrition guidance that deliver measurable, lasting transformation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         SERVICES / PROGRAMS SECTION
+    ======================================== -->
+    <section class="apex-section" id="apex-services">
+        <div class="apex-container">
+            <h2 class="apex-section-title apex-reveal">Our <span>Programs</span></h2>
+            <p class="apex-section-subtitle apex-reveal">
+                From one-on-one coaching to high-energy group sessions, we have the perfect program for every fitness level.
+            </p>
+
+            <div class="apex-services-grid">
+                <div class="apex-glass apex-service-card apex-reveal apex-reveal-delay-1">
+                    <span class="apex-service-card-emoji">🎯</span>
+                    <h3 class="apex-service-card-title">Personal Training</h3>
+                    <p class="apex-service-card-text">
+                        One-on-one sessions with certified trainers who customize every workout to your goals, body type, and fitness level.
+                    </p>
+                    <span class="apex-service-card-link">Learn more →</span>
+                </div>
+
+                <div class="apex-glass apex-service-card apex-reveal apex-reveal-delay-2">
+                    <span class="apex-service-card-emoji">🔥</span>
+                    <h3 class="apex-service-card-title">Group Classes</h3>
+                    <p class="apex-service-card-text">
+                        High-energy sessions including HIIT, yoga, spin, boxing, and more. The group energy will push you further than ever.
+                    </p>
+                    <span class="apex-service-card-link">Learn more →</span>
+                </div>
+
+                <div class="apex-glass apex-service-card apex-reveal apex-reveal-delay-3">
+                    <span class="apex-service-card-emoji">❤️</span>
+                    <h3 class="apex-service-card-title">Cardio Zone</h3>
+                    <p class="apex-service-card-text">
+                        Premium cardio equipment with integrated screens, heart rate monitoring, and virtual trails from around the world.
+                    </p>
+                    <span class="apex-service-card-link">Learn more →</span>
+                </div>
+
+                <div class="apex-glass apex-service-card apex-reveal apex-reveal-delay-4">
+                    <span class="apex-service-card-emoji">🏋️</span>
+                    <h3 class="apex-service-card-title">Strength Training</h3>
+                    <p class="apex-service-card-text">
+                        Olympic platforms, free weights, and machines covering every muscle group. Designed for beginners to advanced lifters.
+                    </p>
+                    <span class="apex-service-card-link">Learn more →</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         PRICING SECTION
+    ======================================== -->
+    <section class="apex-section apex-pricing" id="apex-pricing">
+        <div class="apex-container">
+            <h2 class="apex-section-title apex-reveal">Simple <span>Pricing</span></h2>
+            <p class="apex-section-subtitle apex-reveal">
+                No hidden fees. No contracts. Just honest pricing for an extraordinary fitness experience.
+            </p>
+
+            <div class="apex-pricing-grid">
+                <!-- Basic -->
+                <div class="apex-glass apex-pricing-card apex-reveal apex-reveal-delay-1">
+                    <p class="apex-pricing-plan">Basic</p>
+                    <p class="apex-pricing-price">
+                        <span class="apex-pricing-price-currency">$</span>29
+                    </p>
+                    <p class="apex-pricing-period">per month</p>
+                    <ul class="apex-pricing-features">
+                        <li><span class="check">✓</span> Gym floor access</li>
+                        <li><span class="check">✓</span> Cardio equipment</li>
+                        <li><span class="check">✓</span> Locker room access</li>
+                        <li><span class="check">✓</span> Free Wi-Fi</li>
+                        <li><span class="cross">✗</span> <span style="color:var(--text-muted)">Group classes</span></li>
+                        <li><span class="cross">✗</span> <span style="color:var(--text-muted)">Personal training</span></li>
+                    </ul>
+                    <button class="apex-btn apex-btn-outline">Get Started</button>
+                </div>
+
+                <!-- Pro (Popular) -->
+                <div class="apex-glass apex-pricing-card popular apex-reveal apex-reveal-delay-2">
+                    <div class="apex-pricing-popular-badge">Most Popular</div>
+                    <p class="apex-pricing-plan">Pro</p>
+                    <p class="apex-pricing-price">
+                        <span class="apex-pricing-price-currency">$</span>59
+                    </p>
+                    <p class="apex-pricing-period">per month</p>
+                    <ul class="apex-pricing-features">
+                        <li><span class="check">✓</span> Everything in Basic</li>
+                        <li><span class="check">✓</span> All group classes</li>
+                        <li><span class="check">✓</span> Sauna & steam room</li>
+                        <li><span class="check">✓</span> 1 PT session/month</li>
+                        <li><span class="check">✓</span> Nutrition guide</li>
+                        <li><span class="cross">✗</span> <span style="color:var(--text-muted)">Unlimited PT</span></li>
+                    </ul>
+                    <button class="apex-btn apex-btn-primary">Get Started</button>
+                </div>
+
+                <!-- Elite -->
+                <div class="apex-glass apex-pricing-card apex-reveal apex-reveal-delay-3">
+                    <p class="apex-pricing-plan">Elite</p>
+                    <p class="apex-pricing-price">
+                        <span class="apex-pricing-price-currency">$</span>99
+                    </p>
+                    <p class="apex-pricing-period">per month</p>
+                    <ul class="apex-pricing-features">
+                        <li><span class="check">✓</span> Everything in Pro</li>
+                        <li><span class="check">✓</span> Unlimited PT sessions</li>
+                        <li><span class="check">✓</span> Custom meal plans</li>
+                        <li><span class="check">✓</span> Recovery lounge</li>
+                        <li><span class="check">✓</span> Priority booking</li>
+                        <li><span class="check">✓</span> Guest passes (2/mo)</li>
+                    </ul>
+                    <button class="apex-btn apex-btn-outline">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         TRAINERS SECTION
+    ======================================== -->
+    <section class="apex-section" id="apex-trainers">
+        <div class="apex-container">
+            <h2 class="apex-section-title apex-reveal">Meet Our <span>Trainers</span></h2>
+            <p class="apex-section-subtitle apex-reveal">
+                Our certified professionals bring passion, expertise, and years of experience to every session.
+            </p>
+
+            <div class="apex-trainers-grid">
+                <div class="apex-glass apex-trainer-card apex-reveal apex-reveal-delay-1">
+                    <div class="apex-trainer-avatar">
+                        <div class="apex-trainer-avatar-placeholder">👨‍🦱</div>
+                    </div>
+                    <h3 class="apex-trainer-name">Marcus Rivera</h3>
+                    <p class="apex-trainer-specialty">Strength & Conditioning</p>
+                    <p class="apex-trainer-bio">
+                        Former collegiate athlete with 10+ years of coaching. Specializes in powerlifting and athletic performance.
+                    </p>
+                    <div class="apex-trainer-socials">
+                        <a href="#" class="apex-trainer-social-link" aria-label="Instagram">📷</a>
+                        <a href="#" class="apex-trainer-social-link" aria-label="Twitter">🐦</a>
+                        <a href="#" class="apex-trainer-social-link" aria-label="LinkedIn">💼</a>
+                    </div>
+                </div>
+
+                <div class="apex-glass apex-trainer-card apex-reveal apex-reveal-delay-2">
+                    <div class="apex-trainer-avatar">
+                        <div class="apex-trainer-avatar-placeholder">👩</div>
+                    </div>
+                    <h3 class="apex-trainer-name">Sarah Chen</h3>
+                    <p class="apex-trainer-specialty">HIIT & Nutrition</p>
+                    <p class="apex-trainer-bio">
+                        Certified nutritionist and HIIT specialist. Helped 500+ clients achieve their body transformation goals.
+                    </p>
+                    <div class="apex-trainer-socials">
+                        <a href="#" class="apex-trainer-social-link" aria-label="Instagram">📷</a>
+                        <a href="#" class="apex-trainer-social-link" aria-label="Twitter">🐦</a>
+                        <a href="#" class="apex-trainer-social-link" aria-label="LinkedIn">💼</a>
+                    </div>
+                </div>
+
+                <div class="apex-glass apex-trainer-card apex-reveal apex-reveal-delay-3">
+                    <div class="apex-trainer-avatar">
+                        <div class="apex-trainer-avatar-placeholder">👨</div>
+                    </div>
+                    <h3 class="apex-trainer-name">James Okafor</h3>
+                    <p class="apex-trainer-specialty">Yoga & Mobility</p>
+                    <p class="apex-trainer-bio">
+                        200-hour certified yoga instructor with a background in physical therapy. Master of flexibility and recovery.
+                    </p>
+                    <div class="apex-trainer-socials">
+                        <a href="#" class="apex-trainer-social-link" aria-label="Instagram">📷</a>
+                        <a href="#" class="apex-trainer-social-link" aria-label="Twitter">🐦</a>
+                        <a href="#" class="apex-trainer-social-link" aria-label="LinkedIn">💼</a>
+                    </div>
+                </div>
+
+                <div class="apex-glass apex-trainer-card apex-reveal apex-reveal-delay-4">
+                    <div class="apex-trainer-avatar">
+                        <div class="apex-trainer-avatar-placeholder">👩‍🦰</div>
+                    </div>
+                    <h3 class="apex-trainer-name">Elena Volkov</h3>
+                    <p class="apex-trainer-specialty">Boxing & Cardio</p>
+                    <p class="apex-trainer-bio">
+                        Former competitive boxer turned trainer. Her high-energy sessions are the most popular classes at APEX.
+                    </p>
+                    <div class="apex-trainer-socials">
+                        <a href="#" class="apex-trainer-social-link" aria-label="Instagram">📷</a>
+                        <a href="#" class="apex-trainer-social-link" aria-label="Twitter">🐦</a>
+                        <a href="#" class="apex-trainer-social-link" aria-label="LinkedIn">💼</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         TESTIMONIALS SECTION
+    ======================================== -->
+    <section class="apex-section apex-testimonials" id="apex-testimonials">
+        <div class="apex-container">
+            <h2 class="apex-section-title apex-reveal">What Members <span>Say</span></h2>
+            <p class="apex-section-subtitle apex-reveal">
+                Don't just take our word for it — hear from real APEX members who transformed their lives.
+            </p>
+
+            <div class="apex-testimonial-slider apex-reveal">
+                <div class="apex-testimonial-track" id="apexTestimonialTrack">
+                    <!-- Slide 1 -->
+                    <div class="apex-testimonial-slide">
+                        <div class="apex-glass apex-testimonial-card">
+                            <div class="apex-testimonial-stars">★★★★★</div>
+                            <p class="apex-testimonial-quote">
+                                APEX completely changed my relationship with fitness. The trainers are incredible, the community is supportive, and I've never felt stronger. Down 30 lbs and counting!
+                            </p>
+                            <div class="apex-testimonial-author">
+                                <div class="apex-testimonial-author-avatar">
+                                    <div class="apex-testimonial-author-avatar-placeholder">👩‍💼</div>
+                                </div>
+                                <div class="apex-testimonial-author-info">
+                                    <div class="apex-testimonial-author-name">Amanda Torres</div>
+                                    <div class="apex-testimonial-author-title">Member for 8 months</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="apex-testimonial-slide">
+                        <div class="apex-glass apex-testimonial-card">
+                            <div class="apex-testimonial-stars">★★★★★</div>
+                            <p class="apex-testimonial-quote">
+                                As someone who was intimidated by gyms, APEX made me feel welcome from day one. The personal training sessions are worth every penny. I've gained confidence I never thought possible.
+                            </p>
+                            <div class="apex-testimonial-author">
+                                <div class="apex-testimonial-author-avatar">
+                                    <div class="apex-testimonial-author-avatar-placeholder">👨‍💻</div>
+                                </div>
+                                <div class="apex-testimonial-author-info">
+                                    <div class="apex-testimonial-author-name">David Kim</div>
+                                    <div class="apex-testimonial-author-title">Member for 1 year</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="apex-testimonial-slide">
+                        <div class="apex-glass apex-testimonial-card">
+                            <div class="apex-testimonial-stars">★★★★★</div>
+                            <p class="apex-testimonial-quote">
+                                The group classes are ADDICTIVE. Elena's boxing sessions and Sarah's HIIT workouts are the highlights of my week. This isn't just a gym — it's a lifestyle upgrade.
+                            </p>
+                            <div class="apex-testimonial-author">
+                                <div class="apex-testimonial-author-avatar">
+                                    <div class="apex-testimonial-author-avatar-placeholder">👩‍🎤</div>
+                                </div>
+                                <div class="apex-testimonial-author-info">
+                                    <div class="apex-testimonial-author-name">Rachel Nguyen</div>
+                                    <div class="apex-testimonial-author-title">Member for 6 months</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4 -->
+                    <div class="apex-testimonial-slide">
+                        <div class="apex-glass apex-testimonial-card">
+                            <div class="apex-testimonial-stars">★★★★★</div>
+                            <p class="apex-testimonial-quote">
+                                I've been to dozens of gyms over the years. APEX is in a completely different league. The equipment is top-tier, the facility is immaculate, and the results speak for themselves.
+                            </p>
+                            <div class="apex-testimonial-author">
+                                <div class="apex-testimonial-author-avatar">
+                                    <div class="apex-testimonial-author-avatar-placeholder">🧔</div>
+                                </div>
+                                <div class="apex-testimonial-author-info">
+                                    <div class="apex-testimonial-author-name">Michael Brooks</div>
+                                    <div class="apex-testimonial-author-title">Member for 2 years</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="apex-testimonial-controls">
+                    <button class="apex-testimonial-btn" id="apexTestimonialPrev" aria-label="Previous testimonial">←</button>
+                    <div class="apex-testimonial-dots" id="apexTestimonialDots">
+                        <span class="apex-testimonial-dot active" data-slide="0"></span>
+                        <span class="apex-testimonial-dot" data-slide="1"></span>
+                        <span class="apex-testimonial-dot" data-slide="2"></span>
+                        <span class="apex-testimonial-dot" data-slide="3"></span>
+                    </div>
+                    <button class="apex-testimonial-btn" id="apexTestimonialNext" aria-label="Next testimonial">→</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         CONTACT SECTION
+    ======================================== -->
+    <section class="apex-section" id="apex-contact">
+        <div class="apex-container">
+            <h2 class="apex-section-title apex-reveal">Get In <span>Touch</span></h2>
+            <p class="apex-section-subtitle apex-reveal">
+                Ready to start your journey? Drop us a message or swing by the gym for a free tour.
+            </p>
+
+            <div class="apex-contact-grid">
+                <!-- Contact Form -->
+                <div class="apex-glass apex-contact-form apex-reveal apex-reveal-delay-1">
+                    <form id="apexContactForm">
+                        <div class="apex-form-group">
+                            <label class="apex-form-label" for="apexFormName">Full Name</label>
+                            <input type="text" class="apex-form-input" id="apexFormName" placeholder="John Doe" required>
+                        </div>
+                        <div class="apex-form-group">
+                            <label class="apex-form-label" for="apexFormEmail">Email Address</label>
+                            <input type="email" class="apex-form-input" id="apexFormEmail" placeholder="john@example.com" required>
+                        </div>
+                        <div class="apex-form-group">
+                            <label class="apex-form-label" for="apexFormMessage">Message</label>
+                            <textarea class="apex-form-textarea" id="apexFormMessage" placeholder="Tell us about your fitness goals..." required></textarea>
+                        </div>
+                        <button type="submit" class="apex-btn apex-btn-primary" style="width:100%;justify-content:center;">
+                            Send Message →
+                        </button>
+                    </form>
+
+                    <div class="apex-form-success" id="apexFormSuccess">
+                        <div class="apex-form-success-icon">✅</div>
+                        <h3>Message Sent!</h3>
+                        <p style="color:var(--text-secondary);margin-top:0.5rem;">We'll get back to you within 24 hours.</p>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="apex-glass apex-contact-info apex-reveal apex-reveal-delay-2">
+                    <div class="apex-contact-info-item">
+                        <div class="apex-contact-info-icon">📍</div>
+                        <div>
+                            <p class="apex-contact-info-title">Location</p>
+                            <p class="apex-contact-info-text">123 Fitness Avenue, Downtown District<br>New York, NY 10001</p>
+                        </div>
+                    </div>
+
+                    <div class="apex-contact-info-item">
+                        <div class="apex-contact-info-icon">📧</div>
+                        <div>
+                            <p class="apex-contact-info-title">Email</p>
+                            <p class="apex-contact-info-text">hello@apexfitness.com</p>
+                        </div>
+                    </div>
+
+                    <div class="apex-contact-info-item">
+                        <div class="apex-contact-info-icon">📱</div>
+                        <div>
+                            <p class="apex-contact-info-title">Phone</p>
+                            <p class="apex-contact-info-text">+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+
+                    <div class="apex-contact-hours">
+                        <p class="apex-contact-hours-title">🕐 Opening Hours</p>
+                        <div class="apex-contact-hours-row">
+                            <span>Monday — Friday</span>
+                            <span>5:00 AM — 11:00 PM</span>
+                        </div>
+                        <div class="apex-contact-hours-row">
+                            <span>Saturday</span>
+                            <span>6:00 AM — 10:00 PM</span>
+                        </div>
+                        <div class="apex-contact-hours-row">
+                            <span>Sunday</span>
+                            <span>7:00 AM — 9:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+    <footer class="apex-footer">
+        <div class="apex-container">
+            <div class="apex-footer-inner">
+                <div>
+                    <div class="apex-footer-logo">APEX</div>
+                    <p class="apex-footer-copyright">© 2025 Apex Fitness. All rights reserved.</p>
+                </div>
+
+                <div class="apex-footer-socials">
+                    <a href="#" class="apex-footer-social" aria-label="Instagram">📷</a>
+                    <a href="#" class="apex-footer-social" aria-label="Twitter">🐦</a>
+                    <a href="#" class="apex-footer-social" aria-label="Facebook">📘</a>
+                    <a href="#" class="apex-footer-social" aria-label="YouTube">▶️</a>
+                    <a href="#" class="apex-footer-social" aria-label="TikTok">🎵</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="apex-scroll-top" id="apexScrollTop" aria-label="Scroll to top">↑</button>
+
+    <!-- ========================================
+         JAVASCRIPT
+    ======================================== -->
+    <script>
+        // ========================================
+        // LOADING SCREEN
+        // ========================================
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('apexLoader');
+            setTimeout(() => {
+                loader.classList.add('hidden');
+            }, 600);
+        });
+
+        // ========================================
+        // THEME TOGGLE (Dark/Light Mode)
+        // ========================================
+        const themeToggle = document.getElementById('apexThemeToggle');
+        const themeCircle = document.getElementById('apexThemeCircle');
+        const html = document.documentElement;
+
+        // Load saved theme from localStorage
+        const savedTheme = localStorage.getItem('apex-theme') || 'dark';
+        html.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('apex-theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        // Keyboard accessibility for theme toggle
+        themeToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                themeToggle.click();
+            }
+        });
+
+        function updateThemeIcon(theme) {
+            themeCircle.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+
+        // ========================================
+        // MOBILE NAVIGATION
+        // ========================================
+        const mobileToggle = document.getElementById('apexMobileToggle');
+        const navLinks = document.getElementById('apexNavLinks');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            navLinks.classList.toggle('open');
+        });
+
+        // Close mobile nav when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // Close mobile nav when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !mobileToggle.contains(e.target)) {
+                mobileToggle.classList.remove('active');
+                navLinks.classList.remove('open');
+            }
+        });
+
+        // ========================================
+        // NAVBAR SCROLL EFFECT
+        // ========================================
+        const nav = document.getElementById('apexNav');
+        let lastScrollY = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+
+            lastScrollY = currentScrollY;
+        });
+
+        // ========================================
+        // SCROLL REVEAL ANIMATIONS (Intersection Observer)
+        // ========================================
+        const revealElements = document.querySelectorAll('.apex-reveal');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    // Don't unobserve — allows re-triggering if needed
+                    // But for performance, let's unobserve after reveal
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ========================================
+        // COUNTER ANIMATION
+        // ========================================
+        const counters = document.querySelectorAll('.apex-counter');
+        let countersAnimated = false;
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !countersAnimated) {
+                    countersAnimated = true;
+                    counters.forEach(counter => {
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        const duration = 2000;
+                        const startTime = performance.now();
+
+                        function updateCounter(currentTime) {
+                            const elapsed = currentTime - startTime;
+                            const progress = Math.min(elapsed / duration, 1);
+                            // Ease out cubic
+                            const eased = 1 - Math.pow(1 - progress, 3);
+                            const current = Math.floor(eased * target);
+                            counter.textContent = current.toLocaleString();
+
+                            if (progress < 1) {
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target.toLocaleString();
+                            }
+                        }
+
+                        requestAnimationFrame(updateCounter);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        // Observe the stats container
+        const statsContainer = document.querySelector('.apex-hero-stats');
+        if (statsContainer) {
+            counterObserver.observe(statsContainer);
+        }
+
+        // ========================================
+        // TESTIMONIAL SLIDER
+        // ========================================
+        const testimonialTrack = document.getElementById('apexTestimonialTrack');
+        const testimonialDots = document.querySelectorAll('.apex-testimonial-dot');
+        const prevBtn = document.getElementById('apexTestimonialPrev');
+        const nextBtn = document.getElementById('apexTestimonialNext');
+        let currentSlide = 0;
+        const totalSlides = testimonialDots.length;
+        let autoSlideInterval;
+
+        function goToSlide(index) {
+            if (index < 0) index = totalSlides - 1;
+            if (index >= totalSlides) index = 0;
+            currentSlide = index;
+
+            testimonialTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            // Update dots
+            testimonialDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        prevBtn.addEventListener('click', () => {
+            goToSlide(currentSlide - 1);
+            resetAutoSlide();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            goToSlide(currentSlide + 1);
+            resetAutoSlide();
+        });
+
+        testimonialDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                goToSlide(parseInt(dot.getAttribute('data-slide')));
+                resetAutoSlide();
+            });
+        });
+
+        // Auto-slide
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                goToSlide(currentSlide + 1);
+            }, 5000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        startAutoSlide();
+
+        // Touch/Swipe support for testimonials
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        testimonialTrack.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        testimonialTrack.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    goToSlide(currentSlide + 1);
+                } else {
+                    goToSlide(currentSlide - 1);
+                }
+                resetAutoSlide();
+            }
+        }, { passive: true });
+
+        // ========================================
+        // CONTACT FORM
+        // ========================================
+        const contactForm = document.getElementById('apexContactForm');
+        const formSuccess = document.getElementById('apexFormSuccess');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Simulate form submission
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                contactForm.style.display = 'none';
+                formSuccess.classList.add('show');
+            }, 1500);
+        });
+
+        // ========================================
+        // SCROLL TO TOP BUTTON
+        // ========================================
+        const scrollTopBtn = document.getElementById('apexScrollTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ========================================
+        // PARALLAX EFFECT ON BACKGROUND ORBS
+        // ========================================
+        const orbs = document.querySelectorAll('.apex-bg-orbs .orb');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            orbs.forEach((orb, i) => {
+                const speed = (i + 1) * 0.03;
+                orb.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+        }, { passive: true });
+
+        // ========================================
+        // MOUSE PARALLAX ON HERO (Desktop only)
+        // ========================================
+        const heroContent = document.querySelector('.apex-hero-content');
+
+        if (window.matchMedia('(min-width: 769px)').matches) {
+            document.querySelector('.apex-hero').addEventListener('mousemove', (e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+                const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+
+                heroContent.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+            });
+
+            document.querySelector('.apex-hero').addEventListener('mouseleave', () => {
+                heroContent.style.transform = 'translate(0, 0)';
+                heroContent.style.transition = 'transform 0.5s ease';
+                setTimeout(() => {
+                    heroContent.style.transition = '';
+                }, 500);
+            });
+        }
+
+        // ========================================
+        // ACTIVE NAV LINK HIGHLIGHT ON SCROLL
+        // ========================================
+        const sections = document.querySelectorAll('section[id]');
+
+        const navHighlightObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    document.querySelectorAll('.apex-nav-links a').forEach(link => {
+                        link.style.color = '';
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.style.color = 'var(--accent-primary)';
+                        }
+                    });
+                }
+            });
+        }, {
+            threshold: 0.3,
+            rootMargin: '-80px 0px -50% 0px'
+        });
+
+        sections.forEach(section => navHighlightObserver.observe(section));
+    </script>
+</body>
+</html>
