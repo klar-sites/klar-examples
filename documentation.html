@@ -2882,7 +2882,7 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
             try { 
               if (pushState) history.pushState(null, '', `#${pageId}`);
             } catch (e) {
-              console.log('hehe', e);
+              console.log('error', e);
             }
             
             // Update ToC
