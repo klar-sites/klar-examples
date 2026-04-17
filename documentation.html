@@ -27,8 +27,8 @@
         --sp-20: 80px;
 
         /* Typography */
-        --font-display: 'Source Serif 4', Georgia, serif;
-        --font-body: 'DM Sans', system-ui, sans-serif;
+        --font-display: 'Inter', Georgia, serif;
+        --font-body: 'Inter', system-ui, sans-serif;
         --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
         /* Sizes */
@@ -2879,12 +2879,12 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
             });
 
             // Update URL
-            try { 
+            try {
               if (pushState) history.pushState(null, '', `#${pageId}`);
             } catch (e) {
               console.log('error', e);
             }
-            
+
             // Update ToC
             TOC.generate(page);
 
