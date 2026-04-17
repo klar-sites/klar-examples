@@ -1,1654 +1,2079 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <title>Mob Timer — Focus Timer for macOS</title>
-    <meta name="description"
-      content="A minimal macOS timer designed for deep focus and mob programming. Start instantly, stay focused, get notified.">
-    <link rel="stylesheet" href="styles.css">
+    <title>AURELIA — Fine Dining Experience</title>
+    
+    <!-- Google Fonts: Outfit for premium, modern feel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
-      rel="stylesheet">
-  </head>
-  <body>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-      /* =============================================
-   HAMBURGER TOGGLE BUTTON
-   ============================================= */
-
-      .nav-toggle {
-        display: none;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--border);
-        cursor: pointer;
-        padding: 0;
-        gap: 5px;
-        z-index: 110;
-        transition: all var(--transition);
-        flex-shrink: 0;
-      }
-
-      .nav-toggle:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: var(--border-hover);
-      }
-
-      .hamburger-line {
-        display: block;
-        width: 18px;
-        height: 2px;
-        background: var(--text);
-        border-radius: 2px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        transform-origin: center;
-      }
-
-      /* Hamburger → X animation */
-      .nav-toggle.active .hamburger-line:nth-child(1) {
-        transform: translateY(7px) rotate(45deg);
-      }
-
-      .nav-toggle.active .hamburger-line:nth-child(2) {
-        opacity: 0;
-        transform: scaleX(0);
-      }
-
-      .nav-toggle.active .hamburger-line:nth-child(3) {
-        transform: translateY(-7px) rotate(-45deg);
-      }
-
-      /* =============================================
-   MOBILE MENU OVERLAY
-   ============================================= */
-
-      .mobile-menu-overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        z-index: 98;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .mobile-menu-overlay.visible {
-        display: block;
-        opacity: 1;
-      }
-
-      /* =============================================
-   MOBILE MENU PANEL
-   ============================================= */
-
-      .mobile-menu {
-        display: none;
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 300px;
-        max-width: calc(100vw - 48px);
-        height: 100dvh;
-        background: var(--bg-surface);
-        border-left: 1px solid var(--border);
-        z-index: 99;
-        flex-direction: column;
-        padding: 88px 24px 32px;
-        transform: translateX(100%);
-        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        box-shadow: -20px 0 60px rgba(0, 0, 0, 0.4);
-      }
-
-      .mobile-menu.open {
-        display: flex;
-        transform: translateX(0);
-      }
-
-      /* Slight delay trick: always display:flex when animating out */
-      .mobile-menu.closing {
-        display: flex;
-        transform: translateX(100%);
-      }
-
-      /* =============================================
-   MOBILE MENU LINKS
-   ============================================= */
-
-      .mobile-menu-links {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        flex: 1;
-      }
-
-      .mobile-menu-links li {
-        opacity: 0;
-        transform: translateX(20px);
-        animation: mobileMenuSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      }
-
-      .mobile-menu-links li:nth-child(1) {
-        animation-delay: 0.05s;
-      }
-
-      .mobile-menu-links li:nth-child(2) {
-        animation-delay: 0.08s;
-      }
-
-      .mobile-menu-links li:nth-child(3) {
-        animation-delay: 0.11s;
-      }
-
-      .mobile-menu-links li:nth-child(4) {
-        animation-delay: 0.14s;
-      }
-
-      .mobile-menu-links li:nth-child(5) {
-        animation-delay: 0.17s;
-      }
-
-      .mobile-menu-links li:nth-child(6) {
-        animation-delay: 0.2s;
-      }
-
-      @keyframes mobileMenuSlideIn {
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      .mobile-menu-links a {
-        display: block;
-        padding: 14px 16px;
-        font-size: 16px;
-        font-weight: 500;
-        color: var(--text-2);
-        border-radius: 12px;
-        transition: all var(--transition);
-        letter-spacing: -0.01em;
-      }
-
-      .mobile-menu-links a:hover,
-      .mobile-menu-links a.nav-active {
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.06);
-      }
-
-      .mobile-menu-links a.nav-active {
-        color: var(--accent);
-      }
-
-      /* =============================================
-   MOBILE MENU FOOTER
-   ============================================= */
-
-      .mobile-menu-footer {
-        padding-top: 24px;
-        border-top: 1px solid var(--border);
-        margin-top: 16px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        opacity: 0;
-        animation: mobileMenuSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
-        transform: translateX(20px);
-      }
-
-      .mobile-menu-download {
-        width: 100%;
-        justify-content: center;
-        padding: 14px 24px;
-        font-size: 15px;
-      }
-
-      .mobile-menu-meta {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        font-size: 12px;
-        color: var(--text-3);
-      }
-
-      /* =============================================
-   BODY LOCK WHEN MENU IS OPEN
-   ============================================= */
-
-      body.mobile-menu-open {
-        overflow: hidden;
-      }
-
-      /* =============================================
-   RESPONSIVE — SHOW/HIDE
-   ============================================= */
-
-      @media (max-width: 900px) {
-        .nav-toggle {
-          display: flex;
+        /* ========================================
+           CSS CUSTOM PROPERTIES — Design Tokens
+           Following the Taste Standard system
+           ======================================== */
+        :root {
+            /* Canvas & Surfaces */
+            --canvas: #0A0A0B;
+            --surface: #111113;
+            --surface-elevated: #18181B;
+            
+            /* Glass Effect Variables */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-hover: rgba(255, 255, 255, 0.08);
+            
+            /* Text Hierarchy */
+            --ink-primary: #FAFAFA;
+            --ink-secondary: #A1A1AA;
+            --ink-muted: #71717A;
+            
+            /* Accent — Amber Warmth (single accent, saturation < 80%) */
+            --accent: #F59E0B;
+            --accent-glow: rgba(245, 158, 11, 0.15);
+            --accent-hover: #FBBF24;
+            
+            /* Shadows */
+            --shadow-glass: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --shadow-diffused: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
+            
+            /* Typography Scale */
+            --font-display: 'Outfit', system-ui, sans-serif;
+            --font-body: 'Outfit', system-ui, sans-serif;
+            
+            /* Spacing (fluid clamp-based) */
+            --section-gap: clamp(4rem, 10vw, 8rem);
+            --container-padding: clamp(1rem, 4vw, 4rem);
+            --max-width: 1400px;
+            
+            /* Transitions */
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --duration-fast: 200ms;
+            --duration-normal: 400ms;
+            --duration-slow: 600ms;
         }
 
-        .nav-links {
-          display: none !important;
+        /* ========================================
+           RESET & BASE STYLES
+           ======================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .nav-download-btn {
-          display: none !important;
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--ink-muted) var(--surface);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--ink-muted);
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            line-height: 1.65;
+            color: var(--ink-secondary);
+            background-color: var(--canvas);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        /* ========================================
+           UTILITY CLASSES
+           ======================================== */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+        }
+
+        .section {
+            padding: var(--section-gap) 0;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--ink-primary);
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+        }
+
+        /* Glass Card Component */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all var(--duration-normal) var(--ease-smooth);
+        }
+
+        .glass-card:hover {
+            background: var(--glass-hover);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glass);
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity var(--duration-slow) var(--ease-smooth),
+                        transform var(--duration-slow) var(--ease-spring);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========================================
+           NAVIGATION
+           ======================================== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: all var(--duration-normal) var(--ease-smooth);
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
         }
 
         .nav-inner {
-          justify-content: space-between;
-        }
-      }
-
-      /* On large screens, never show mobile menu */
-      @media (min-width: 901px) {
-
-        .mobile-menu,
-        .mobile-menu-overlay {
-          display: none !important;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+            letter-spacing: 0.1em;
+        }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--ink-secondary);
+            transition: color var(--duration-fast) var(--ease-smooth);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width var(--duration-normal) var(--ease-spring);
+        }
+
+        .nav-links a:hover {
+            color: var(--ink-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu Toggle */
         .nav-toggle {
-          display: none !important;
-        }
-      }
-    </style>
-    <nav class="nav" id="nav">
-      <div class="nav-inner">
-        <a href="#" class="nav-logo">
-          <img src="logo.png" alt="Mob Timer" width="28" height="28">
-          <span>Mob Timer</span>
-        </a>
-        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-        </button>
-
-        <ul class="nav-links" id="nav-links">
-          <li><a href="#mob-programming">Mob Programming</a></li>
-          <li><a href="#break-timer">Break Timer</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#how-it-works">How it works</a></li>
-          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
-        </ul>
-        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
-      </div>
-
-      <!-- Mobile menu overlay -->
-      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
-
-      <!-- Mobile menu panel -->
-      <div class="mobile-menu" id="mobile-menu">
-        <ul class="mobile-menu-links">
-          <li><a href="#mob-programming">Mob Programming</a></li>
-          <li><a href="#break-timer">Break Timer</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#how-it-works">How it works</a></li>
-          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <div class="mobile-menu-footer">
-          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round"></path>
-            </svg>
-            Download for Mac
-          </a>
-          <div class="mobile-menu-meta">
-            <span>macOS 13+</span>
-            <span class="meta-dot">·</span>
-            <span>Free</span>
-          </div>
-        </div>
-      </div>
-    </nav>
-    <script>
-      // =============================================
-      //  MOBILE MENU
-      // =============================================
-
-      (function() {
-        const toggle = document.getElementById('nav-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('mobile-menu-overlay');
-        const mobileLinks = document.querySelectorAll('.mobile-menu-links a, .mobile-menu-download');
-
-        if (!toggle || !mobileMenu || !overlay) return;
-
-        let isOpen = false;
-
-        function openMenu() {
-          isOpen = true;
-          toggle.classList.add('active');
-          toggle.setAttribute('aria-expanded', 'true');
-          mobileMenu.classList.remove('closing');
-          mobileMenu.classList.add('open');
-          overlay.classList.add('visible');
-          document.body.classList.add('mobile-menu-open');
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            padding: 8px;
         }
 
-        function closeMenu() {
-          if (!isOpen) return;
-          isOpen = false;
-          toggle.classList.remove('active');
-          toggle.setAttribute('aria-expanded', 'false');
-          mobileMenu.classList.add('closing');
-          mobileMenu.classList.remove('open');
-          overlay.classList.remove('visible');
-          document.body.classList.remove('mobile-menu-open');
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--ink-primary);
+            transition: all var(--duration-fast) var(--ease-smooth);
+        }
 
-          // After transition ends, remove closing class
-          setTimeout(() => {
-            if (!isOpen) {
-              mobileMenu.classList.remove('closing');
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 11, 0.98);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            z-index: 999;
+            padding: 6rem 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--duration-normal) var(--ease-smooth);
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            text-align: center;
+        }
+
+        .mobile-menu li {
+            margin-bottom: 2rem;
+        }
+
+        .mobile-menu a {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+            transition: color var(--duration-fast) var(--ease-smooth);
+        }
+
+        .mobile-menu a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
             }
-          }, 350);
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
         }
 
-        toggle.addEventListener('click', () => {
-          if (isOpen) {
-            closeMenu();
-          } else {
-            openMenu();
-          }
-        });
-
-        overlay.addEventListener('click', closeMenu);
-
-        // Close on link click
-        mobileLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            closeMenu();
-          });
-        });
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && isOpen) {
-            closeMenu();
-          }
-        });
-
-        // Close if window resizes past breakpoint
-        window.addEventListener('resize', () => {
-          if (window.innerWidth > 900 && isOpen) {
-            closeMenu();
-          }
-        });
-
-        // Sync active link highlighting in mobile menu
-        const mobileLinkEls = document.querySelectorAll('.mobile-menu-links a');
-        const sectionObserverMobile = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const id = entry.target.id;
-                mobileLinkEls.forEach((link) => {
-                  link.classList.toggle(
-                    'nav-active',
-                    link.getAttribute('href') === `#${id}`
-                  );
-                });
-              }
-            });
-          }, {
-            threshold: 0.4
-          }
-        );
-
-        document.querySelectorAll('section[id]').forEach((s) => sectionObserverMobile.observe(s));
-      })();
-    </script>
-
-    <!-- ========== HERO ========== -->
-    <section class="hero" id="hero">
-      <div class="hero-bg">
-        <div class="hero-glow hero-glow-1"></div>
-        <div class="hero-glow hero-glow-2"></div>
-        <div class="hero-grid"></div>
-      </div>
-
-      <div class="container">
-        <div class="hero-content">
-          <div class="hero-badge">
-            <span class="badge-dot"></span>Native macOS · Free Download
-          </div>
-
-          <h1 class="hero-title" data-klar-edit="">The timer that<br>
-            <span class="gradient-text">gets out of your way</span>
-          </h1>
-
-          <p class="hero-subtitle">Mob Timer is a minimal macOS timer built for deep focus sessions and collaborative
-            mob programming. Start in seconds. Stay in the zone.</p>
-
-          <div class="hero-actions">
-            <a href="#download" class="btn btn-primary btn-lg">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
-              Download for Mac
-            </a>
-            <a href="/assets/Mob Timer.dmg" download="" class="btn btn-ghost btn-lg">
-              See features
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
-            </a>
-          </div>
-
-          <div class="hero-meta">
-            <span>macOS 13+</span>
-            <span class="meta-dot">·</span>
-            <span>Native SwiftUI</span>
-            <span class="meta-dot">·</span>
-            <span>No subscription</span>
-          </div>
-        </div>
-
-        <!-- App Window Mockup -->
-        <div class="hero-visual">
-          <div class="app-window app-window-mob">
-            <div class="window-chrome">
-              <div class="window-dots">
-                <span class="dot dot-red"></span>
-                <span class="dot dot-yellow"></span>
-                <span class="dot dot-green"></span>
-              </div>
-            </div>
-            <div class="window-body mob-window-body">
-              <img src="images/app-screenshot.png" alt="Mob Timer app" class="app-screenshot">
-              <div class="screenshot-time-overlay" id="screenshot-timer">
-                07:28
-              </div>
-            </div>
-          </div>
-          <div class="window-reflection"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== SOCIAL PROOF ========== -->
-    <section class="social-proof" id="social-proof">
-      <div class="container">
-        <p class="proof-label">Built for developers who value focus</p>
-        <div class="proof-stats">
-          <div class="stat">
-            <span class="stat-num">3</span>
-            <span class="stat-desc">Timer presets</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-num">∞</span>
-            <span class="stat-desc">Custom durations</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-num">0</span>
-            <span class="stat-desc">Subscriptions</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-num">100%</span>
-            <span class="stat-desc">Native macOS</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== MOB PROGRAMMING ========== -->
-    <section class="mob-section" id="mob-programming">
-      <div class="mob-bg">
-        <div class="mob-glow mob-glow-1"></div>
-        <div class="mob-glow mob-glow-2"></div>
-      </div>
-      <div class="container">
-        <div class="mob-layout">
-          <div class="mob-copy">
-            <div class="section-tag">Core Feature</div>
-            <h2 class="section-title" style="text-align: left">
-              Mob programming,<br><span class="gradient-text">perfectly in sync</span>
-            </h2>
-            <p class="mob-lead">
-              Mob Timer is built around a single shared countdown that every
-              teammate sees at the same time—no drift, no confusion about whose
-              turn it is.
-            </p>
-
-            <div class="mob-steps" data-klar-list="">
-              <div class="mob-step">
-                <div class="mob-step-num">1</div>
-                <div>
-                  <strong>Create a session</strong>
-                  <p>Start a new session in one click. Get a shareable code instantly, or give it a permanent name your
-                    team can always find. hehe</p>
-                </div>
-              </div>
-              <div class="mob-step">
-                <div class="mob-step-num">2</div>
-                <div>
-                  <strong>Share the code</strong>
-                  <p>Every team member opens Mob Timer and joinsss with the code. The timer and queue sync across all
-                    Macs in real time.</p>
-                </div>
-              </div>
-              <div class="mob-step">
-                <div class="mob-step-num">3</div>
-                <div>
-                  <strong>Auto-rotate drivers</strong>
-                  <p>
-                    When a turn ends, everyone gets notified and the next driver
-                    is automatically highlighted. No manual coordination needed.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="mob-tags" data-list=""><span class="mob-tag">Real-time sync</span>
-              <span class="mob-tag">Persistent named sessions</span>
-              <span class="mob-tag">Auto-rotation</span>
-            </div>
-          </div>
-
-          <div class="mob-visual">
-            <div class="mob-flow">
-              <!-- Settings / Join card -->
-              <div class="flow-card flow-card-create">
-                <div class="flow-settings-title">Settings</div>
-                <div class="flow-settings-section">
-                  <div class="flow-settings-label">MOB TIMER SESSION</div>
-                  <div class="flow-settings-desc">
-                    A shared timer for your whole team. Everyone sees the same
-                    countdown and knows whose turn it is to drive.
-                  </div>
-                  <div class="flow-input-field">Session code or name</div>
-                  <button class="flow-join-btn">Join Session</button>
-                  <div class="flow-or-divider">or create</div>
-                  <div class="flow-input-field">Session name (optional)</div>
-                  <button class="flow-create-btn">Create Session</button>
-                </div>
-              </div>
-
-              <!-- Arrow -->
-              <div class="flow-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round"></path>
-                </svg>
-              </div>
-
-              <!-- Active Mob Timer card -->
-              <div class="flow-card flow-card-active">
-                <div class="flow-app-tabs">
-                  <span class="flow-app-tab active">Mob Timer</span>
-                  <span class="flow-app-tab">Break Timer</span>
-                </div>
-
-                <div class="flow-ring-wrap">
-                  <svg viewBox="0 0 100 100" class="flow-ring-svg">
-                    <circle cx="50" cy="50" r="42" class="ring-track"></circle>
-                    <circle cx="50" cy="50" r="42" class="ring-progress flow-ring-progress" style="--progress: 0.55">
-                    </circle>
-                  </svg>
-                  <div class="flow-ring-inner">
-                    <div class="flow-driver-name">SUZANNE</div>
-                    <span class="flow-time" id="flow-time">05:06</span>
-                    <div class="flow-driving-sub">Now driving</div>
-                  </div>
-                </div>
-
-                <div class="flow-next-label">Next: Gabriel</div>
-
-                <div style="flex: 1"></div>
-
-                <div class="flow-participants-bar">
-                  <span class="flow-p-label">PARTICIPANTS</span>
-                  <span class="flow-session-code">Session: NEWSWEB</span>
-                </div>
-                <div class="flow-chips">
-                  <span class="flow-chip">Siri ×</span>
-                  <span class="flow-chip flow-chip-active">● Suzanne ×</span>
-                  <span class="flow-chip">Gabriel ×</span>
-                  <span class="flow-chip">Richard ×</span>
-                  <span class="flow-chip flow-chip-add">+</span>
-                </div>
-
-                <!-- Notification toast -->
-                <div class="flow-toast" id="flow-toast">
-                  <span class="flow-toast-icon">🔔</span>
-                  <div class="flow-toast-text">
-                    <strong>Turn complete!</strong>
-                    <span>Gabriel is now driving.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Sync indicator -->
-            <div class="mob-sync-bar">
-              <div class="sync-dot"></div>
-              <span>Synced across all team members</span>
-              <span class="sync-sep">·</span>
-              <span class="sync-ts">Updated just now</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== BREAK TIMER ========== -->
-    <section class="app-showcase" id="break-timer">
-      <div class="container">
-        <div class="app-showcase-inner">
-          <div class="app-showcase-content">
-            <div class="section-tag">Break Timer</div>
-            <h2 class="section-title" style="text-align: left">Work deeply.<br>Rest intentionally.</h2>
-            <p class="app-showcase-desc">
-              Mob Timer's Break Timer keeps your work sessions structured. Pick
-              a cycle preset — Pomodoro, Deep Work, or your own custom rhythm —
-              and let the app handle the rest. A gentle ring tracks your
-              progress so you stay in the zone without watching the clock.
-            </p>
-            <ul class="app-showcase-points">
-              <li>Pomodoro, Deep Work, Quick, and Custom presets</li>
-              <li>Visual ring progress — always glanceable</li>
-              <li>Shared across your whole team in real time</li>
-            </ul>
-          </div>
-          <div class="app-showcase-visual">
-            <img src="images/app-break-timer.png" alt="Mob Timer Break Timer" class="app-showcase-img">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== FEATURES ========== -->
-    <section class="features" id="features">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-tag">Features</div>
-          <h2 class="section-title">Everything you need,<br>nothing you don't</h2>
-          <p class="section-subtitle">
-            Mob Timer strips away the noise so you can focus on what matters.
-            Every feature is intentional.
-          </p>
-        </div>
-
-        <div class="features-grid">
-          <div class="feature-card feature-card-large">
-            <div class="feature-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M11 3C7.134 3 4 6.134 4 10s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" stroke="currentColor"
-                  stroke-width="1.5"></path>
-                <path d="M11 7v4l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-              </svg>
-            </div>
-            <h3>Persistent Sessions</h3>
-            <p>
-              Name your session and it's always there. Rejoin tomorrow with the
-              same code, same queue, same team—pick up exactly where you left
-              off.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <rect x="3" y="3" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.5"></rect>
-                <path d="M8 11h6M11 8v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-              </svg>
-            </div>
-            <h3>Mob Programming</h3>
-            <p>
-              Shared sessions sync across multiple Macs in real time. Every team
-              member stays perfectly in sync—down to the millisecond.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M7 4h8M5 8h12M9 12h4M11 16v0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                </path>
-              </svg>
-            </div>
-            <h3>Distraction-Free</h3>
-            <p>
-              Frameless floating window lives quietly in your corner. A status
-              bar icon shows your remaining time without stealing focus.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M4 11a7 7 0 0 1 7-7M18 11a7 7 0 0 1-7 7" stroke="currentColor" stroke-width="1.5"
-                  stroke-linecap="round"></path>
-                <path d="M15 7l3-3 1 4-4-1M7 15l-3 3-1-4 4 1" stroke="currentColor" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            </div>
-            <h3>Turn Rotation</h3>
-            <p>
-              When a turn ends, the next driver is automatically highlighted and
-              everyone gets notified. Fair, effortless, zero manual
-              coordination.
-            </p>
-          </div>
-
-          <div class="feature-card feature-card-accent">
-            <div class="feature-icon">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.5"></circle>
-                <path d="M11 6v5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-              </svg>
-            </div>
-            <h3>Instant Timer Setup</h3>
-            <p>
-              One click to start a Pomodoro, Deep Work, or Quick session. No
-              configuration hell—just focused work from the moment you open the
-              app.
-            </p>
-            <div class="feature-pill">Pomodoro · Deep Work · Quick</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== HOW IT WORKS ========== -->
-    <section class="how-it-works" id="how-it-works">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-tag">How it works</div>
-          <h2 class="section-title">Three steps to<br>pure focus</h2>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <div class="step-number">01</div>
-            <div class="step-content">
-              <h3>Share a session</h3>
-              <p>
-                Create a session and share the code with your team. Everyone
-                joins instantly — no accounts, no setup required.
-              </p>
-            </div>
-            <div class="step-visual">
-              <div class="step-card step-card-session">
-                <div class="app-settings-label">MOB TIMER SESSION</div>
-                <div class="app-settings-desc">
-                  A shared timer for your whole team. Everyone sees the same
-                  countdown and knows whose turn it is to drive.
-                </div>
-                <div class="app-input-field">Session code or name</div>
-                <button class="app-join-btn">Join Session</button>
-                <div class="app-divider">or create</div>
-                <div class="app-input-field">Session name (optional)</div>
-                <button class="app-create-btn">Create Session</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="step-connector">
-            <div class="connector-line"></div>
-          </div>
-
-          <div class="step">
-            <div class="step-number">02</div>
-            <div class="step-content">
-              <h3>Focus on your work</h3>
-              <p>
-                Once your session is running, Mob Timer stays out of your way. A
-                countdown in the menu bar keeps everyone on track—no switching
-                windows, no interruptions.
-              </p>
-            </div>
-            <div class="step-visual">
-              <div class="step-card step-card-timer">
-                <div class="step-menubar">
-                  <span class="step-menubar-spacer"></span>
-                  <span class="step-menubar-item" id="step-menubar-time">Gabriel: 07:28</span>
-                </div>
-                <div class="app-ring-container">
-                  <svg viewBox="0 0 100 100" class="app-ring-svg">
-                    <circle cx="50" cy="50" r="42" class="app-ring-track"></circle>
-                    <circle cx="50" cy="50" r="42" class="app-ring-progress" id="step-ring-progress"
-                      style="--progress: 0.5"></circle>
-                  </svg>
-                  <div class="app-ring-inner">
-                    <div class="app-ring-name">GABRIEL</div>
-                    <div class="app-ring-time">03:28</div>
-                    <div class="app-ring-label">Now driving</div>
-                  </div>
-                </div>
-                <div class="app-next-label">Next: Siri</div>
-                <div class="app-participants-row">
-                  <span class="app-participant">Siri</span>
-                  <span class="app-participant active">Gabriel</span>
-                  <span class="app-participant">Bekhal</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="step-connector">
-            <div class="connector-line"></div>
-          </div>
-
-          <div class="step">
-            <div class="step-number">03</div>
-            <div class="step-content">
-              <h3>Set your work and break intervals</h3>
-              <p>
-                Choose how long to focus and how long to rest. Mob Timer handles
-                the countdown and alerts you when it's time to take a break.
-              </p>
-            </div>
-            <div class="step-visual">
-              <div class="step-card step-card-presets">
-                <div class="app-settings-label">CYCLE PRESET</div>
-                <div class="app-preset-grid">
-                  <div class="app-preset-item">
-                    <div class="app-preset-name">Pomodoro</div>
-                    <div class="app-preset-sub">25 / 5</div>
-                  </div>
-                  <div class="app-preset-item">
-                    <div class="app-preset-name">Deep Work</div>
-                    <div class="app-preset-sub">50 / 10</div>
-                  </div>
-                  <div class="app-preset-item active">
-                    <div class="app-preset-name">Quick</div>
-                    <div class="app-preset-sub">15 / 3</div>
-                  </div>
-                  <div class="app-preset-item">
-                    <div class="app-preset-name">Custom</div>
-                    <div class="app-preset-sub">28 / 5</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== APP PREVIEW ========== -->
-    <section class="preview" id="preview" style="display: none">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-tag">App Preview</div>
-          <h2 class="section-title">
-            Built for the way<br>you actually work
-          </h2>
-          <p class="section-subtitle">
-            Every pixel designed to minimize friction and maximize focus.
-          </p>
-        </div>
-
-        <div class="preview-grid">
-          <!-- Mob Timer Preview -->
-          <div class="preview-window preview-window-main">
-            <div class="window-chrome">
-              <div class="window-dots">
-                <span class="dot dot-red"></span>
-                <span class="dot dot-yellow"></span>
-                <span class="dot dot-green"></span>
-              </div>
-            </div>
-            <div class="window-body preview-body">
-              <div class="app-tabs">
-                <button class="app-tab active">Mob Timer</button>
-                <button class="app-tab">Break Timer</button>
-                <button class="app-tab app-tab-icon">
-                  <svg width="16" height="12" viewBox="0 0 20 14" fill="none">
-                    <ellipse cx="10" cy="10" rx="4" ry="4" fill="#4a9eff" opacity="0.3"></ellipse>
-                    <circle cx="10" cy="10" r="3" fill="#4a9eff"></circle>
-                    <ellipse cx="4" cy="9" rx="3" ry="3" fill="#4a9eff" opacity="0.6"></ellipse>
-                    <ellipse cx="16" cy="9" rx="3" ry="3" fill="#4a9eff" opacity="0.6"></ellipse>
-                  </svg>
-                </button>
-              </div>
-              <div class="pv-ring-wrap">
-                <svg viewBox="0 0 180 180" class="pv-ring-svg">
-                  <circle cx="90" cy="90" r="75" class="pv-ring-track"></circle>
-                  <circle cx="90" cy="90" r="75" class="pv-ring-progress pv-ring-green" style="--progress: 0.78">
-                  </circle>
-                </svg>
-                <div class="pv-ring-inner">
-                  <div class="pv-driver-name">GABRIEL</div>
-                  <div class="pv-time pv-time-green">03:28</div>
-                  <div class="pv-sublabel">Now driving</div>
-                </div>
-              </div>
-              <div class="pv-next">Next: Siri</div>
-              <div class="pv-duration-row">
-                <span class="pv-dur-btn">−</span>
-                <span class="pv-dur-val">15 min</span>
-                <span class="pv-dur-btn">+</span>
-              </div>
-              <div class="pv-controls">
-                <button class="pv-ctrl-btn">↺</button>
-                <button class="pv-ctrl-btn pv-ctrl-main pv-ctrl-green">
-                  ⏸
-                </button>
-                <button class="pv-ctrl-btn">⏭</button>
-              </div>
-              <div class="pv-participants-section">
-                <div class="pv-participants-header">
-                  <span class="pv-participants-label">PARTICIPANTS</span>
-                  <span class="pv-session-tag">Session: NEWSWEB <span class="pv-dot-green">●</span></span>
-                </div>
-                <div class="pv-chips">
-                  <span class="pv-chip">Siri ×</span>
-                  <span class="pv-chip">Bekhal ×</span>
-                  <span class="pv-chip pv-chip-active">● Gabriel ×</span>
-                  <span class="pv-chip pv-chip-add">+</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Break Timer Preview -->
-          <div class="preview-window preview-window-side">
-            <div class="window-chrome">
-              <div class="window-dots">
-                <span class="dot dot-red"></span>
-                <span class="dot dot-yellow"></span>
-                <span class="dot dot-green"></span>
-              </div>
-            </div>
-            <div class="window-body preview-body">
-              <div class="app-tabs">
-                <button class="app-tab">Mob Timer</button>
-                <button class="app-tab active">Break Timer</button>
-                <button class="app-tab app-tab-icon">
-                  <svg width="16" height="12" viewBox="0 0 20 14" fill="none">
-                    <ellipse cx="10" cy="10" rx="4" ry="4" fill="#4a9eff" opacity="0.3"></ellipse>
-                    <circle cx="10" cy="10" r="3" fill="#4a9eff"></circle>
-                    <ellipse cx="4" cy="9" rx="3" ry="3" fill="#4a9eff" opacity="0.6"></ellipse>
-                    <ellipse cx="16" cy="9" rx="3" ry="3" fill="#4a9eff" opacity="0.6"></ellipse>
-                  </svg>
-                </button>
-              </div>
-              <div class="pv-ring-wrap">
-                <svg viewBox="0 0 180 180" class="pv-ring-svg">
-                  <circle cx="90" cy="90" r="75" class="pv-ring-track"></circle>
-                  <circle cx="90" cy="90" r="75" class="pv-ring-progress pv-ring-blue" style="--progress: 0"></circle>
-                </svg>
-                <div class="pv-ring-inner">
-                  <div class="pv-driver-name">WORK</div>
-                  <div class="pv-time pv-time-blue">28:00</div>
-                  <div class="pv-sublabel">Locked in. Keep it up.</div>
-                </div>
-              </div>
-              <div class="pv-duration-row">
-                <span class="pv-dur-btn">−</span>
-                <span class="pv-dur-val">28 min</span>
-                <span class="pv-dur-btn">+</span>
-              </div>
-              <div class="pv-controls">
-                <button class="pv-ctrl-btn">↺</button>
-                <button class="pv-ctrl-btn pv-ctrl-main pv-ctrl-blue">▶</button>
-                <button class="pv-ctrl-btn">⏭</button>
-              </div>
-              <div class="pv-participants-section">
-                <div class="pv-participants-header">
-                  <span class="pv-participants-label">CYCLE PRESET</span>
-                  <span class="pv-session-tag">Session: NEWSWEB <span class="pv-dot-green">●</span></span>
-                </div>
-                <div class="pv-preset-grid">
-                  <div class="pv-preset">
-                    Pomodoro<br><small>25 / 5</small>
-                  </div>
-                  <div class="pv-preset">
-                    Deep Work<br><small>50 / 10</small>
-                  </div>
-                  <div class="pv-preset">Quick<br><small>15 / 3</small></div>
-                  <div class="pv-preset pv-preset-active">
-                    Custom<br><small>28 / 5</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Settings Preview -->
-          <div class="preview-menubar">
-            <div class="menubar-window pv-settings-panel">
-              <div class="pv-settings-title">Settings</div>
-              <div class="pv-settings-section">
-                <div class="pv-settings-section-title">Mob Timer Session</div>
-                <div class="pv-settings-section-desc">
-                  A shared timer for your whole team. Everyone sees the same
-                  countdown and knows whose turn it is to drive.
-                </div>
-                <div class="pv-connected-row">
-                  <div>
-                    <div class="pv-connected-label">CONNECTED</div>
-                    <div class="pv-connected-name">NEWSWEB</div>
-                  </div>
-                  <div class="pv-connected-actions">
-                    <button class="pv-icon-btn">⎘</button>
-                    <button class="pv-leave-btn">Leave</button>
-                  </div>
-                </div>
-              </div>
-              <div class="pv-settings-section">
-                <div class="pv-settings-section-title">Break Timer Sync</div>
-                <div class="pv-settings-section-desc">
-                  Join a session to sync your break timer with teammates. Break
-                  phases are shared across all participants.
-                </div>
-                <div class="pv-connected-row">
-                  <div>
-                    <div class="pv-connected-label">CONNECTED</div>
-                    <div class="pv-connected-name">NEWSWEB</div>
-                  </div>
-                  <div class="pv-connected-actions">
-                    <button class="pv-icon-btn">⎘</button>
-                    <button class="pv-leave-btn">Leave</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== WHY MOB TIMER ========== -->
-    <section class="why" id="why-mob-timer">
-      <div class="container">
-        <div class="why-grid">
-          <div class="why-content">
-            <div class="section-tag">Why Mob Timer</div>
-            <h2 class="section-title">Timers shouldn't<br>add friction</h2>
-            <p class="why-body">
-              Most timers demand your attention. They fight for screen space,
-              interrupt your flow, and drown you in settings. Mob Timer takes
-              the opposite approach.
-            </p>
-            <p class="why-body">
-              It launches instantly, stays out of the way, and does exactly one
-              job exceptionally well: keeping track of time while you focus on
-              the work that matters.
-            </p>
-            <div class="why-points">
-              <div class="why-point">
-                <div class="why-check">✓</div>
-                <div>
-                  <strong>Native, not Electron</strong>
-                  <p>
-                    Pure SwiftUI. Lightweight, fast, and battery-friendly by
-                    default.
-                  </p>
-                </div>
-              </div>
-              <div class="why-point">
-                <div class="why-check">✓</div>
-                <div>
-                  <strong>No account required</strong>
-                  <p>
-                    Download and run. No sign-ups, no onboarding flows, no
-                    friction.
-                  </p>
-                </div>
-              </div>
-              <div class="why-point">
-                <div class="why-check">✓</div>
-                <div>
-                  <strong>Designed for deep work</strong>
-                  <p>
-                    Every design decision optimizes for minimizing interruptions
-                    and maximizing flow.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="why-compare">
-            <div class="compare-card">
-              <div class="compare-header compare-bad">
-                <span>Other timers</span>
-              </div>
-              <ul class="compare-list">
-                <li class="compare-item bad">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 2l10 10M12 2L2 12" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"></path>
-                  </svg>
-                  Cluttered interfaces
-                </li>
-                <li class="compare-item bad">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 2l10 10M12 2L2 12" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"></path>
-                  </svg>
-                  Web-based (slow)
-                </li>
-                <li class="compare-item bad">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 2l10 10M12 2L2 12" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"></path>
-                  </svg>
-                  Require subscriptions
-                </li>
-                <li class="compare-item bad">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 2l10 10M12 2L2 12" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"></path>
-                  </svg>
-                  No team sync
-                </li>
-                <li class="compare-item bad">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 2l10 10M12 2L2 12" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"></path>
-                  </svg>
-                  Generic, not macOS-native
-                </li>
-              </ul>
-            </div>
-            <div class="compare-card compare-card-good">
-              <div class="compare-header compare-good">
-                <span>Mob Timer</span>
-                <span class="compare-badge">You're here</span>
-              </div>
-              <ul class="compare-list">
-                <li class="compare-item good">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-                  </svg>
-                  Minimal, focused UI
-                </li>
-                <li class="compare-item good">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-                  </svg>
-                  Native SwiftUI app
-                </li>
-                <li class="compare-item good">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-                  </svg>
-                  Free forever
-                </li>
-                <li class="compare-item good">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-                  </svg>
-                  Real-time mob sync
-                </li>
-                <li class="compare-item good">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-                  </svg>
-                  Designed for macOS
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== DOWNLOAD CTA ========== -->
-    <section class="download-cta" id="download">
-      <div class="cta-bg">
-        <div class="cta-glow"></div>
-      </div>
-      <div class="container">
-        <div class="cta-content">
-          <div class="cta-icon">
-            <img src="logo-large.png" alt="Mob Timer" width="72" height="72"
-              style="filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5))">
-          </div>
-          <h2 class="cta-title">Start focusing today.</h2>
-          <p class="cta-subtitle">
-            Free. Native. No sign-up required. Just download and run.
-          </p>
-          <a href="#" id="download-btn" class="btn btn-cta">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M9 1v11M4 8l5 5 5-5M2 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round"></path>
-            </svg>
-            Download Mob Timer for macOS
-          </a>
-          <p class="cta-meta">Requires macOS 13 Ventura or later · Free</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== CONTACT ========== -->
-    <script>
-      // Contact form interaction
-      const contactForm = document.getElementById('contact-form');
-      if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-
-          const submitBtn = contactForm.querySelector('.contact-submit');
-          const submitText = contactForm.querySelector('.contact-submit-text');
-          const successMsg = document.getElementById('contact-success');
-
-          // Disable button and show loading state
-          submitBtn.disabled = true;
-          submitBtn.style.opacity = '0.7';
-          submitText.textContent = 'Sending...';
-
-          // Simulate send delay
-          setTimeout(() => {
-            // Show success
-            successMsg.classList.add('visible');
-            submitText.textContent = 'Send Message';
-            submitBtn.style.opacity = '1';
-            submitBtn.disabled = false;
-
-            // Reset form
-            contactForm.reset();
-
-            // Hide success after 5s
-            setTimeout(() => {
-              successMsg.classList.remove('visible');
-            }, 5000);
-          }, 1500);
-        });
-      }
-    </script>
-    <style>
-      .contact-section {
-        padding: 120px 0;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .contact-section::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 800px;
-        height: 600px;
-        background: radial-gradient(ellipse,
-            rgba(64, 140, 255, 0.06) 0%,
-            rgba(99, 102, 241, 0.03) 40%,
-            transparent 70%);
-        filter: blur(60px);
-        pointer-events: none;
-      }
-
-      .contact-layout {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 80px;
-        align-items: start;
-        position: relative;
-        z-index: 1;
-      }
-
-      .contact-info .section-tag {
-        display: inline-block;
-        margin-bottom: 20px;
-      }
-
-      .contact-info .section-title {
-        text-align: left;
-        margin-bottom: 20px;
-      }
-
-      .contact-desc {
-        font-size: 16px;
-        color: var(--text-2);
-        line-height: 1.7;
-        margin-bottom: 40px;
-        max-width: 420px;
-      }
-
-      .contact-details {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .contact-detail-item {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-      }
-
-      .contact-detail-icon {
-        width: 44px;
-        height: 44px;
-        background: rgba(64, 140, 255, 0.1);
-        border: 1px solid rgba(64, 140, 255, 0.2);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--accent);
-        flex-shrink: 0;
-      }
-
-      .contact-detail-item strong {
-        display: block;
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--text);
-        margin-bottom: 2px;
-      }
-
-      .contact-detail-item span {
-        font-size: 13px;
-        color: var(--text-2);
-      }
-
-      /* Form card */
-      .contact-form-wrap {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-lg);
-        padding: 36px;
-        box-shadow: var(--shadow);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .contact-form-wrap::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.03) 0%,
-            transparent 60%);
-        pointer-events: none;
-      }
-
-      .contact-form {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        position: relative;
-      }
-
-      .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-      }
-
-      .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-
-      .form-label {
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--text-2);
-        letter-spacing: -0.01em;
-      }
-
-      .form-input {
-        width: 100%;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        padding: 12px 14px;
-        font-size: 14px;
-        color: var(--text);
-        font-family: var(--font);
-        outline: none;
-        transition: all var(--transition);
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .form-input::placeholder {
-        color: var(--text-3);
-      }
-
-      .form-input:hover {
-        border-color: var(--border-hover);
-        background: rgba(255, 255, 255, 0.06);
-      }
-
-      .form-input:focus {
-        border-color: var(--accent);
-        background: rgba(64, 140, 255, 0.04);
-        box-shadow: 0 0 0 3px rgba(64, 140, 255, 0.1);
-      }
-
-      .form-textarea {
-        resize: vertical;
-        min-height: 120px;
-        line-height: 1.6;
-      }
-
-      .contact-submit {
-        align-self: flex-start;
-        margin-top: 4px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .contact-submit-icon {
-        transition: transform var(--transition);
-      }
-
-      .contact-submit:hover .contact-submit-icon {
-        transform: translate(2px, -2px);
-      }
-
-      /* Success message */
-      .contact-success {
-        display: none;
-        align-items: center;
-        gap: 10px;
-        padding: 14px 18px;
-        background: rgba(74, 222, 128, 0.08);
-        border: 1px solid rgba(74, 222, 128, 0.2);
-        border-radius: var(--radius-sm);
-        font-size: 14px;
-        font-weight: 500;
-        color: var(--accent-green);
-        animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-      }
-
-      .contact-success.visible {
-        display: flex;
-      }
-
-      /* Responsive */
-      @media (max-width: 900px) {
-        .contact-layout {
-          grid-template-columns: 1fr;
-          gap: 48px;
+        /* ========================================
+           HERO SECTION
+           ======================================== */
+        .hero {
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .contact-info .section-title {
-          text-align: center;
+        /* Hero Background with Gradient Overlay */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
         }
 
-        .contact-info .section-tag {
-          display: block;
-          text-align: center;
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, var(--canvas) 0%, var(--surface) 100%);
+            z-index: 1;
         }
 
-        .contact-desc {
-          text-align: center;
-          margin: 0 auto 40px;
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            filter: grayscale(30%);
         }
 
-        .contact-details {
-          align-items: center;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .form-row {
-          grid-template-columns: 1fr;
-        }
-
-        .contact-form-wrap {
-          padding: 24px;
+        /* Ambient Glow Effects */
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            filter: blur(80px);
+            animation: float 8s ease-in-out infinite;
+            pointer-events: none;
         }
 
-        .contact-submit {
-          width: 100%;
-          justify-content: center;
+        .hero-glow--left {
+            top: 20%;
+            left: -10%;
         }
-      }
+
+        .hero-glow--right {
+            bottom: 10%;
+            right: -10%;
+            animation-delay: -4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 800;
+            color: var(--ink-primary);
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title span {
+            display: block;
+            background: linear-gradient(135deg, var(--ink-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            color: var(--ink-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 480px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Primary Button */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-family: var(--font-display);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            transition: all var(--duration-fast) var(--ease-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--canvas);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left var(--duration-slow) var(--ease-smooth);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px var(--accent);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: var(--ink-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass-hover);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+        }
+
+        .hero-image-frame {
+            position: relative;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-glass);
+        }
+
+        .hero-image-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero-image-frame img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            transition: transform var(--duration-slow) var(--ease-smooth);
+        }
+
+        .hero-image-frame:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Floating Badge */
+        .hero-float-badge {
+            position: absolute;
+            bottom: -20px;
+            left: -30px;
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: floatBadge 4s ease-in-out infinite;
+        }
+
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-float-badge .icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-glow);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+
+        .hero-float-badge .text {
+            font-size: 0.875rem;
+        }
+
+        .hero-float-badge .text strong {
+            display: block;
+            color: var(--ink-primary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text {
+                max-width: 100%;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+        }
+
+        /* ========================================
+           ABOUT SECTION
+           ======================================== */
+        .about {
+            position: relative;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image-stack {
+            position: relative;
+        }
+
+        .about-image-main {
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-diffused);
+        }
+
+        .about-image-main img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .about-image-secondary {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 200px;
+            height: 250px;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 4px solid var(--canvas);
+            box-shadow: var(--shadow-diffused);
+        }
+
+        .about-image-secondary img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-content .section-title {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text {
+            font-size: 1.0625rem;
+            color: var(--ink-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .about-feature {
+            text-align: center;
+        }
+
+        .about-feature-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--accent-glow);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.75rem;
+            color: var(--accent);
+        }
+
+        .about-feature h4 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+        }
+
+        .about-feature p {
+            font-size: 0.8125rem;
+            color: var(--ink-muted);
+        }
+
+        @media (max-width: 968px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-image-stack {
+                order: -1;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .about-features {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-features {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .about-feature {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                text-align: left;
+            }
+
+            .about-feature-icon {
+                margin: 0;
+            }
+        }
+
+        /* ========================================
+           MENU SECTION
+           ======================================== */
+        .menu {
+            position: relative;
+        }
+
+        .menu-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+        }
+
+        .menu-header .section-title {
+            margin-bottom: 1rem;
+        }
+
+        .menu-header p {
+            color: var(--ink-secondary);
+        }
+
+        /* Menu Filter Tabs */
+        .menu-filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .menu-filter {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--ink-secondary);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            transition: all var(--duration-fast) var(--ease-smooth);
+            cursor: pointer;
+        }
+
+        .menu-filter:hover {
+            background: var(--glass-hover);
+            color: var(--ink-primary);
+        }
+
+        .menu-filter.active {
+            background: var(--accent);
+            color: var(--canvas);
+            border-color: var(--accent);
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            display: flex;
+            gap: 1.25rem;
+            transition: all var(--duration-normal) var(--ease-smooth);
+            cursor: pointer;
+        }
+
+        .menu-card:hover {
+            background: var(--glass-hover);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glass);
+        }
+
+        .menu-card-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 1rem;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .menu-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--duration-normal) var(--ease-smooth);
+        }
+
+        .menu-card:hover .menu-card-image img {
+            transform: scale(1.1);
+        }
+
+        .menu-card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-card-name {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+        }
+
+        .menu-card-price {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .menu-card-description {
+            font-size: 0.875rem;
+            color: var(--ink-muted);
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .menu-card-tag {
+            display: inline-block;
+            margin-top: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 1rem;
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-card {
+                flex-direction: column;
+            }
+
+            .menu-card-image {
+                width: 100%;
+                height: 180px;
+            }
+        }
+
+        /* ========================================
+           GALLERY SECTION
+           ======================================== */
+        .gallery {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .gallery-header .section-title {
+            margin-bottom: 1rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 280px);
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-item:nth-child(1) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--duration-slow) var(--ease-smooth);
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.6) 100%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity var(--duration-normal) var(--ease-smooth);
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 2;
+            transition: transform var(--duration-normal) var(--ease-spring);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+
+        .gallery-item:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, 200px);
+            }
+
+            .gallery-item:nth-child(1) {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+
+            .gallery-item,
+            .gallery-item:nth-child(1) {
+                grid-column: span 1;
+                grid-row: span 1;
+                height: 200px;
+            }
+        }
+
+        /* ========================================
+           CONTACT SECTION
+           ======================================== */
+        .contact {
+            position: relative;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: all var(--duration-normal) var(--ease-smooth);
+        }
+
+        .contact-card:hover {
+            background: var(--glass-hover);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-glow);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .contact-card h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-card p {
+            font-size: 0.9375rem;
+            color: var(--ink-secondary);
+        }
+
+        /* Contact Form */
+        .contact-form-wrapper {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+        }
+
+        .contact-form h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-form > p {
+            color: var(--ink-muted);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--ink-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            color: var(--ink-primary);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 0.75rem;
+            transition: all var(--duration-fast) var(--ease-smooth);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--ink-muted);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .form-textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .form-success.show {
+            display: block;
+        }
+
+        .form-success svg {
+            width: 64px;
+            height: 64px;
+            color: var(--accent);
+            margin: 0 auto 1rem;
+        }
+
+        .form-success h4 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--ink-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-success p {
+            color: var(--ink-secondary);
+        }
+
+        @media (max-width: 968px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        .footer {
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ink-primary);
+            letter-spacing: 0.1em;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .footer-tagline {
+            font-size: 0.875rem;
+            color: var(--ink-muted);
+        }
+
+        /* Social Links */
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 0.75rem;
+            color: var(--ink-secondary);
+            transition: all var(--duration-fast) var(--ease-smooth);
+        }
+
+        .footer-social a:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--canvas);
+            transform: translateY(-4px);
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .footer-copyright {
+            font-size: 0.8125rem;
+            color: var(--ink-muted);
+        }
+
+        .footer-copyright a {
+            color: var(--accent);
+            transition: color var(--duration-fast) var(--ease-smooth);
+        }
+
+        .footer-copyright a:hover {
+            color: var(--accent-hover);
+        }
+
+        @media (max-width: 640px) {
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* ========================================
+           LOADING OVERLAY
+           ======================================== */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--canvas);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s var(--ease-smooth), visibility 0.6s var(--ease-smooth);
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-logo {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--ink-primary);
+            letter-spacing: 0.1em;
+            animation: loaderPulse 1.5s ease-in-out infinite;
+        }
+
+        .loader-logo span {
+            color: var(--accent);
+        }
+
+        @keyframes loaderPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: var(--glass-border);
+            margin: 1.5rem auto 0;
+            border-radius: 1px;
+            overflow: hidden;
+        }
+
+        .loader-progress {
+            height: 100%;
+            background: var(--accent);
+            width: 0;
+            animation: loaderProgress 2s var(--ease-smooth) forwards;
+        }
+
+        @keyframes loaderProgress {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
     </style>
-    <section id="contact" class="contact-section">
-      <div class="container">
-        <div class="contact-layout">
-          <div class="contact-info">
-            <span class="section-tag">Get in Touch</span>
-            <h2 class="section-title">Let's start a<br><span class="gradient-text">conversation</span></h2>
-            <p class="contact-desc">Have a question, feedback, or just want to say hello? We'd love to hear from you.
-              Fill out the form and we'll get back to you shortly.</p>
-            <div class="contact-details">
-              <div class="contact-detail-item">
-                <div class="contact-detail-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                  </svg>
-                </div>
-                <div>
-                  <strong>Email us</strong>
-                  <span>hello@mobtimer.app</span>
-                </div>
-              </div>
-              <div class="contact-detail-item">
-                <div class="contact-detail-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
-                    <circle cx="12" cy="9" r="2.5"></circle>
-                  </svg>
-                </div>
-                <div>
-                  <strong>Based in</strong>
-                  <span>San Francisco, CA</span>
-                </div>
-              </div>
-              <div class="contact-detail-item">
-                <div class="contact-detail-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
-                </div>
-                <div>
-                  <strong>Response time</strong>
-                  <span>Within 24 hours</span>
-                </div>
-              </div>
+</head>
+<body>
+
+    <!-- ========================================
+         LOADING SCREEN
+         ======================================== -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">AURELIA<span>.</span></div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
             </div>
-          </div>
-          <div class="contact-form-wrap">
-            <form id="contact-form" class="contact-form" onsubmit="return false;">
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label" for="contact-name">Name</label>
-                  <input class="form-input" type="text" id="contact-name" placeholder="Your name" required="">
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="contact-email">Email</label>
-                  <input class="form-input" type="email" id="contact-email" placeholder="you@example.com" required="">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="contact-subject">Subject</label>
-                <input class="form-input" type="text" id="contact-subject" placeholder="What's this about?">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="contact-message">Message</label>
-                <textarea class="form-input form-textarea" id="contact-message" rows="5" placeholder="Tell us more..."
-                  required=""></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary btn-lg contact-submit">
-                <span class="contact-submit-text">Send Message</span>
-                <svg class="contact-submit-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="22" y1="2" x2="11" y2="13"></line>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-              </button>
-              <div id="contact-success" class="contact-success">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Message sent! We'll get back to you soon.</span>
-              </div>
-            </form>
-          </div>
         </div>
-      </div>
-    </section>
-
-    <!-- ========== FOOTER ========== -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-inner">
-          <div class="footer-brand">
-            <img src="logo.png" alt="Mob Timer" width="24" height="24" style="border-radius: 6px; flex-shrink: 0">
-            <span class="footer-name">Mob Timer</span>
-          </div>
-          <p class="footer-copy">
-            © 2026 Mob Timer. Built with ♥ for focused teams.
-          </p>
-          <div class="footer-links">
-            <a href="#">Privacy</a>
-            <a href="#">GitHub</a>
-            <a href="#">Support</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Password modal -->
-    <div id="download-modal" class="dl-modal-overlay">
-      <div class="dl-modal-box">
-        <h3 class="dl-modal-title">Enter password to download</h3>
-        <input id="dl-password" class="dl-modal-input" type="password" placeholder="Password" autocomplete="off">
-        <p id="dl-error" class="dl-modal-error">Incorrect password</p>
-        <div class="dl-modal-actions">
-          <button id="dl-cancel" class="dl-btn-cancel">Cancel</button>
-          <button id="dl-confirm" class="dl-btn-confirm">Download</button>
-        </div>
-      </div>
     </div>
 
-    <script src="main.js"></script>
+    <!-- ========================================
+         NAVIGATION
+         ======================================== -->
+    <nav class="nav" id="nav">
+        <div class="container nav-inner">
+            <a href="#" class="nav-logo">AURELIA<span>.</span></a>
+            
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
 
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
 
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
 
-  </body>
+    <!-- ========================================
+         HERO SECTION
+         ======================================== -->
+    <section class="hero" id="hero">
+        <!-- Background Layer -->
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80" alt="Restaurant ambiance" loading="eager">
+        </div>
+
+        <!-- Ambient Glow Effects -->
+        <div class="hero-glow hero-glow--left"></div>
+        <div class="hero-glow hero-glow--right"></div>
+
+        <div class="container hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    Fine Dining Experience
+                </div>
+                <h1 class="hero-title">
+                    Where <span>Flavor</span> Meets Artistry
+                </h1>
+                <p class="hero-description">
+                    Experience culinary excellence in an atmosphere of refined elegance. 
+                    Our chefs craft each dish with passion, using only the finest seasonal ingredients.
+                </p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary">
+                        Book a Table
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="#menu" class="btn btn-secondary">Explore Menu</a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-image-frame">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80" alt="Signature dish presentation" loading="eager">
+                </div>
+                <div class="hero-float-badge">
+                    <div class="icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                    </div>
+                    <div class="text">
+                        <strong>Michelin Star</strong>
+                        Since 2019
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         ABOUT SECTION
+         ======================================== -->
+    <section class="about section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image-stack reveal">
+                    <div class="about-image-main">
+                        <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800&q=80" alt="Chef preparing dish" loading="lazy">
+                    </div>
+                    <div class="about-image-secondary">
+                        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400&q=80" alt="Wine pairing" loading="lazy">
+                    </div>
+                </div>
+
+                <div class="about-content reveal" style="transition-delay: 0.1s;">
+                    <span class="section-label">Our Story</span>
+                    <h2 class="section-title">A Legacy of Culinary Excellence</h2>
+                    <p class="about-text">
+                        Founded in 2015 by Chef Elena Marchetti, Aurelia was born from a vision to create 
+                        more than just a restaurant — it was designed to be a destination where every 
+                        element conspires to create an unforgettable experience.
+                    </p>
+                    <p class="about-text">
+                        Our philosophy centers on honoring traditional techniques while embracing 
+                        modern innovation. Each plate tells a story of heritage, creativity, and an 
+                        unwavering commitment to quality that has earned us recognition among the 
+                        world's finest dining establishments.
+                    </p>
+
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <div class="about-feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
+                                    <line x1="6" y1="17" x2="18" y2="17"/>
+                                </svg>
+                            </div>
+                            <h4>12+</h4>
+                            <p>Years of Excellence</p>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                </svg>
+                            </div>
+                            <h4>5</h4>
+                            <p>Michelin Stars</p>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                            <h4>50K+</h4>
+                            <p>Happy Guests</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         MENU SECTION
+         ======================================== -->
+    <section class="menu section" id="menu">
+        <div class="container">
+            <div class="menu-header reveal">
+                <span class="section-label">Our Selection</span>
+                <h2 class="section-title">Seasonal Masterpieces</h2>
+                <p>Each dish is a celebration of flavor, texture, and visual artistry.</p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="menu-filters reveal" style="transition-delay: 0.1s;">
+                <button class="menu-filter active" data-filter="all">All</button>
+                <button class="menu-filter" data-filter="starters">Starters</button>
+                <button class="menu-filter" data-filter="mains">Mains</button>
+                <button class="menu-filter" data-filter="desserts">Desserts</button>
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="menu-grid">
+                <!-- Starter 1 -->
+                <div class="menu-card reveal" data-category="starters" style="transition-delay: 0.15s;">
+                    <div class="menu-card-image">
+                        <img src="https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=400&q=80" alt="Seared Scallops" loading="lazy">
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3 class="menu-card-name">Pan-Seared Scallops</h3>
+                            <span class="menu-card-price">$28</span>
+                        </div>
+                        <p class="menu-card-description">
+                            Golden seared Atlantic scallops with cauliflower purée, crispy capers, 
+                            and brown butter emulsion.
+                        </p>
+                        <span class="menu-card-tag">Chef's Pick</span>
+                    </div>
+                </div>
+
+                <!-- Starter 2 -->
+                <div class="menu-card reveal" data-category="starters" style="transition-delay: 0.2s;">
+                    <div class="menu-card-image">
+                        <img src="https://images.unsplash.com/photo-1541014741259-de529411b96a?w=400&q=80" alt="Burrata" loading="lazy">
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3 class="menu-card-name">Burrata & Heirloom Tomatoes</h3>
+                            <span class="menu-card-price">$24</span>
+                        </div>
+                        <p class="menu-card-description">
+                            Creamy burrata with vine-ripened heirloom tomatoes, aged balsamic, 
+                            and basil oil.
+                        </p>
+                        <span class="menu-card-tag">Vegetarian</span>
+                    </div>
+                </div>
+
+                <!-- Main 1 -->
+                <div class="menu-card reveal" data-category="mains" style="transition-delay: 0.25s;">
+                    <div class="menu-card-image">
+                        <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=400&q=80" alt="Wagyu" loading="lazy">
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3 class="menu-card-name">A5 Wagyu Ribeye</h3>
+                            <span class="menu-card-price">$185</span>
+                        </div>
+                        <p class="menu-card-description">
+                            Japanese A5 Wagyu grilled over binchotan charcoal, served with 
+                            black garlic jus and seasonal vegetables.
+                        </p>
+                        <span class="menu-card-tag">Signature</span>
+                    </div>
+                </div>
+
+                <!-- Main 2 -->
+                <div class="menu-card reveal" data-category="mains" style="transition-delay: 0.3s;">
+                    <div class="menu-card-image">
+                        <img src="https://images.unsplash.com/photo-1534766555764-ce878a5e3a2b?w=400&q=80" alt="Duck" loading="lazy">
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3 class="menu-card-name">Roasted Duck Breast</h3>
+                            <span class="menu-card-price">$68</span>
+                        </div>
+                        <p class="menu-card-description">
+                            Slow-roasted Moulard duck with cherry gastrique, roasted beets, 
+                            and duck fat potatoes.
+                        </p>
+                        <span class="menu-card-tag">Seasonal</span>
+                    </div>
+                </div>
+
+                <!-- Dessert 1 -->
+                <div class="menu-card reveal" data-category="desserts" style="transition-delay: 0.35s;">
+                    <div class="menu-card-image">
+                        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80" alt="Chocolate" loading="lazy">
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3 class="menu-card-name">Valrhona Chocolate Sphere</h3>
+                            <span class="menu-card-price">$22</span>
+                        </div>
+                        <p class="menu-card-description">
+                            Warm dark chocolate sphere with molten center, served with 
+                            vanilla bean ice cream and gold leaf.
+                        </p>
+                        <span class="menu-card-tag">Indulgent</span>
+                    </div>
+                </div>
+
+                <!-- Dessert 2 -->
+                <div class="menu-card reveal" data-category="desserts" style="transition-delay: 0.4s;">
+                    <div class="menu-card-image">
+                        <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80" alt="Tart" loading="lazy">
+                    </div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-header">
+                            <h3 class="menu-card-name">Citrus Tart</h3>
+                            <span class="menu-card-price">$19</span>
+                        </div>
+                        <p class="menu-card-description">
+                            Meyer lemon and yuzu curd in a buttery shell, topped with 
+                            Italian meringue and candied citrus.
+                        </p>
+                        <span class="menu-card-tag">Refreshing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         GALLERY SECTION
+         ======================================== -->
+    <section class="gallery section" id="gallery">
+        <div class="container">
+            <div class="gallery-header reveal">
+                <span class="section-label">Visual Journey</span>
+                <h2 class="section-title">Moments at Aurelia</h2>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item reveal" style="transition-delay: 0.1s;">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80" alt="Restaurant interior" loading="lazy">
+                </div>
+                <div class="gallery-item reveal" style="transition-delay: 0.15s;">
+                    <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=600&q=80" alt="Chef at work" loading="lazy">
+                </div>
+                <div class="gallery-item reveal" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=600&q=80" alt="Wine cellar" loading="lazy">
+                </div>
+                <div class="gallery-item reveal" style="transition-delay: 0.25s;">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Plated dish" loading="lazy">
+                </div>
+                <div class="gallery-item reveal" style="transition-delay: 0.3s;">
+                    <img src="https://images.unsplash.com/photo-1560053608-13721e0d69e8?w=600&q=80" alt="Dessert presentation" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         CONTACT SECTION
+         ======================================== -->
+    <section class="contact section" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Info Cards -->
+                <div class="contact-info">
+                    <div class="reveal">
+                        <span class="section-label">Get in Touch</span>
+                        <h2 class="section-title">Reserve Your Experience</h2>
+                    </div>
+
+                    <div class="contact-card reveal" style="transition-delay: 0.1s;">
+                        <div class="contact-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Visit Us</h4>
+                            <p>247 West 46th Street<br>New York, NY 10036</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-card reveal" style="transition-delay: 0.15s;">
+                        <div class="contact-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Call Us</h4>
+                            <p>+1 (212) 847-1928</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-card reveal" style="transition-delay: 0.2s;">
+                        <div class="contact-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Email Us</h4>
+                            <p>reservations@aurelia.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-card reveal" style="transition-delay: 0.25s;">
+                        <div class="contact-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Hours</h4>
+                            <p>Tue–Sat: 6PM – 11PM<br>Sun–Mon: Closed</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form-wrapper reveal" style="transition-delay: 0.15s;">
+                    <form class="contact-form" id="contactForm">
+                        <h3>Make a Reservation</h3>
+                        <p>Fill out the form below and we'll get back to you within 24 hours.</p>
+
+                        <div class="form-group">
+                            <label class="form-label" for="name">Full Name</label>
+                            <input type="text" class="form-input" id="name" name="name" placeholder="Alexandra Chen" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email Address</label>
+                            <input type="email" class="form-input" id="email" name="email" placeholder="alex@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone Number</label>
+                            <input type="tel" class="form-input" id="phone" name="phone" placeholder="+1 (555) 000-0000">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="message">Special Requests</label>
+                            <textarea class="form-textarea" id="message" name="message" placeholder="Dietary restrictions, celebration details, seating preferences..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary form-submit">
+                            Submit Request
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </form>
+
+                    <!-- Success Message -->
+                    <div class="form-success" id="formSuccess">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        <h4>Reservation Submitted!</h4>
+                        <p>Thank you for choosing Aurelia. Our team will contact you shortly to confirm your booking.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FOOTER
+         ======================================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <div class="footer-logo">AURELIA<span>.</span></div>
+                    <p class="footer-tagline">Where culinary dreams become reality.</p>
+                </div>
+
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                            <rect x="2" y="9" width="4" height="12"/>
+                            <circle cx="4" cy="4" r="2"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    © 2024 Aurelia Restaurant. Crafted with care by <a href="#">Aurelia Design Studio</a>.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================
+         JAVASCRIPT
+         ======================================== -->
+    <script>
+        /* ========================================
+           LOADING SCREEN
+           ======================================== */
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.classList.add('hidden');
+            }, 2200);
+        });
+
+        /* ========================================
+           NAVIGATION — Scroll Effect & Mobile Menu
+           ======================================== */
+        const nav = document.getElementById('nav');
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        // Scroll-based navigation styling
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Mobile menu toggle
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        /* ========================================
+           SMOOTH SCROLL — Navigation Links
+           ======================================== */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        /* ========================================
+           SCROLL REVEAL ANIMATIONS
+           Using Intersection Observer for performance
+           ======================================== */
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Optional: unobserve after animation triggers
+                    // revealObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with 'reveal' class
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        /* ========================================
+           MENU FILTER FUNCTIONALITY
+           ======================================== */
+        const menuFilters = document.querySelectorAll('.menu-filter');
+        const menuCards = document.querySelectorAll('.menu-card');
+
+        menuFilters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                // Update active filter button
+                menuFilters.forEach(btn => btn.classList.remove('active'));
+                filter.classList.add('active');
+
+                const filterValue = filter.dataset.filter;
+
+                // Filter menu cards with animation
+                menuCards.forEach((card, index) => {
+                    const category = card.dataset.category;
+                    
+                    if (filterValue === 'all' || category === filterValue) {
+                        card.style.display = 'flex';
+                        card.style.animation = `fadeInUp 0.4s ease ${index * 0.05}s forwards`;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        /* ========================================
+           CONTACT FORM HANDLING
+           ======================================== */
+        const contactForm = document.getElementById('contactForm');
+        const formSuccess = document.getElementById('formSuccess');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Simulate form submission
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spin">
+                    <line x1="12" y1="2" x2="12" y2="6"/>
+                    <line x1="12" y1="18" x2="12" y2="22"/>
+                    <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/>
+                    <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/>
+                    <line x1="2" y1="12" x2="6" y2="12"/>
+                    <line x1="18" y1="12" x2="22" y2="12"/>
+                    <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/>
+                    <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/>
+                </svg>
+                Sending...
+            `;
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                contactForm.style.display = 'none';
+                formSuccess.classList.add('show');
+            }, 1500);
+        });
+
+        /* ========================================
+           ADDITIONAL CSS ANIMATIONS
+           ======================================== */
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .spin {
+                animation: spin 1s linear infinite;
+            }
+            
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        /* ========================================
+           PARALLAX EFFECT ON HERO (subtle)
+           ======================================== */
+        const heroGlows = document.querySelectorAll('.hero-glow');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroHeight = document.querySelector('.hero').offsetHeight;
+            
+            if (scrolled < heroHeight) {
+                heroGlows.forEach((glow, i) => {
+                    const direction = i === 0 ? 1 : -1;
+                    glow.style.transform = `translateY(${scrolled * 0.3 * direction}px)`;
+                });
+            }
+        });
+
+        /* ========================================
+           GALLERY LIGHTBOX EFFECT (CSS-only hover)
+           ======================================== */
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Could implement a lightbox modal here
+                console.log('Gallery item clicked');
+            });
+        });
+    </script>
+
+</body>
 </html>
