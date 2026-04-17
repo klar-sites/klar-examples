@@ -3,66 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ashworth Clinic — Shoulder & Hand Surgery Specialists</title>
+    <title>Maison Aurèle — Fine Dining</title>
 
-    <!-- Fonts: Satoshi for body, Instrument Serif for editorial display -->
+    <!-- Fonts: Distinctive choices — no Inter, no generic serifs -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=Geist+Mono&display=swap" rel="stylesheet">
 
     <style>
         /* ============================================
-           CSS CUSTOM PROPERTIES
+           CSS CUSTOM PROPERTIES — DESIGN TOKENS
            ============================================ */
         :root {
-            /* Color Palette */
-            --canvas: #F4F6F8;
-            --surface: rgba(255, 255, 255, 0.55);
-            --surface-solid: #FFFFFF;
-            --ink: #1A1D23;
-            --ink-secondary: #5A6172;
-            --ink-tertiary: #8B93A5;
-            --accent: #2A7C6F;
-            --accent-light: rgba(42, 124, 111, 0.08);
-            --accent-glow: rgba(42, 124, 111, 0.15);
-            --gold: #C4A265;
-            --gold-light: rgba(196, 162, 101, 0.1);
-            --border: rgba(200, 210, 225, 0.45);
-            --border-light: rgba(200, 210, 225, 0.25);
-            --shadow-diffuse: rgba(20, 30, 50, 0.06);
-            --shadow-tight: rgba(20, 30, 50, 0.03);
-            --glass-bg: rgba(255, 255, 255, 0.45);
-            --glass-bg-strong: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.5);
+            /* Color Palette — Dark, warm, luxurious */
+            --canvas-deep: #0F0F0E;
+            --canvas-mid: #161615;
+            --canvas-elevated: #1C1C1A;
+            --surface-glass: rgba(255, 255, 255, 0.04);
+            --surface-glass-hover: rgba(255, 255, 255, 0.07);
+            --surface-glass-border: rgba(255, 255, 255, 0.08);
+            --surface-glass-border-hover: rgba(255, 255, 255, 0.14);
 
-            /* Typography */
+            --text-primary: #F5F0E8;
+            --text-secondary: #A8A29E;
+            --text-tertiary: #78716C;
+            --text-accent: #D4A574;
+
+            /* Single accent — warm amber/copper, under 80% saturation */
+            --accent-warm: #D4A574;
+            --accent-warm-muted: rgba(212, 165, 116, 0.15);
+            --accent-warm-glow: rgba(212, 165, 116, 0.06);
+
+            /* Shadows — warm-tinted, never harsh */
+            --shadow-diffused: 0 20px 60px -15px rgba(0, 0, 0, 0.5);
+            --shadow-card: 0 8px 32px -8px rgba(0, 0, 0, 0.4);
+            --shadow-elevated: 0 32px 80px -20px rgba(0, 0, 0, 0.6);
+
+            /* Typography scale */
             --font-display: 'Instrument Serif', serif;
-            --font-body: 'Satoshi', -apple-system, 'Segoe UI', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
+            --font-body: 'Outfit', sans-serif;
+            --font-mono: 'Geist Mono', monospace;
 
             /* Spacing */
             --section-gap: clamp(4rem, 10vw, 8rem);
-            --container-max: 1320px;
-            --px: clamp(1.25rem, 4vw, 4rem);
+            --container-max: 1400px;
+            --container-pad: clamp(1.25rem, 4vw, 4rem);
 
-            /* Transitions */
-            --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            /* Glass effect */
+            --glass-blur: 24px;
+            --glass-radius: 1.5rem;
         }
-
-        /* ============================================
-           FONT FACE — Satoshi
-           ============================================ */
-        @font-face {
-            font-family: 'Satoshi';
-            src: url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap') format('woff2');
-            font-weight: 400 700;
-            font-display: swap;
-        }
-
-        /* Import Satoshi from Fontshare */
-        @import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap');
 
         /* ============================================
            RESET & BASE
@@ -82,1281 +72,1190 @@
         body {
             font-family: var(--font-body);
             font-weight: 400;
-            color: var(--ink);
-            background-color: var(--canvas);
+            color: var(--text-primary);
+            background-color: var(--canvas-deep);
             line-height: 1.65;
             overflow-x: hidden;
-            position: relative;
+        }
+
+        /* Noise texture overlay for depth */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
         /* ============================================
-           BACKGROUND — Ambient Shapes
+           UTILITY — CONTAINER
            ============================================ */
-        .ambient-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .ambient-bg::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 60vw;
-            height: 60vw;
-            max-width: 800px;
-            max-height: 800px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(42, 124, 111, 0.07) 0%, rgba(42, 124, 111, 0.02) 50%, transparent 70%);
-            animation: ambientFloat1 25s ease-in-out infinite;
-        }
-
-        .ambient-bg::after {
-            content: '';
-            position: absolute;
-            bottom: -15%;
-            left: -15%;
-            width: 50vw;
-            height: 50vw;
-            max-width: 700px;
-            max-height: 700px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(196, 162, 101, 0.06) 0%, rgba(196, 162, 101, 0.01) 50%, transparent 70%);
-            animation: ambientFloat2 30s ease-in-out infinite;
-        }
-
-        .ambient-shape-3 {
-            position: absolute;
-            top: 40%;
-            left: 30%;
-            width: 40vw;
-            height: 40vw;
-            max-width: 600px;
-            max-height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(140, 160, 200, 0.05) 0%, transparent 60%);
-            animation: ambientFloat3 20s ease-in-out infinite;
-        }
-
-        @keyframes ambientFloat1 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(-30px, 40px) scale(1.05); }
-            66% { transform: translate(20px, -20px) scale(0.97); }
-        }
-
-        @keyframes ambientFloat2 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(40px, -30px) scale(1.08); }
-        }
-
-        @keyframes ambientFloat3 {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(20px, 30px); }
-            75% { transform: translate(-25px, -15px); }
-        }
-
-        /* Grain overlay */
-        .grain-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0.3;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-            background-repeat: repeat;
-        }
-
-        /* ============================================
-           LAYOUT UTILITIES
-           ============================================ */
-        .container {
-            width: 100%;
+        .aurele-container {
             max-width: var(--container-max);
             margin: 0 auto;
-            padding: 0 var(--px);
-        }
-
-        section {
-            position: relative;
-            z-index: 2;
+            padding-left: var(--container-pad);
+            padding-right: var(--container-pad);
         }
 
         /* ============================================
-           TYPOGRAPHY
+           SECTION LABEL — SHARED STYLE
            ============================================ */
-        h1, h2, h3, h4 {
-            font-family: var(--font-display);
-            font-weight: 400;
-            line-height: 1.1;
-            letter-spacing: -0.01em;
-        }
-
-        h1 {
-            font-size: clamp(2.75rem, 6.5vw, 5.5rem);
-            color: var(--ink);
-        }
-
-        h2 {
-            font-size: clamp(2rem, 4vw, 3.25rem);
-            color: var(--ink);
-        }
-
-        h3 {
-            font-size: clamp(1.25rem, 2vw, 1.5rem);
-            color: var(--ink);
-        }
-
-        p {
-            color: var(--ink-secondary);
-            max-width: 60ch;
-            font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
-        }
-
-        .label {
-            font-family: var(--font-body);
+        .aurele-section-label {
+            font-family: var(--font-mono);
             font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: var(--accent);
+            color: var(--accent-warm);
+            margin-bottom: 1rem;
+        }
+
+        .aurele-section-heading {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4.5vw, 3.5rem);
+            font-weight: 400;
+            line-height: 1.15;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
         }
 
         /* ============================================
-           NAVIGATION
+           GLASS CARD — REUSABLE COMPONENT
            ============================================ */
-        .nav {
+        .aurele-glass-card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--surface-glass-border);
+            border-radius: var(--glass-radius);
+            padding: 2rem;
+            transition: background 0.4s ease, border-color 0.4s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .aurele-glass-card:hover {
+            background: var(--surface-glass-hover);
+            border-color: var(--surface-glass-border-hover);
+        }
+
+        /* ============================================
+           SCROLL REVEAL ANIMATION
+           ============================================ */
+        .aurele-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .aurele-reveal.aurele-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered children */
+        .aurele-stagger > * {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .aurele-stagger.aurele-visible > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           NAVIGATION — STICKY GLASS NAV
+           ============================================ */
+        .aurele-nav {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
+            right: 0;
             z-index: 100;
             padding: 1.25rem 0;
-            transition: all 0.5s var(--ease-smooth);
+            transition: background 0.5s ease, backdrop-filter 0.5s ease;
         }
 
-        .nav.scrolled {
-            background: rgba(244, 246, 248, 0.7);
-            backdrop-filter: blur(20px) saturate(1.4);
-            -webkit-backdrop-filter: blur(20px) saturate(1.4);
-            border-bottom: 1px solid var(--border-light);
-            padding: 0.875rem 0;
+        .aurele-nav.aurele-nav-scrolled {
+            background: rgba(15, 15, 14, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--surface-glass-border);
         }
 
-        .nav-inner {
+        .aurele-nav-inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .nav-logo {
+        .aurele-nav-logo {
             font-family: var(--font-display);
-            font-size: 1.375rem;
-            color: var(--ink);
-            text-decoration: none;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            letter-spacing: 0.02em;
+        }
+
+        .aurele-nav-logo span {
+            color: var(--accent-warm);
+        }
+
+        .aurele-nav-links {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-logo-mark {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-logo-mark svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .nav-links {
-            display: none;
-            list-style: none;
             gap: 2.5rem;
-            align-items: center;
+            list-style: none;
         }
 
-        @media (min-width: 768px) {
-            .nav-links {
-                display: flex;
-            }
-        }
-
-        .nav-links a {
+        .aurele-nav-links a {
+            font-family: var(--font-body);
             font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--ink-secondary);
-            text-decoration: none;
-            transition: color 0.3s var(--ease-smooth);
+            font-weight: 400;
+            color: var(--text-secondary);
+            letter-spacing: 0.03em;
+            transition: color 0.3s ease;
             position: relative;
         }
 
-        .nav-links a::after {
+        .aurele-nav-links a::after {
             content: '';
             position: absolute;
             bottom: -4px;
             left: 0;
             width: 0;
-            height: 1.5px;
-            background: var(--accent);
-            transition: width 0.3s var(--ease-smooth);
+            height: 1px;
+            background: var(--accent-warm);
+            transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        .nav-links a:hover {
-            color: var(--ink);
+        .aurele-nav-links a:hover {
+            color: var(--text-primary);
         }
 
-        .nav-links a:hover::after {
+        .aurele-nav-links a:hover::after {
             width: 100%;
         }
 
-        .nav-cta {
-            font-size: 0.8125rem;
-            font-weight: 600;
-            color: var(--surface-solid) !important;
-            background: var(--accent);
-            padding: 0.625rem 1.5rem;
-            border-radius: 100px;
-            text-decoration: none;
-            transition: all 0.3s var(--ease-smooth);
-        }
-
-        .nav-cta::after {
-            display: none !important;
-        }
-
-        .nav-cta:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(42, 124, 111, 0.2);
-            color: var(--surface-solid) !important;
-        }
-
-        .nav-cta:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        /* Mobile menu button */
-        .nav-mobile-toggle {
-            display: flex;
+        /* Mobile menu toggle */
+        .aurele-nav-toggle {
+            display: none;
             flex-direction: column;
             gap: 5px;
             background: none;
             border: none;
             cursor: pointer;
-            padding: 8px;
-            z-index: 101;
+            padding: 4px;
         }
 
-        @media (min-width: 768px) {
-            .nav-mobile-toggle {
-                display: none;
-            }
-        }
-
-        .nav-mobile-toggle span {
+        .aurele-nav-toggle span {
             display: block;
-            width: 22px;
+            width: 24px;
             height: 1.5px;
-            background: var(--ink);
-            transition: all 0.3s var(--ease-smooth);
-            transform-origin: center;
+            background: var(--text-primary);
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
-        .nav-mobile-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(4px, 5px);
+        .aurele-nav-toggle.aurele-toggle-active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 4px);
         }
-
-        .nav-mobile-toggle.active span:nth-child(2) {
+        .aurele-nav-toggle.aurele-toggle-active span:nth-child(2) {
             opacity: 0;
         }
-
-        .nav-mobile-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(4px, -5px);
+        .aurele-nav-toggle.aurele-toggle-active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -4px);
         }
 
         /* Mobile menu overlay */
-        .mobile-menu {
+        .aurele-mobile-menu {
+            display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100dvh;
-            background: rgba(244, 246, 248, 0.95);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(15, 15, 14, 0.95);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             z-index: 99;
-            display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            gap: 2rem;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s var(--ease-smooth);
+            justify-content: center;
+            gap: 2.5rem;
         }
 
-        .mobile-menu.active {
-            opacity: 1;
-            pointer-events: all;
+        .aurele-mobile-menu.aurele-menu-open {
+            display: flex;
         }
 
-        .mobile-menu a {
+        .aurele-mobile-menu a {
             font-family: var(--font-display);
             font-size: 2rem;
-            color: var(--ink);
-            text-decoration: none;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s var(--ease-smooth);
+            color: var(--text-primary);
+            transition: color 0.3s ease;
         }
 
-        .mobile-menu.active a {
-            opacity: 1;
-            transform: translateY(0);
+        .aurele-mobile-menu a:hover {
+            color: var(--accent-warm);
         }
-
-        .mobile-menu.active a:nth-child(1) { transition-delay: 0.1s; }
-        .mobile-menu.active a:nth-child(2) { transition-delay: 0.15s; }
-        .mobile-menu.active a:nth-child(3) { transition-delay: 0.2s; }
-        .mobile-menu.active a:nth-child(4) { transition-delay: 0.25s; }
-        .mobile-menu.active a:nth-child(5) { transition-delay: 0.3s; }
-        .mobile-menu.active a:nth-child(6) { transition-delay: 0.35s; }
 
         /* ============================================
-           HERO SECTION
+           HERO SECTION — FULLSCREEN, ASYMMETRIC
            ============================================ */
-        .hero {
+        .aurele-hero {
             min-height: 100dvh;
-            display: flex;
-            align-items: center;
-            padding-top: 6rem;
-            padding-bottom: 4rem;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        @media (min-width: 768px) {
-            .hero-grid {
-                grid-template-columns: 1.15fr 0.85fr;
-                gap: 4rem;
-            }
-        }
-
-        .hero-content {
-            max-width: 620px;
-        }
-
-        .hero-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 100px;
-        }
-
-        .hero-label-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent);
-            animation: pulse 2.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        .hero h1 {
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 em {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .hero-text {
-            font-size: clamp(1rem, 1.5vw, 1.125rem);
-            line-height: 1.7;
-            margin-bottom: 2.5rem;
-            max-width: 48ch;
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: var(--font-body);
-            font-size: 0.9375rem;
-            font-weight: 600;
-            color: var(--surface-solid);
-            background: var(--accent);
-            padding: 0.9375rem 2rem;
-            border-radius: 100px;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s var(--ease-smooth);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(42, 124, 111, 0.25);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: var(--font-body);
-            font-size: 0.9375rem;
-            font-weight: 500;
-            color: var(--ink);
-            background: transparent;
-            padding: 0.9375rem 1.75rem;
-            border-radius: 100px;
-            border: 1.5px solid var(--border);
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s var(--ease-smooth);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        /* Hero visual */
-        .hero-visual {
             position: relative;
-            display: flex;
-            justify-content: center;
-        }
-
-        .hero-glass-card {
-            position: relative;
-            width: 100%;
-            max-width: 420px;
-            padding: 2.5rem;
-            background: var(--glass-bg-strong);
-            backdrop-filter: blur(24px) saturate(1.3);
-            -webkit-backdrop-filter: blur(24px) saturate(1.3);
-            border: 1px solid var(--glass-border);
-            border-radius: 2rem;
-            box-shadow:
-                0 24px 48px -12px var(--shadow-diffuse),
-                0 0 0 1px rgba(255,255,255,0.3) inset;
-        }
-
-        .hero-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .hero-stat {
-            text-align: center;
-            padding: 1.25rem;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 1.25rem;
-            border: 1px solid var(--border-light);
-        }
-
-        .hero-stat-number {
-            font-family: var(--font-display);
-            font-size: 2.25rem;
-            color: var(--ink);
-            line-height: 1;
-            margin-bottom: 0.375rem;
-        }
-
-        .hero-stat-label {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--ink-tertiary);
-            letter-spacing: 0.02em;
-        }
-
-        .hero-glass-divider {
-            width: 100%;
-            height: 1px;
-            background: var(--border-light);
-            margin: 1.5rem 0;
-        }
-
-        .hero-trust {
-            display: flex;
             align-items: center;
-            gap: 0.75rem;
-        }
-
-        .hero-trust-avatars {
-            display: flex;
-        }
-
-        .hero-trust-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: 2px solid var(--surface-solid);
-            margin-left: -10px;
-            background: var(--canvas);
             overflow: hidden;
         }
 
-        .hero-trust-avatar:first-child {
-            margin-left: 0;
+        /* Background ambient gradient */
+        .aurele-hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 70%;
+            height: 120%;
+            background: radial-gradient(ellipse at center, var(--accent-warm-glow) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .hero-trust-avatar img {
+        .aurele-hero-content {
+            position: relative;
+            z-index: 2;
+            padding: clamp(6rem, 12vw, 10rem) var(--container-pad);
+            padding-left: clamp(2rem, 8vw, 8rem);
+        }
+
+        .aurele-hero-tagline {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-warm);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: aurele-fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+        }
+
+        .aurele-hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 7vw, 6.5rem);
+            line-height: 1.05;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: aurele-fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+        }
+
+        .aurele-hero-title em {
+            font-style: italic;
+            color: var(--accent-warm);
+        }
+
+        .aurele-hero-subtitle {
+            font-size: 1.0625rem;
+            color: var(--text-secondary);
+            max-width: 38ch;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: aurele-fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
+        }
+
+        .aurele-hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.25rem;
+            background: var(--accent-warm);
+            color: var(--canvas-deep);
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+            opacity: 0;
+            animation: aurele-fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+        }
+
+        .aurele-hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px -8px rgba(212, 165, 116, 0.3);
+        }
+
+        .aurele-hero-cta:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .aurele-hero-cta svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .aurele-hero-cta:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* Hero image side */
+        .aurele-hero-visual {
+            position: relative;
+            height: 100%;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+        }
+
+        .aurele-hero-image-wrapper {
+            position: relative;
+            width: 85%;
+            max-width: 520px;
+            aspect-ratio: 3/4;
+            border-radius: 2rem;
+            overflow: hidden;
+            opacity: 0;
+            animation: aurele-scaleIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+        }
+
+        .aurele-hero-image-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .hero-trust-text {
-            font-size: 0.8125rem;
-            color: var(--ink-secondary);
-            line-height: 1.4;
-        }
-
-        .hero-trust-text strong {
-            color: var(--ink);
-            font-weight: 600;
-        }
-
-        /* Floating accent decoration */
-        .hero-visual::before {
+        /* Decorative frame around hero image */
+        .aurele-hero-image-wrapper::after {
             content: '';
             position: absolute;
-            top: -30px;
-            right: -30px;
-            width: 120px;
-            height: 120px;
+            inset: -8px;
+            border: 1px solid var(--surface-glass-border);
+            border-radius: 2.25rem;
+            pointer-events: none;
+        }
+
+        /* Floating badge on hero */
+        .aurele-hero-badge {
+            position: absolute;
+            bottom: 6rem;
+            left: -2rem;
+            z-index: 3;
+            opacity: 0;
+            animation: aurele-fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 1.2s forwards;
+        }
+
+        .aurele-hero-badge-inner {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--surface-glass-border);
+            border-radius: 1.25rem;
+            padding: 1.25rem 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .aurele-hero-badge-icon {
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
-            animation: ambientFloat3 15s ease-in-out infinite;
+            background: var(--accent-warm-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-warm);
+            font-size: 1.25rem;
+        }
+
+        .aurele-hero-badge-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .aurele-hero-badge-text strong {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .aurele-hero-badge-text span {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
         }
 
         /* ============================================
            ABOUT SECTION
            ============================================ */
-        .about {
+        .aurele-about {
             padding: var(--section-gap) 0;
         }
 
-        .about-grid {
+        .aurele-about-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-            align-items: start;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
         }
 
-        @media (min-width: 768px) {
-            .about-grid {
-                grid-template-columns: 0.4fr 0.6fr;
-                gap: 4rem;
-            }
-        }
-
-        .about-left .label {
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .about-left h2 {
-            max-width: 400px;
-        }
-
-        .about-left h2 em {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .about-right {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .about-right p {
-            font-size: clamp(1rem, 1.3vw, 1.125rem);
+        .aurele-about-text p {
+            font-size: 1.0625rem;
+            color: var(--text-secondary);
             line-height: 1.75;
-        }
-
-        .about-line {
-            width: 48px;
-            height: 2px;
-            background: var(--gold);
-            border-radius: 2px;
-        }
-
-        .about-highlight {
-            display: flex;
-            gap: 2rem;
-            margin-top: 0.5rem;
-        }
-
-        .about-highlight-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .about-highlight-number {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            color: var(--ink);
-            line-height: 1;
-        }
-
-        .about-highlight-text {
-            font-size: 0.8125rem;
-            color: var(--ink-tertiary);
-            font-weight: 500;
-        }
-
-        /* ============================================
-           SERVICES SECTION
-           ============================================ */
-        .services {
-            padding: var(--section-gap) 0;
-        }
-
-        .services-header {
-            text-align: center;
-            margin-bottom: 3.5rem;
-        }
-
-        .services-header .label {
-            display: block;
-            margin-bottom: 1rem;
-        }
-
-        .services-header h2 {
-            margin: 0 auto;
-            max-width: 500px;
-        }
-
-        .services-header h2 em {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.25rem;
-        }
-
-        @media (min-width: 600px) {
-            .services-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (min-width: 960px) {
-            .services-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .service-card {
-            position: relative;
-            padding: 2rem;
-            background: var(--glass-bg-strong);
-            backdrop-filter: blur(20px) saturate(1.2);
-            -webkit-backdrop-filter: blur(20px) saturate(1.2);
-            border: 1px solid var(--glass-border);
-            border-radius: 1.5rem;
-            box-shadow: 0 8px 32px -8px var(--shadow-diffuse);
-            transition: all 0.4s var(--ease-smooth);
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 1.5rem;
-            opacity: 0;
-            background: linear-gradient(135deg, var(--accent-light), transparent 60%);
-            transition: opacity 0.4s var(--ease-smooth);
-        }
-
-        .service-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 48px -12px var(--shadow-diffuse), 0 0 0 1px var(--accent-glow);
-            border-color: rgba(42, 124, 111, 0.2);
-        }
-
-        .service-card:hover::before {
-            opacity: 1;
-        }
-
-        .service-icon {
-            position: relative;
-            z-index: 1;
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
-            background: var(--accent-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            transition: background 0.3s var(--ease-smooth);
-        }
-
-        .service-card:hover .service-icon {
-            background: var(--accent-glow);
-        }
-
-        .service-icon svg {
-            width: 24px;
-            height: 24px;
-            color: var(--accent);
-        }
-
-        .service-card h3 {
-            position: relative;
-            z-index: 1;
-            margin-bottom: 0.75rem;
-        }
-
-        .service-card p {
-            position: relative;
-            z-index: 1;
-            font-size: 0.9rem;
-            line-height: 1.65;
-        }
-
-        /* ============================================
-           WHY CHOOSE US
-           ============================================ */
-        .why-us {
-            padding: var(--section-gap) 0;
-        }
-
-        .why-us-inner {
-            background: var(--glass-bg-strong);
-            backdrop-filter: blur(24px) saturate(1.3);
-            -webkit-backdrop-filter: blur(24px) saturate(1.3);
-            border: 1px solid var(--glass-border);
-            border-radius: 2rem;
-            padding: clamp(2.5rem, 5vw, 4rem);
-            box-shadow: 0 24px 48px -12px var(--shadow-diffuse);
-        }
-
-        .why-us-header {
-            margin-bottom: 3rem;
-        }
-
-        .why-us-header .label {
-            display: block;
-            margin-bottom: 1rem;
-        }
-
-        .why-us-header h2 em {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .why-us-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        @media (min-width: 600px) {
-            .why-us-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .why-us-item {
-            display: flex;
-            gap: 1.25rem;
-            align-items: flex-start;
-        }
-
-        .why-us-num {
-            flex-shrink: 0;
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: var(--gold-light);
-            color: var(--gold);
-            font-family: var(--font-display);
-            font-size: 1.125rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .why-us-item h3 {
-            font-family: var(--font-body);
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 0.375rem;
-        }
-
-        .why-us-item p {
-            font-size: 0.875rem;
-            line-height: 1.6;
-        }
-
-        /* ============================================
-           TESTIMONIALS
-           ============================================ */
-        .testimonials {
-            padding: var(--section-gap) 0;
-        }
-
-        .testimonials-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .testimonials-header .label {
-            display: block;
-            margin-bottom: 1rem;
-        }
-
-        .testimonials-header h2 em {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .testimonials-grid {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-        }
-
-        .testimonial-card {
-            padding: 2rem;
-            background: var(--glass-bg-strong);
-            backdrop-filter: blur(20px) saturate(1.2);
-            -webkit-backdrop-filter: blur(20px) saturate(1.2);
-            border: 1px solid var(--glass-border);
-            border-radius: 1.5rem;
-            box-shadow: 0 8px 32px -8px var(--shadow-diffuse);
-            transition: all 0.4s var(--ease-smooth);
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 16px 40px -10px var(--shadow-diffuse);
-        }
-
-        .testimonial-stars {
-            display: flex;
-            gap: 2px;
+            max-width: 52ch;
             margin-bottom: 1.25rem;
         }
 
-        .testimonial-stars svg {
-            width: 16px;
-            height: 16px;
-            color: var(--gold);
-            fill: var(--gold);
+        .aurele-about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2.5rem;
         }
 
-        .testimonial-card blockquote {
-            font-size: 0.9375rem;
-            line-height: 1.7;
-            color: var(--ink-secondary);
-            margin-bottom: 1.5rem;
-            font-style: italic;
+        .aurele-stat-card {
+            text-align: center;
+            padding: 1.75rem 1rem;
         }
 
-        .testimonial-author {
+        .aurele-stat-number {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            color: var(--accent-warm);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .aurele-stat-label {
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+            letter-spacing: 0.03em;
+        }
+
+        .aurele-about-image {
+            border-radius: 2rem;
+            overflow: hidden;
+            aspect-ratio: 4/5;
+        }
+
+        .aurele-about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .aurele-about-image:hover img {
+            transform: scale(1.04);
+        }
+
+        /* ============================================
+           MENU SECTION
+           ============================================ */
+        .aurele-menu {
+            padding: var(--section-gap) 0;
+            position: relative;
+        }
+
+        /* Ambient background glow */
+        .aurele-menu::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: -15%;
+            width: 50%;
+            height: 60%;
+            background: radial-gradient(ellipse, var(--accent-warm-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .aurele-menu-header {
             display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding-top: 1.25rem;
-            border-top: 1px solid var(--border-light);
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 3.5rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
         }
 
-        .testimonial-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--accent-light);
+        .aurele-menu-filters {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .aurele-filter-btn {
+            padding: 0.625rem 1.25rem;
             font-family: var(--font-body);
-            font-weight: 600;
-            font-size: 0.875rem;
-            color: var(--accent);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            background: transparent;
+            border: 1px solid var(--surface-glass-border);
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        .testimonial-name {
-            font-weight: 600;
-            font-size: 0.875rem;
-            color: var(--ink);
+        .aurele-filter-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--surface-glass-border-hover);
         }
 
-        .testimonial-role {
-            font-size: 0.75rem;
-            color: var(--ink-tertiary);
+        .aurele-filter-btn.aurele-filter-active {
+            background: var(--accent-warm);
+            color: var(--canvas-deep);
+            border-color: var(--accent-warm);
+        }
+
+        .aurele-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .aurele-dish-card {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: 1.5rem;
+            align-items: center;
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), background 0.4s ease, border-color 0.4s ease;
+        }
+
+        .aurele-dish-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .aurele-dish-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 1rem;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .aurele-dish-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .aurele-dish-card:hover .aurele-dish-image img {
+            transform: scale(1.12);
+        }
+
+        .aurele-dish-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .aurele-dish-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .aurele-dish-desc {
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            line-height: 1.5;
+        }
+
+        .aurele-dish-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--accent-warm);
+            background: var(--accent-warm-muted);
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            margin-top: 0.25rem;
+            width: fit-content;
+        }
+
+        .aurele-dish-price {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--accent-warm);
+            white-space: nowrap;
+            align-self: start;
+            margin-top: 0.25rem;
+        }
+
+        /* Hidden dishes for filtering */
+        .aurele-dish-card.aurele-dish-hidden {
+            display: none;
+        }
+
+        /* ============================================
+           GALLERY SECTION
+           ============================================ */
+        .aurele-gallery {
+            padding: var(--section-gap) 0;
+        }
+
+        .aurele-gallery-header {
+            margin-bottom: 3rem;
+        }
+
+        .aurele-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto auto;
+            gap: 1rem;
+        }
+
+        /* Asymmetric bento layout */
+        .aurele-gallery-item:nth-child(1) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .aurele-gallery-item {
+            border-radius: 1.25rem;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 1;
+        }
+
+        .aurele-gallery-item:nth-child(1) {
+            aspect-ratio: auto;
+        }
+
+        .aurele-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .aurele-gallery-item:hover img {
+            transform: scale(1.06);
+        }
+
+        /* Glass overlay on hover */
+        .aurele-gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 15, 14, 0.5) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .aurele-gallery-item:hover::after {
+            opacity: 1;
         }
 
         /* ============================================
            CONTACT SECTION
            ============================================ */
-        .contact {
+        .aurele-contact {
             padding: var(--section-gap) 0;
-            padding-bottom: calc(var(--section-gap) + 2rem);
+            position: relative;
         }
 
-        .contact-grid {
+        .aurele-contact::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: -10%;
+            width: 40%;
+            height: 60%;
+            background: radial-gradient(ellipse, var(--accent-warm-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .aurele-contact-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 4rem;
         }
 
-        @media (min-width: 768px) {
-            .contact-grid {
-                grid-template-columns: 0.45fr 0.55fr;
-                gap: 4rem;
-            }
-        }
-
-        .contact-info .label {
-            display: block;
-            margin-bottom: 1rem;
-        }
-
-        .contact-info h2 {
-            margin-bottom: 1.25rem;
-        }
-
-        .contact-info h2 em {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .contact-info > p {
-            margin-bottom: 2.5rem;
-        }
-
-        .contact-details {
+        .aurele-contact-info {
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: 2.5rem;
         }
 
-        .contact-detail {
+        .aurele-contact-detail {
             display: flex;
-            align-items: center;
             gap: 1rem;
+            align-items: flex-start;
         }
 
-        .contact-detail-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: var(--accent-light);
+        .aurele-contact-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent-warm-muted);
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--accent-warm);
             flex-shrink: 0;
         }
 
-        .contact-detail-icon svg {
+        .aurele-contact-icon svg {
             width: 20px;
             height: 20px;
-            color: var(--accent);
         }
 
-        .contact-detail-text {
-            font-size: 0.9375rem;
-            color: var(--ink);
-            font-weight: 500;
-        }
-
-        .contact-detail-label {
-            font-size: 0.75rem;
-            color: var(--ink-tertiary);
-            margin-bottom: 0.125rem;
-        }
-
-        /* Form */
-        .contact-form-wrapper {
-            background: var(--glass-bg-strong);
-            backdrop-filter: blur(24px) saturate(1.3);
-            -webkit-backdrop-filter: blur(24px) saturate(1.3);
-            border: 1px solid var(--glass-border);
-            border-radius: 2rem;
-            padding: 2.5rem;
-            box-shadow: 0 24px 48px -12px var(--shadow-diffuse);
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .form-group label {
-            font-size: 0.8125rem;
-            font-weight: 600;
-            color: var(--ink);
-            letter-spacing: 0.01em;
-        }
-
-        .form-group input,
-        .form-group textarea {
+        .aurele-contact-detail-text h4 {
             font-family: var(--font-body);
             font-size: 0.9375rem;
-            color: var(--ink);
-            background: rgba(255, 255, 255, 0.6);
-            border: 1.5px solid var(--border);
-            border-radius: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .aurele-contact-detail-text p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .aurele-contact-hours {
+            margin-top: 1rem;
+            padding: 1.75rem;
+        }
+
+        .aurele-contact-hours h4 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .aurele-hours-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--surface-glass-border);
+        }
+
+        .aurele-hours-row:last-child {
+            border-bottom: none;
+        }
+
+        .aurele-hours-day {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .aurele-hours-time {
+            font-family: var(--font-mono);
+            font-size: 0.8125rem;
+            color: var(--text-primary);
+        }
+
+        /* Contact form */
+        .aurele-contact-form-wrapper {
+            padding: 2.5rem;
+        }
+
+        .aurele-contact-form-wrapper h3 {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .aurele-contact-form-wrapper > p {
+            font-size: 0.9375rem;
+            color: var(--text-tertiary);
+            margin-bottom: 2rem;
+        }
+
+        .aurele-form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .aurele-form-label {
+            display: block;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
+        }
+
+        .aurele-form-input,
+        .aurele-form-textarea {
+            width: 100%;
             padding: 0.875rem 1.125rem;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--surface-glass-border);
+            border-radius: 0.875rem;
             outline: none;
-            transition: all 0.3s var(--ease-smooth);
-            resize: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: var(--ink-tertiary);
+        .aurele-form-input::placeholder,
+        .aurele-form-textarea::placeholder {
+            color: var(--text-tertiary);
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-light);
-            background: rgba(255, 255, 255, 0.85);
+        .aurele-form-input:focus,
+        .aurele-form-textarea:focus {
+            border-color: var(--accent-warm);
+            box-shadow: 0 0 0 3px var(--accent-warm-muted);
         }
 
-        .form-group textarea {
+        .aurele-form-textarea {
+            resize: vertical;
             min-height: 120px;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 480px) {
-            .form-row {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .form-submit {
+        .aurele-form-submit {
+            width: 100%;
+            padding: 1rem;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--canvas-deep);
+            background: var(--accent-warm);
+            border: none;
+            border-radius: 0.875rem;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
             margin-top: 0.5rem;
         }
 
-        .form-submit .btn-primary {
-            width: 100%;
-            justify-content: center;
-            font-size: 1rem;
-            padding: 1.0625rem 2rem;
+        .aurele-form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px -8px rgba(212, 165, 116, 0.3);
+        }
+
+        .aurele-form-submit:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Success message */
+        .aurele-form-success {
+            display: none;
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .aurele-form-success.aurele-success-show {
+            display: block;
+        }
+
+        .aurele-form-success svg {
+            width: 48px;
+            height: 48px;
+            color: var(--accent-warm);
+            margin-bottom: 1rem;
+        }
+
+        .aurele-form-success h4 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .aurele-form-success p {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
         }
 
         /* ============================================
            FOOTER
            ============================================ */
-        .footer {
-            position: relative;
-            z-index: 2;
-            padding: 2.5rem 0;
-            border-top: 1px solid var(--border-light);
+        .aurele-footer {
+            border-top: 1px solid var(--surface-glass-border);
+            padding: 3rem 0;
+            margin-top: 2rem;
         }
 
-        .footer-inner {
+        .aurele-footer-inner {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
             align-items: center;
-            text-align: center;
-        }
-
-        @media (min-width: 768px) {
-            .footer-inner {
-                flex-direction: row;
-                justify-content: space-between;
-                text-align: left;
-            }
-        }
-
-        .footer-logo {
-            font-family: var(--font-display);
-            font-size: 1.125rem;
-            color: var(--ink);
-        }
-
-        .footer-copy {
-            font-size: 0.8125rem;
-            color: var(--ink-tertiary);
-        }
-
-        .footer-links {
-            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
             gap: 1.5rem;
         }
 
-        .footer-links a {
+        .aurele-footer-brand {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .aurele-footer-brand span {
+            color: var(--accent-warm);
+        }
+
+        .aurele-footer-copyright {
             font-size: 0.8125rem;
-            color: var(--ink-tertiary);
-            text-decoration: none;
-            transition: color 0.3s;
+            color: var(--text-tertiary);
         }
 
-        .footer-links a:hover {
-            color: var(--accent);
+        .aurele-footer-socials {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .aurele-social-link {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--surface-glass);
+            border: 1px solid var(--surface-glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .aurele-social-link:hover {
+            background: var(--accent-warm-muted);
+            border-color: var(--accent-warm);
+            color: var(--accent-warm);
+            transform: translateY(-2px);
+        }
+
+        .aurele-social-link svg {
+            width: 18px;
+            height: 18px;
         }
 
         /* ============================================
-           SCROLL ANIMATIONS
+           KEYFRAME ANIMATIONS
            ============================================ */
-        .reveal {
-            opacity: 0;
-            transform: translateY(32px);
-            transition: opacity 0.7s var(--ease-smooth), transform 0.7s var(--ease-smooth);
+        @keyframes aurele-fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes aurele-scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-        .reveal-delay-5 { transition-delay: 0.5s; }
+        /* Gentle float for decorative elements */
+        @keyframes aurele-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
 
         /* ============================================
-           RESPONSIVE FINE-TUNING
+           RESPONSIVE — MOBILE FIRST COLLAPSE
            ============================================ */
-        @media (max-width: 767px) {
-            .hero-visual {
-                order: -1;
+        @media (max-width: 1024px) {
+            .aurele-menu-grid {
+                grid-template-columns: 1fr;
             }
 
-            .hero-glass-card {
-                max-width: 100%;
+            .aurele-contact-grid {
+                grid-template-columns: 1fr;
             }
 
-            .hero h1 {
-                font-size: clamp(2.5rem, 8vw, 3.5rem);
+            .aurele-gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .about-highlight {
-                flex-direction: row;
-                gap: 2rem;
+            .aurele-gallery-item:nth-child(1) {
+                grid-column: span 2;
+                grid-row: span 1;
+                aspect-ratio: 16/9;
             }
+        }
 
-            .testimonials-grid .testimonial-card:nth-child(3) {
+        @media (max-width: 768px) {
+            .aurele-nav-links {
                 display: none;
             }
+
+            .aurele-nav-toggle {
+                display: flex;
+            }
+
+            .aurele-hero {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .aurele-hero-content {
+                padding: 8rem var(--container-pad) 3rem;
+                text-align: left;
+            }
+
+            .aurele-hero-visual {
+                padding: 0 var(--container-pad) 3rem;
+            }
+
+            .aurele-hero-image-wrapper {
+                width: 100%;
+                max-width: none;
+                aspect-ratio: 4/3;
+            }
+
+            .aurele-hero-badge {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                margin-top: 1.5rem;
+            }
+
+            .aurele-about-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .aurele-about-image {
+                order: -1;
+                aspect-ratio: 16/9;
+            }
+
+            .aurele-about-stats {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+
+            .aurele-menu-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .aurele-dish-card {
+                grid-template-columns: 64px 1fr;
+                gap: 1rem;
+                padding: 1.5rem;
+            }
+
+            .aurele-dish-image {
+                width: 64px;
+                height: 64px;
+            }
+
+            .aurele-dish-price {
+                grid-column: 2;
+                align-self: auto;
+                margin-top: 0;
+            }
+
+            .aurele-gallery-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+            }
+
+            .aurele-gallery-item:nth-child(1) {
+                grid-column: span 2;
+            }
+
+            .aurele-contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .aurele-footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
         }
 
-        @media (max-width: 599px) {
-            .services-grid {
+        @media (max-width: 480px) {
+            .aurele-hero-title {
+                font-size: clamp(2.25rem, 10vw, 3.5rem);
+            }
+
+            .aurele-about-stats {
                 grid-template-columns: 1fr;
             }
 
-            .why-us-grid {
+            .aurele-stat-card {
+                text-align: left;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding: 1rem 1.25rem;
+            }
+
+            .aurele-stat-number {
+                margin-bottom: 0;
+                font-size: 2rem;
+            }
+
+            .aurele-gallery-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .aurele-gallery-item:nth-child(1) {
+                grid-column: span 1;
+            }
+
+            .aurele-menu-filters {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 0.5rem;
+            }
+
+            .aurele-filter-btn {
+                flex-shrink: 0;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Ambient Background -->
-    <div class="ambient-bg" aria-hidden="true">
-        <div class="ambient-shape-3"></div>
-    </div>
-    <div class="grain-overlay" aria-hidden="true"></div>
+    <!-- ==========================================
+         NAVIGATION — Fixed glass nav with scroll effect
+         ========================================== -->
+    <nav class="aurele-nav" id="aureleNav">
+        <div class="aurele-container aurele-nav-inner">
+            <a href="#" class="aurele-nav-logo">Maison <span>Aurèle</span></a>
 
-    <!-- ============================
-         NAVIGATION
-         ============================ -->
-    <nav class="nav" id="mainNav" role="navigation" aria-label="Main navigation">
-        <div class="container nav-inner">
-            <a href="#" class="nav-logo">
-                <div class="nav-logo-mark">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
-                        <path d="M12 2v4M12 18v4M6 8l2 3M16 8l-2 3M8 11h8M10 14l2 4 2-4"/>
-                    </svg>
-                </div>
-                Ashworth Clinic
-            </a>
-
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#why-us">Why Us</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#contact" class="nav-cta">Book Consultation</a></li>
+            <ul class="aurele-nav-links">
+                <li><a href="#aurele-about">About</a></li>
+                <li><a href="#aurele-menu">Menu</a></li>
+                <li><a href="#aurele-gallery">Gallery</a></li>
+                <li><a href="#aurele-contact">Contact</a></li>
             </ul>
 
-            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Toggle menu" aria-expanded="false">
+            <!-- Mobile toggle button -->
+            <button class="aurele-nav-toggle" id="aureleNavToggle" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -1364,538 +1263,599 @@
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
-        <a href="#about" class="mobile-menu-link">About</a>
-        <a href="#services" class="mobile-menu-link">Services</a>
-        <a href="#why-us" class="mobile-menu-link">Why Us</a>
-        <a href="#testimonials" class="mobile-menu-link">Testimonials</a>
-        <a href="#contact" class="mobile-menu-link">Contact</a>
-        <a href="#contact" class="btn-primary" style="margin-top: 1rem;">Book Consultation</a>
+    <!-- Mobile full-screen menu overlay -->
+    <div class="aurele-mobile-menu" id="aureleMobileMenu">
+        <a href="#aurele-about" class="aurele-mobile-link">About</a>
+        <a href="#aurele-menu" class="aurele-mobile-link">Menu</a>
+        <a href="#aurele-gallery" class="aurele-mobile-link">Gallery</a>
+        <a href="#aurele-contact" class="aurele-mobile-link">Contact</a>
     </div>
 
-    <!-- ============================
-         HERO
-         ============================ -->
-    <section class="hero" id="hero">
-        <div class="container">
-            <div class="hero-grid">
-                <div class="hero-content">
-                    <div class="hero-label reveal">
-                        <div class="hero-label-dot"></div>
-                        <span class="label" style="margin: 0;">Accepting New Patients</span>
+    <!-- ==========================================
+         HERO SECTION — Asymmetric split layout
+         ========================================== -->
+    <section class="aurele-hero" id="aurele-hero">
+        <div class="aurele-hero-content">
+            <p class="aurele-hero-tagline">Est. 2017 — Bordeaux, France</p>
+            <h1 class="aurele-hero-title">
+                Where fire<br>meets <em>finesse</em>
+            </h1>
+            <p class="aurele-hero-subtitle">
+                A deeply personal kitchen rooted in seasonal French technique, 
+                shaped by the open flame and the rhythm of the land.
+            </p>
+            <a href="#aurele-contact" class="aurele-hero-cta">
+                Book a Table
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+
+        <div class="aurele-hero-visual">
+            <div class="aurele-hero-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=1000&fit=crop&q=80" alt="Elegant plated dish at Maison Aurèle" loading="eager">
+            </div>
+
+            <!-- Floating glass badge -->
+            <div class="aurele-hero-badge">
+                <div class="aurele-hero-badge-inner">
+                    <div class="aurele-hero-badge-icon">★</div>
+                    <div class="aurele-hero-badge-text">
+                        <strong>Michelin Recognized</strong>
+                        <span>Since 2019</span>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                    <h1 class="reveal reveal-delay-1">
-                        Specialists in Shoulder & <em>Hand</em> Surgery
-                    </h1>
-
-                    <p class="hero-text reveal reveal-delay-2">
-                        Precision orthopaedic care for complex shoulder and hand conditions. From diagnosis through recovery, we deliver outcomes shaped by decades of surgical expertise.
+    <!-- ==========================================
+         ABOUT SECTION — Glass card with stats
+         ========================================== -->
+    <section class="aurele-about" id="aurele-about">
+        <div class="aurele-container">
+            <div class="aurele-about-grid">
+                <div class="aurele-about-text aurele-reveal">
+                    <p class="aurele-section-label">Our Story</p>
+                    <h2 class="aurele-section-heading">Rooted in craft,<br>driven by curiosity</h2>
+                    <p>
+                        Maison Aurèle was born from Chef Laurent Marchand's obsession 
+                        with fire-driven cooking and the farmers who shape our terroir. 
+                        Every plate tells the story of a particular morning at the market, 
+                        a conversation with a winemaker, or a childhood memory from Périgord.
+                    </p>
+                    <p>
+                        We do not chase trends. We chase honesty — in sourcing, in technique, 
+                        and in the hospitality we extend to every guest who walks through our doors.
                     </p>
 
-                    <div class="hero-actions reveal reveal-delay-3">
-                        <a href="#contact" class="btn-primary">
-                            Book Consultation
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
-                        <a href="#services" class="btn-secondary">View Services</a>
+                    <div class="aurele-about-stats aurele-stagger">
+                        <div class="aurele-glass-card aurele-stat-card">
+                            <div class="aurele-stat-number">7</div>
+                            <div class="aurele-stat-label">Years Open</div>
+                        </div>
+                        <div class="aurele-glass-card aurele-stat-card">
+                            <div class="aurele-stat-number">24</div>
+                            <div class="aurele-stat-label">Seats Nightly</div>
+                        </div>
+                        <div class="aurele-glass-card aurele-stat-card">
+                            <div class="aurele-stat-number">12</div>
+                            <div class="aurele-stat-label">Local Farms</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="hero-visual reveal reveal-delay-2">
-                    <div class="hero-glass-card">
-                        <div class="hero-stats">
-                            <div class="hero-stat">
-                                <div class="hero-stat-number">23+</div>
-                                <div class="hero-stat-label">Years Practice</div>
-                            </div>
-                            <div class="hero-stat">
-                                <div class="hero-stat-number">8.4k</div>
-                                <div class="hero-stat-label">Surgeries Completed</div>
-                            </div>
-                            <div class="hero-stat">
-                                <div class="hero-stat-number">97.3%</div>
-                                <div class="hero-stat-label">Patient Satisfaction</div>
-                            </div>
-                            <div class="hero-stat">
-                                <div class="hero-stat-number">14</div>
-                                <div class="hero-stat-label">Specialist Surgeons</div>
-                            </div>
-                        </div>
-                        <div class="hero-glass-divider"></div>
-                        <div class="hero-trust">
-                            <div class="hero-trust-avatars">
-                                <div class="hero-trust-avatar">
-                                    <img src="https://picsum.photos/seed/doc1/72/72" alt="Patient" loading="lazy">
-                                </div>
-                                <div class="hero-trust-avatar">
-                                    <img src="https://picsum.photos/seed/doc2/72/72" alt="Patient" loading="lazy">
-                                </div>
-                                <div class="hero-trust-avatar">
-                                    <img src="https://picsum.photos/seed/doc3/72/72" alt="Patient" loading="lazy">
-                                </div>
-                            </div>
-                            <div class="hero-trust-text">
-                                <strong>Trusted by athletes</strong><br>
-                                and professionals worldwide
-                            </div>
-                        </div>
-                    </div>
+                <div class="aurele-about-image aurele-reveal">
+                    <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=700&h=900&fit=crop&q=80" alt="Chef preparing a dish over open flame" loading="lazy">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ============================
-         ABOUT
-         ============================ -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-left reveal">
-                    <span class="label">About the Clinic</span>
-                    <h2>A tradition of <em>surgical precision</em></h2>
+    <!-- ==========================================
+         MENU SECTION — Filterable dish cards
+         ========================================== -->
+    <section class="aurele-menu" id="aurele-menu">
+        <div class="aurele-container">
+            <div class="aurele-menu-header aurele-reveal">
+                <div>
+                    <p class="aurele-section-label">The Menu</p>
+                    <h2 class="aurele-section-heading">Seasonal plates,<br>lasting impressions</h2>
                 </div>
-                <div class="about-right">
-                    <p class="reveal reveal-delay-1">
-                        Ashworth Clinic was founded on a single principle: that exceptional surgical outcomes demand both technical mastery and genuine attentiveness. Our consultants hold fellowships from leading international centres and bring a combined expertise spanning reconstructive shoulder surgery, complex hand trauma, and microsurgical repair.
-                    </p>
-                    <p class="reveal reveal-delay-2">
-                        Every treatment plan is built around the individual — their anatomy, their goals, their daily demands. We do not believe in one-size-fits-all protocols. From the first consultation to final rehabilitation, you are guided by the same surgeon who operates.
-                    </p>
-                    <div class="about-line reveal reveal-delay-3"></div>
-                    <div class="about-highlight reveal reveal-delay-3">
-                        <div class="about-highlight-item">
-                            <div class="about-highlight-number">3</div>
-                            <div class="about-highlight-text">Clinic locations</div>
-                        </div>
-                        <div class="about-highlight-item">
-                            <div class="about-highlight-number">48hr</div>
-                            <div class="about-highlight-text">Avg. appointment wait</div>
-                        </div>
-                        <div class="about-highlight-item">
-                            <div class="about-highlight-number">12</div>
-                            <div class="about-highlight-text">Research publications</div>
-                        </div>
+
+                <!-- Filter buttons for interactive menu filtering -->
+                <div class="aurele-menu-filters" id="aureleMenuFilters">
+                    <button class="aurele-filter-btn aurele-filter-active" data-filter="all">All</button>
+                    <button class="aurele-filter-btn" data-filter="starter">Starters</button>
+                    <button class="aurele-filter-btn" data-filter="main">Mains</button>
+                    <button class="aurele-filter-btn" data-filter="dessert">Desserts</button>
+                </div>
+            </div>
+
+            <div class="aurele-menu-grid aurele-stagger" id="aureleMenuGrid">
+
+                <!-- Dish 1 -->
+                <div class="aurele-glass-card aurele-dish-card" data-category="starter">
+                    <div class="aurele-dish-image">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=200&h=200&fit=crop&q=80" alt="Cured trout on plate" loading="lazy">
                     </div>
+                    <div class="aurele-dish-info">
+                        <h3 class="aurele-dish-name">Cured River Trout</h3>
+                        <p class="aurele-dish-desc">Citrus, fennel pollen, buttermilk, dill oil</p>
+                        <span class="aurele-dish-tag">Starter</span>
+                    </div>
+                    <span class="aurele-dish-price">€18</span>
+                </div>
+
+                <!-- Dish 2 -->
+                <div class="aurele-glass-card aurele-dish-card" data-category="starter">
+                    <div class="aurele-dish-image">
+                        <img src="https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?w=200&h=200&fit=crop&q=80" alt="Burrata with heirloom tomatoes" loading="lazy">
+                    </div>
+                    <div class="aurele-dish-info">
+                        <h3 class="aurele-dish-name">Heirloom Tomato Salad</h3>
+                        <p class="aurele-dish-desc">Burrata, aged balsamic, basil, black garlic</p>
+                        <span class="aurele-dish-tag">Starter</span>
+                    </div>
+                    <span class="aurele-dish-price">€16</span>
+                </div>
+
+                <!-- Dish 3 -->
+                <div class="aurele-glass-card aurele-dish-card" data-category="main">
+                    <div class="aurele-dish-image">
+                        <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=200&h=200&fit=crop&q=80" alt="Dry-aged duck breast" loading="lazy">
+                    </div>
+                    <div class="aurele-dish-info">
+                        <h3 class="aurele-dish-name">Dry-aged Duck Breast</h3>
+                        <p class="aurele-dish-desc">Cherry jus, roasted turnip, smoked hazelnut</p>
+                        <span class="aurele-dish-tag">Main</span>
+                    </div>
+                    <span class="aurele-dish-price">€38</span>
+                </div>
+
+                <!-- Dish 4 -->
+                <div class="aurele-glass-card aurele-dish-card" data-category="main">
+                    <div class="aurele-dish-image">
+                        <img src="https://images.unsplash.com/photo-1432139509613-5c4255a1d9be?w=200&h=200&fit=crop&q=80" alt="Wild sea bass fillet" loading="lazy">
+                    </div>
+                    <div class="aurele-dish-info">
+                        <h3 class="aurele-dish-name">Wild Sea Bass</h3>
+                        <p class="aurele-dish-desc">Saffron beurre blanc, asparagus, sea herbs</p>
+                        <span class="aurele-dish-tag">Main</span>
+                    </div>
+                    <span class="aurele-dish-price">€42</span>
+                </div>
+
+                <!-- Dish 5 -->
+                <div class="aurele-glass-card aurele-dish-card" data-category="main">
+                    <div class="aurele-dish-image">
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200&h=200&fit=crop&q=80" alt="Braised lamb shoulder" loading="lazy">
+                    </div>
+                    <div class="aurele-dish-info">
+                        <h3 class="aurele-dish-name">Braised Lamb Shoulder</h3>
+                        <p class="aurele-dish-desc">Olive tapenade, charred eggplant, rosemary jus</p>
+                        <span class="aurele-dish-tag">Main</span>
+                    </div>
+                    <span class="aurele-dish-price">€36</span>
+                </div>
+
+                <!-- Dish 6 -->
+                <div class="aurele-glass-card aurele-dish-card" data-category="dessert">
+                    <div class="aurele-dish-image">
+                        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=200&h=200&fit=crop&q=80" alt="Dark chocolate mousse" loading="lazy">
+                    </div>
+                    <div class="aurele-dish-info">
+                        <h3 class="aurele-dish-name">Valrhona Chocolate Mousse</h3>
+                        <p class="aurele-dish-desc">Tonka bean, candied orange, cocoa nib tuile</p>
+                        <span class="aurele-dish-tag">Dessert</span>
+                    </div>
+                    <span class="aurele-dish-price">€14</span>
+                </div>
+
+                <!-- Dish 7 -->
+                <div class="aurele-glass-card aurele-dish-card" data-category="dessert">
+                    <div class="aurele-dish-image">
+                        <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=200&h=200&fit=crop&q=80" alt="Tarte Tatin" loading="lazy">
+                    </div>
+                    <div class="aurele-dish-info">
+                        <h3 class="aurele-dish-name">Tarte Tatin</h3>
+                        <p class="aurele-dish-desc">Caramelized apple, calvados cream, vanilla</p>
+                        <span class="aurele-dish-tag">Dessert</span>
+                    </div>
+                    <span class="aurele-dish-price">€13</span>
+                </div>
+
+                <!-- Dish 8 -->
+                <div class="aurele-glass-card aurele-dish-card" data-category="starter">
+                    <div class="aurele-dish-image">
+                        <img src="https://images.unsplash.com/photo-1607098665874-fd193397547b?w=200&h=200&fit=crop&q=80" alt="Foie gras terrine" loading="lazy">
+                    </div>
+                    <div class="aurele-dish-info">
+                        <h3 class="aurele-dish-name">Foie Gras Terrine</h3>
+                        <p class="aurele-dish-desc">Sauternes gel, brioche, Périgord walnut</p>
+                        <span class="aurele-dish-tag">Starter</span>
+                    </div>
+                    <span class="aurele-dish-price">€26</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ============================
-         SERVICES
-         ============================ -->
-    <section class="services" id="services">
-        <div class="container">
-            <div class="services-header">
-                <span class="label reveal">Our Specialties</span>
-                <h2 class="reveal reveal-delay-1">Focused expertise in <em>upper limb</em> surgery</h2>
+    <!-- ==========================================
+         GALLERY SECTION — Asymmetric bento grid
+         ========================================== -->
+    <section class="aurele-gallery" id="aurele-gallery">
+        <div class="aurele-container">
+            <div class="aurele-gallery-header aurele-reveal">
+                <p class="aurele-section-label">The Atmosphere</p>
+                <h2 class="aurele-section-heading">An evening at Maison Aurèle</h2>
             </div>
 
-            <div class="services-grid">
-                <!-- Rotator Cuff -->
-                <div class="service-card reveal reveal-delay-1">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M12 8v4l2 2"/>
-                            <path d="M8 12a4 4 0 0 1 8 0"/>
-                        </svg>
-                    </div>
-                    <h3>Rotator Cuff Repair</h3>
-                    <p>Arthroscopic and open repair techniques for partial and full-thickness tears, restoring range of motion and strength.</p>
+            <div class="aurele-gallery-grid aurele-stagger" id="aureleGalleryGrid">
+                <div class="aurele-gallery-item">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=800&fit=crop&q=80" alt="Restaurant interior with warm lighting" loading="lazy">
                 </div>
-
-                <!-- Shoulder Instability -->
-                <div class="service-card reveal reveal-delay-2">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                            <path d="M2 17l10 5 10-5"/>
-                            <path d="M2 12l10 5 10-5"/>
-                        </svg>
-                    </div>
-                    <h3>Shoulder Instability</h3>
-                    <p>Stabilisation procedures including Bankart repair and Latarjet for recurrent dislocations and subluxation.</p>
+                <div class="aurele-gallery-item">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400&h=400&fit=crop&q=80" alt="Chef plating a dish" loading="lazy">
                 </div>
-
-                <!-- Carpal Tunnel -->
-                <div class="service-card reveal reveal-delay-3">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v0"/>
-                            <path d="M14 10V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v2"/>
-                            <path d="M10 10.5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v8"/>
-                            <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
-                        </svg>
-                    </div>
-                    <h3>Carpal Tunnel Release</h3>
-                    <p>Minimally invasive decompression surgery for median nerve entrapment, with rapid return to daily function.</p>
+                <div class="aurele-gallery-item">
+                    <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb51f3a?w=400&h=400&fit=crop&q=80" alt="Wine being poured at table" loading="lazy">
                 </div>
-
-                <!-- Hand Fractures -->
-                <div class="service-card reveal reveal-delay-2">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
-                            <path d="M9 12h6M12 9v6"/>
-                        </svg>
-                    </div>
-                    <h3>Hand & Wrist Fractures</h3>
-                    <p>Precise fixation of scaphoid, metacarpal, and distal radius fractures using advanced plating and screw techniques.</p>
+                <div class="aurele-gallery-item">
+                    <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=400&h=400&fit=crop&q=80" alt="Table setting with candles" loading="lazy">
                 </div>
-
-                <!-- Sports Injuries -->
-                <div class="service-card reveal reveal-delay-3">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
-                            <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
-                            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
-                            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
-                        </svg>
-                    </div>
-                    <h3>Sports Injuries</h3>
-                    <p>Tailored surgical and rehabilitative pathways for athletes — from ligament reconstruction to tendon repair.</p>
+                <div class="aurele-gallery-item">
+                    <img src="https://images.unsplash.com/photo-1428515613728-6b4607e44363?w=400&h=400&fit=crop&q=80" alt="Open kitchen with fire" loading="lazy">
                 </div>
-
-                <!-- Tendon Repair -->
-                <div class="service-card reveal reveal-delay-4">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/>
-                        </svg>
-                    </div>
-                    <h3>Tendon Reconstruction</h3>
-                    <p>Complex flexor and extensor tendon repairs and staged grafting, restoring grip and dexterity.</p>
+                <div class="aurele-gallery-item">
+                    <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&h=400&fit=crop&q=80" alt="Fresh ingredients on counter" loading="lazy">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ============================
-         WHY CHOOSE US
-         ============================ -->
-    <section class="why-us" id="why-us">
-        <div class="container">
-            <div class="why-us-inner">
-                <div class="why-us-header">
-                    <span class="label reveal">Why Ashworth</span>
-                    <h2 class="reveal reveal-delay-1">Built around the <em>patient</em>, not the process</h2>
-                </div>
+    <!-- ==========================================
+         CONTACT SECTION — Info + Glass Form
+         ========================================== -->
+    <section class="aurele-contact" id="aurele-contact">
+        <div class="aurele-container">
+            <div class="aurele-contact-grid">
+                <div class="aurele-contact-info aurele-reveal">
+                    <div>
+                        <p class="aurele-section-label">Get in Touch</p>
+                        <h2 class="aurele-section-heading">We'd love to<br>welcome you</h2>
+                    </div>
 
-                <div class="why-us-grid">
-                    <div class="why-us-item reveal reveal-delay-1">
-                        <div class="why-us-num">01</div>
-                        <div>
-                            <h3>Fellowship-Trained Surgeons</h3>
-                            <p>Every consultant holds subspecialty fellowship training from internationally recognised centres of orthopaedic excellence.</p>
+                    <div class="aurele-contact-detail">
+                        <div class="aurele-contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        </div>
+                        <div class="aurele-contact-detail-text">
+                            <h4>Location</h4>
+                            <p>14 Rue Sainte-Catherine<br>33000 Bordeaux, France</p>
                         </div>
                     </div>
 
-                    <div class="why-us-item reveal reveal-delay-2">
-                        <div class="why-us-num">02</div>
-                        <div>
-                            <h3>Accelerated Recovery Protocols</h3>
-                            <p>Evidence-based pathways designed to minimise downtime. Our patients return to activity faster through structured post-operative care.</p>
+                    <div class="aurele-contact-detail">
+                        <div class="aurele-contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+                        </div>
+                        <div class="aurele-contact-detail-text">
+                            <h4>Reservations</h4>
+                            <p>+33 5 56 81 47 23</p>
                         </div>
                     </div>
 
-                    <div class="why-us-item reveal reveal-delay-3">
-                        <div class="why-us-num">03</div>
-                        <div>
-                            <h3>Continuity of Care</h3>
-                            <p>Your operating surgeon leads every stage — from initial assessment through surgery and rehabilitation. No handoffs, no fragmentation.</p>
+                    <div class="aurele-contact-detail">
+                        <div class="aurele-contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        </div>
+                        <div class="aurele-contact-detail-text">
+                            <h4>Email</h4>
+                            <p>bonjour@maison-aurele.fr</p>
                         </div>
                     </div>
 
-                    <div class="why-us-item reveal reveal-delay-4">
-                        <div class="why-us-num">04</div>
-                        <div>
-                            <h3>Advanced Surgical Techniques</h3>
-                            <p>Arthroscopic, microsurgical, and image-guided approaches that reduce tissue disruption and improve long-term outcomes.</p>
+                    <!-- Opening hours card -->
+                    <div class="aurele-glass-card aurele-contact-hours">
+                        <h4>Opening Hours</h4>
+                        <div class="aurele-hours-row">
+                            <span class="aurele-hours-day">Tuesday — Thursday</span>
+                            <span class="aurele-hours-time">18:30 — 22:00</span>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================
-         TESTIMONIALS
-         ============================ -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="testimonials-header">
-                <span class="label reveal">Patient Experiences</span>
-                <h2 class="reveal reveal-delay-1">Trusted by those who <em>matter most</em></h2>
-            </div>
-
-            <div class="testimonials-grid">
-                <div class="testimonial-card reveal reveal-delay-1">
-                    <div class="testimonial-stars">
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    </div>
-                    <blockquote>"After eighteen months of shoulder pain that three other clinics couldn't resolve, Mr. Ashworth identified the problem in my first appointment. Six weeks post-surgery, I was back on the tennis court."</blockquote>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">RM</div>
-                        <div>
-                            <div class="testimonial-name">Rachel Moriarty</div>
-                            <div class="testimonial-role">Rotator Cuff Repair, 2024</div>
+                        <div class="aurele-hours-row">
+                            <span class="aurele-hours-day">Friday — Saturday</span>
+                            <span class="aurele-hours-time">18:00 — 23:00</span>
+                        </div>
+                        <div class="aurele-hours-row">
+                            <span class="aurele-hours-day">Sunday Lunch</span>
+                            <span class="aurele-hours-time">12:00 — 14:30</span>
+                        </div>
+                        <div class="aurele-hours-row">
+                            <span class="aurele-hours-day">Monday</span>
+                            <span class="aurele-hours-time">Closed</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="testimonial-card reveal reveal-delay-2">
-                    <div class="testimonial-stars">
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    </div>
-                    <blockquote>"The carpal tunnel release was genuinely life-changing. I'm a concert pianist and the thought of surgery was terrifying. The team understood what was at stake and delivered beyond my expectations."</blockquote>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">TK</div>
-                        <div>
-                            <div class="testimonial-name">Tomasz Kowalski</div>
-                            <div class="testimonial-role">Carpal Tunnel Release, 2023</div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Contact form in a glass card -->
+                <div class="aurele-glass-card aurele-contact-form-wrapper aurele-reveal">
+                    <h3>Send a Message</h3>
+                    <p>For private events, inquiries, or just to say hello.</p>
 
-                <div class="testimonial-card reveal reveal-delay-3">
-                    <div class="testimonial-stars">
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    </div>
-                    <blockquote>"Professional from start to finish. My shoulder stabilisation surgery was handled with extraordinary care. The follow-up programme was thorough and I felt genuinely looked after throughout."</blockquote>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">EH</div>
-                        <div>
-                            <div class="testimonial-name">Eleanor Hughes</div>
-                            <div class="testimonial-role">Shoulder Stabilisation, 2024</div>
+                    <form id="aureleContactForm">
+                        <div class="aurele-form-group">
+                            <label class="aurele-form-label" for="aureleFormName">Your Name</label>
+                            <input class="aurele-form-input" type="text" id="aureleFormName" placeholder="Laurent Marchand" required>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================
-         CONTACT
-         ============================ -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <span class="label reveal">Get in Touch</span>
-                    <h2 class="reveal reveal-delay-1">Begin your <em>recovery</em></h2>
-                    <p class="reveal reveal-delay-2">Request a consultation and our team will arrange your appointment within 48 hours. All enquiries are treated with complete confidentiality.</p>
-
-                    <div class="contact-details">
-                        <div class="contact-detail reveal reveal-delay-3">
-                            <div class="contact-detail-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="contact-detail-label">Telephone</div>
-                                <div class="contact-detail-text">+44 (0) 207 946 0382</div>
-                            </div>
+                        <div class="aurele-form-group">
+                            <label class="aurele-form-label" for="aureleFormEmail">Email Address</label>
+                            <input class="aurele-form-input" type="email" id="aureleFormEmail" placeholder="laurent@example.fr" required>
                         </div>
-
-                        <div class="contact-detail reveal reveal-delay-4">
-                            <div class="contact-detail-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                    <polyline points="22,6 12,13 2,6"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="contact-detail-label">Email</div>
-                                <div class="contact-detail-text">referrals@ashworthclinic.co.uk</div>
-                            </div>
+                        <div class="aurele-form-group">
+                            <label class="aurele-form-label" for="aureleFormMessage">Message</label>
+                            <textarea class="aurele-form-textarea" id="aureleFormMessage" placeholder="Tell us about your occasion..." required></textarea>
                         </div>
-
-                        <div class="contact-detail reveal reveal-delay-5">
-                            <div class="contact-detail-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                    <circle cx="12" cy="10" r="3"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="contact-detail-label">Clinic</div>
-                                <div class="contact-detail-text">82 Harley Street, London W1G 7HF</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="contact-form-wrapper reveal reveal-delay-2">
-                    <form class="contact-form" id="contactForm" novalidate>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="contactName">Full Name</label>
-                                <input type="text" id="contactName" name="name" placeholder="Your name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="contactEmail">Email Address</label>
-                                <input type="email" id="contactEmail" name="email" placeholder="your@email.com" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="contactPhone">Phone Number</label>
-                            <input type="tel" id="contactPhone" name="phone" placeholder="+44 (0) 7XXX XXX XXX">
-                        </div>
-                        <div class="form-group">
-                            <label for="contactMessage">Tell Us About Your Condition</label>
-                            <textarea id="contactMessage" name="message" placeholder="Briefly describe your symptoms, injury, or the consultation you'd like to arrange..." rows="5"></textarea>
-                        </div>
-                        <div class="form-submit">
-                            <button type="submit" class="btn-primary">
-                                Request Consultation
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </button>
-                        </div>
+                        <button type="submit" class="aurele-form-submit">Send Message</button>
                     </form>
+
+                    <!-- Success state shown after form submission -->
+                    <div class="aurele-form-success" id="aureleFormSuccess">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <h4>Message Sent</h4>
+                        <p>Thank you. We'll be in touch within 24 hours.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ============================
+    <!-- ==========================================
          FOOTER
-         ============================ -->
-    <footer class="footer">
-        <div class="container footer-inner">
-            <div class="footer-logo">Ashworth Clinic</div>
-            <div class="footer-links">
-                <a href="#about">About</a>
-                <a href="#services">Services</a>
-                <a href="#contact">Contact</a>
+         ========================================== -->
+    <footer class="aurele-footer">
+        <div class="aurele-container aurele-footer-inner">
+            <div class="aurele-footer-brand">
+                Maison <span>Aurèle</span>
             </div>
-            <div class="footer-copy">&copy; 2024 Ashworth Clinic. All rights reserved.</div>
+
+            <p class="aurele-footer-copyright">
+                &copy; 2024 Maison Aurèle. All rights reserved.
+            </p>
+
+            <div class="aurele-footer-socials">
+                <!-- Instagram -->
+                <a href="#" class="aurele-social-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+                <!-- Facebook -->
+                <a href="#" class="aurele-social-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                </a>
+                <!-- Twitter/X -->
+                <a href="#" class="aurele-social-link" aria-label="Twitter">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.768M13.232 10.232L20 4"/></svg>
+                </a>
+            </div>
         </div>
     </footer>
 
-    <!-- ============================================
-         JAVASCRIPT
-         ============================================ -->
+    <!-- ==========================================
+         JAVASCRIPT — Interactions & Animations
+         ========================================== -->
     <script>
-        // ==================================
-        // NAVIGATION — Scroll State
-        // ==================================
-        const nav = document.getElementById('mainNav');
+    (function() {
+        'use strict';
 
-        function updateNav() {
-            if (window.scrollY > 60) {
-                nav.classList.add('scrolled');
+        /* ============================================
+           1. NAVBAR SCROLL EFFECT
+           Adds glass background when scrolled
+           ============================================ */
+        const nav = document.getElementById('aureleNav');
+        let lastScroll = 0;
+
+        function handleNavScroll() {
+            const scrollY = window.scrollY;
+            if (scrollY > 60) {
+                nav.classList.add('aurele-nav-scrolled');
             } else {
-                nav.classList.remove('scrolled');
+                nav.classList.remove('aurele-nav-scrolled');
             }
+            lastScroll = scrollY;
         }
 
-        window.addEventListener('scroll', updateNav, { passive: true });
-        updateNav();
+        window.addEventListener('scroll', handleNavScroll, { passive: true });
 
-        // ==================================
-        // MOBILE MENU
-        // ==================================
-        const mobileToggle = document.getElementById('mobileToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        /* ============================================
+           2. MOBILE MENU TOGGLE
+           ============================================ */
+        const navToggle = document.getElementById('aureleNavToggle');
+        const mobileMenu = document.getElementById('aureleMobileMenu');
+        const mobileLinks = document.querySelectorAll('.aurele-mobile-link');
 
-        mobileToggle.addEventListener('click', () => {
-            const isActive = mobileMenu.classList.contains('active');
-            mobileMenu.classList.toggle('active');
-            mobileToggle.classList.toggle('active');
-            mobileToggle.setAttribute('aria-expanded', !isActive);
-            document.body.style.overflow = isActive ? '' : 'hidden';
+        navToggle.addEventListener('click', function() {
+            this.classList.toggle('aurele-toggle-active');
+            mobileMenu.classList.toggle('aurele-menu-open');
+            document.body.style.overflow = mobileMenu.classList.contains('aurele-menu-open') ? 'hidden' : '';
         });
 
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-                mobileToggle.classList.remove('active');
-                mobileToggle.setAttribute('aria-expanded', 'false');
+        // Close mobile menu when a link is clicked
+        mobileLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                navToggle.classList.remove('aurele-toggle-active');
+                mobileMenu.classList.remove('aurele-menu-open');
                 document.body.style.overflow = '';
             });
         });
 
-        // ==================================
-        // SCROLL REVEAL — Intersection Observer
-        // ==================================
-        const revealElements = document.querySelectorAll('.reveal');
+        /* ============================================
+           3. SCROLL REVEAL — IntersectionObserver
+           Animates elements as they enter the viewport
+           ============================================ */
+        const revealElements = document.querySelectorAll('.aurele-reveal, .aurele-stagger');
 
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+        const revealObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    entry.target.classList.add('aurele-visible');
+
+                    // Apply staggered delays to children
+                    if (entry.target.classList.contains('aurele-stagger')) {
+                        const children = entry.target.children;
+                        Array.from(children).forEach(function(child, index) {
+                            child.style.transitionDelay = (index * 100) + 'ms';
+                        });
+                    }
+
                     revealObserver.unobserve(entry.target);
                 }
             });
         }, {
-            threshold: 0.12,
-            rootMargin: '0px 0px -40px 0px'
+            threshold: 0.15,
+            rootMargin: '0px 0px -60px 0px'
         });
 
-        revealElements.forEach(el => revealObserver.observe(el));
+        revealElements.forEach(function(el) {
+            revealObserver.observe(el);
+        });
 
-        // ==================================
-        // SMOOTH SCROLL — for anchor links
-        // ==================================
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const navHeight = nav.offsetHeight;
-                    const targetPosition = target.getBoundingClientRect().top + window.scrollY - navHeight - 20;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
+        /* ============================================
+           4. MENU FILTERING
+           Interactive category filter for dishes
+           ============================================ */
+        const filterBtns = document.querySelectorAll('.aurele-filter-btn');
+        const dishCards = document.querySelectorAll('.aurele-dish-card');
+
+        filterBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // Update active state
+                filterBtns.forEach(function(b) {
+                    b.classList.remove('aurele-filter-active');
+                });
+                this.classList.add('aurele-filter-active');
+
+                const filter = this.getAttribute('data-filter');
+
+                dishCards.forEach(function(card, index) {
+                    const category = card.getAttribute('data-category');
+                    const shouldShow = filter === 'all' || category === filter;
+
+                    if (shouldShow) {
+                        card.classList.remove('aurele-dish-hidden');
+                        // Re-trigger stagger animation
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(function() {
+                            card.style.transition = 'opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
+                            card.style.transitionDelay = (index * 80) + 'ms';
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 10);
+                    } else {
+                        card.classList.add('aurele-dish-hidden');
+                    }
+                });
             });
         });
 
-        // ==================================
-        // FORM HANDLING
-        // ==================================
-        const contactForm = document.getElementById('contactForm');
+        /* ============================================
+           5. CONTACT FORM SUBMISSION
+           Simple validation + success state
+           ============================================ */
+        const contactForm = document.getElementById('aureleContactForm');
+        const formSuccess = document.getElementById('aureleFormSuccess');
 
-        contactForm.addEventListener('submit', function (e) {
+        contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const submitBtn = contactForm.querySelector('.btn-primary');
-            const originalText = submitBtn.innerHTML;
-
-            submitBtn.innerHTML = `
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Request Sent
-            `;
-            submitBtn.style.background = '#1a8a6e';
+            // Simulate form submission
+            const submitBtn = contactForm.querySelector('.aurele-form-submit');
+            submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
 
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.style.background = '';
-                submitBtn.disabled = false;
-                contactForm.reset();
-            }, 3000);
+            setTimeout(function() {
+                contactForm.style.display = 'none';
+                formSuccess.classList.add('aurele-success-show');
+            }, 1200);
         });
+
+        /* ============================================
+           6. SMOOTH PARALLAX ON HERO BADGE
+           Subtle floating effect on scroll
+           ============================================ */
+        const heroBadge = document.querySelector('.aurele-hero-badge');
+
+        function handleParallax() {
+            if (!heroBadge) return;
+            const scrollY = window.scrollY;
+            const offset = scrollY * 0.15;
+            heroBadge.style.transform = 'translateY(' + (-offset) + 'px)';
+        }
+
+        window.addEventListener('scroll', handleParallax, { passive: true });
+
+        /* ============================================
+           7. GALLERY ITEM TILT ON HOVER
+           Subtle 3D perspective tilt effect
+           ============================================ */
+        const galleryItems = document.querySelectorAll('.aurele-gallery-item');
+
+        galleryItems.forEach(function(item) {
+            item.addEventListener('mousemove', function(e) {
+                const rect = item.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / centerY * -3;
+                const rotateY = (x - centerX) / centerX * 3;
+
+                item.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)';
+                item.style.transition = 'transform 0.1s ease';
+            });
+
+            item.addEventListener('mouseleave', function() {
+                item.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
+                item.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
+            });
+        });
+
+        /* ============================================
+           8. CTA BUTTON RIPPLE EFFECT
+           Creates an expanding ripple on click
+           ============================================ */
+        const ctaButton = document.querySelector('.aurele-hero-cta');
+
+        if (ctaButton) {
+            ctaButton.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = ctaButton.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.cssText = 'position:absolute;border-radius:50%;background:rgba(255,255,255,0.3);' +
+                    'width:' + size + 'px;height:' + size + 'px;left:' + x + 'px;top:' + y + 'px;' +
+                    'transform:scale(0);animation:aurele-ripple 0.6s ease-out;pointer-events:none;';
+
+                ctaButton.style.position = 'relative';
+                ctaButton.style.overflow = 'hidden';
+                ctaButton.appendChild(ripple);
+
+                setTimeout(function() {
+                    ripple.remove();
+                }, 700);
+            });
+
+            // Inject ripple keyframe
+            const style = document.createElement('style');
+            style.textContent = '@keyframes aurele-ripple{to{transform:scale(4);opacity:0;}}';
+            document.head.appendChild(style);
+        }
+
+    })();
     </script>
+
 </body>
 </html>
