@@ -2277,7 +2277,8 @@
                 <li><strong>Links</strong> &mdash; edit the href on any anchor element, even when the link wraps images
                   or other content</li>
                 <li><strong>Background images</strong> &mdash; swap background images on elements with the
-                  <code>:style(background-image)</code> selector</li>
+                  <code>:style(background-image)</code> selector
+                </li>
               </ul>
 
               <h2 id="text-editing">Text Editing<a href="#text-editing" class="klar-heading-anchor">#</a></h2>
@@ -2571,7 +2572,8 @@
               </h2>
               <p>Elements with CSS background images can be edited through the media library too. Use the
                 <code>:style(background-image)</code> selector modifier or the <code>data-klar-style-bg</code> HTML
-                attribute to enable this on specific elements.</p>
+                attribute to enable this on specific elements.
+              </p>
 
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="ai-assistant">
@@ -2810,7 +2812,8 @@
                     <tr>
                       <td><strong>HTML File</strong></td>
                       <td>Path to the HTML file in your repo (e.g., <code>index.html</code> or
-                        <code>pages/about.html</code>)</td>
+                        <code>pages/about.html</code>)
+                      </td>
                     </tr>
                     <tr>
                       <td><strong>CSS File</strong></td>
@@ -3367,7 +3370,7 @@
             .querySelectorAll(".klar-page")
             .forEach((p) => p.classList.remove("is-active"));
           // Show target
-          const target = document.getElementById("page-" + pageId);
+          const target = document.getElementById(pageId);
           if (target) target.classList.add("is-active");
 
           // Update sidebar
