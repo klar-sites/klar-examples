@@ -25,7 +25,7 @@
         --sp-16: 64px;
         --sp-20: 80px;
 
-        --font-display: 'Instrument Serif', Georgia, serif;
+        --font-display: 'Inter', Georgia, serif;
         --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
@@ -2962,7 +2962,10 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
             const sidebarLink = $(`.klar-sidebar__link[data-nav="${pageId}"]`);
             if (sidebarLink) sidebarLink.classList.add('is-active');
 
-            window.scrollTo({ top: 0, behavior: 'instant' });
+            window.scrollTo({
+              top: 0,
+              behavior: 'instant'
+            });
 
             try {
               if (pushState) history.pushState(null, '', `#${pageId}`);
@@ -3063,22 +3066,96 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
           isOpen: false,
           activeIndex: -1,
 
-          index: [
-            { title: 'Introduction', section: 'Getting Started', page: 'getting-started', keywords: 'intro overview about klar cms' },
-            { title: 'Installation', section: 'Getting Started', page: 'installation', keywords: 'install setup npm cdn script' },
-            { title: 'Quick Start', section: 'Getting Started', page: 'quick-start', keywords: 'start begin tutorial' },
-            { title: 'Clean HTML Output', section: 'Core Concepts', page: 'clean-html', keywords: 'sanitize clean semantic html output' },
-            { title: 'Editing Content', section: 'Core Concepts', page: 'editing', keywords: 'edit contenteditable regions' },
-            { title: 'Configuration', section: 'Core Concepts', page: 'configuration', keywords: 'config options settings defaults' },
-            { title: 'Live CMS Demo', section: 'CMS Features', page: 'cms-demo', keywords: 'demo editor interactive try' },
-            { title: 'HTML Sanitization', section: 'CMS Features', page: 'sanitization', keywords: 'sanitize clean strip remove' },
-            { title: 'Export & Save', section: 'CMS Features', page: 'export', keywords: 'export save download file github' },
-            { title: 'API Overview', section: 'API Reference', page: 'api-overview', keywords: 'api constructor options' },
-            { title: 'Methods', section: 'API Reference', page: 'api-methods', keywords: 'methods enable disable save gethtml destroy' },
-            { title: 'Events', section: 'API Reference', page: 'api-events', keywords: 'events on change save enable disable' },
-            { title: 'Plugin System', section: 'Advanced', page: 'plugins', keywords: 'plugins extend hooks lifecycle' },
-            { title: 'Performance', section: 'Advanced', page: 'performance', keywords: 'performance speed bundle size fast' },
-            { title: 'Accessibility', section: 'Advanced', page: 'accessibility', keywords: 'accessibility a11y wcag keyboard aria' },
+          index: [{
+              title: 'Introduction',
+              section: 'Getting Started',
+              page: 'getting-started',
+              keywords: 'intro overview about klar cms'
+            },
+            {
+              title: 'Installation',
+              section: 'Getting Started',
+              page: 'installation',
+              keywords: 'install setup npm cdn script'
+            },
+            {
+              title: 'Quick Start',
+              section: 'Getting Started',
+              page: 'quick-start',
+              keywords: 'start begin tutorial'
+            },
+            {
+              title: 'Clean HTML Output',
+              section: 'Core Concepts',
+              page: 'clean-html',
+              keywords: 'sanitize clean semantic html output'
+            },
+            {
+              title: 'Editing Content',
+              section: 'Core Concepts',
+              page: 'editing',
+              keywords: 'edit contenteditable regions'
+            },
+            {
+              title: 'Configuration',
+              section: 'Core Concepts',
+              page: 'configuration',
+              keywords: 'config options settings defaults'
+            },
+            {
+              title: 'Live CMS Demo',
+              section: 'CMS Features',
+              page: 'cms-demo',
+              keywords: 'demo editor interactive try'
+            },
+            {
+              title: 'HTML Sanitization',
+              section: 'CMS Features',
+              page: 'sanitization',
+              keywords: 'sanitize clean strip remove'
+            },
+            {
+              title: 'Export & Save',
+              section: 'CMS Features',
+              page: 'export',
+              keywords: 'export save download file github'
+            },
+            {
+              title: 'API Overview',
+              section: 'API Reference',
+              page: 'api-overview',
+              keywords: 'api constructor options'
+            },
+            {
+              title: 'Methods',
+              section: 'API Reference',
+              page: 'api-methods',
+              keywords: 'methods enable disable save gethtml destroy'
+            },
+            {
+              title: 'Events',
+              section: 'API Reference',
+              page: 'api-events',
+              keywords: 'events on change save enable disable'
+            },
+            {
+              title: 'Plugin System',
+              section: 'Advanced',
+              page: 'plugins',
+              keywords: 'plugins extend hooks lifecycle'
+            },
+            {
+              title: 'Performance',
+              section: 'Advanced',
+              page: 'performance',
+              keywords: 'performance speed bundle size fast'
+            },
+            {
+              title: 'Accessibility',
+              section: 'Advanced',
+              page: 'accessibility',
+              keywords: 'accessibility a11y wcag keyboard aria'
+            },
           ],
 
           init() {
@@ -3176,7 +3253,9 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
             if (this.activeIndex < 0) this.activeIndex = results.length - 1;
             if (this.activeIndex >= results.length) this.activeIndex = 0;
             results[this.activeIndex].classList.add('is-active');
-            results[this.activeIndex].scrollIntoView({ block: 'nearest' });
+            results[this.activeIndex].scrollIntoView({
+              block: 'nearest'
+            });
           },
 
           selectActive() {
@@ -3206,7 +3285,8 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
           navigator.clipboard.writeText(code.textContent).then(() => {
             btn.classList.add('is-copied');
             const originalHTML = btn.innerHTML;
-            btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+            btn.innerHTML =
+              `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
             setTimeout(() => {
               btn.classList.remove('is-copied');
               btn.innerHTML = originalHTML;
@@ -3263,7 +3343,8 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
                 $$('.klar-output-panel__tab').forEach(t => t.classList.remove('is-active'));
                 $$('.klar-output-panel__content').forEach(c => c.classList.remove('is-visible'));
                 tab.classList.add('is-active');
-                $(`#klarOutput${tab.dataset.outputTab.charAt(0).toUpperCase() + tab.dataset.outputTab.slice(1)}`).classList.add('is-visible');
+                $(`#klarOutput${tab.dataset.outputTab.charAt(0).toUpperCase() + tab.dataset.outputTab.slice(1)}`)
+                  .classList.add('is-visible');
               });
             });
           },
@@ -3421,12 +3502,15 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
             return diff || '<span class="klar-hl-comment">No differences detected</span>';
           },
 
-          export() {
+          export () {
             const editor = $('#klarEditorContent');
             const cleanHTML = this.sanitizeHTML(editor.innerHTML);
-            const fullDoc = `<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Exported Content</title></head><body>${cleanHTML}</body></html>`;
+            const fullDoc =
+              `<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Exported Content</title></head><body>${cleanHTML}</body></html>`;
 
-            const blob = new Blob([fullDoc], { type: 'text/html' });
+            const blob = new Blob([fullDoc], {
+              type: 'text/html'
+            });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -3438,7 +3522,8 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
         };
 
         document.addEventListener('keydown', (e) => {
-          if (e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement.tagName !== 'INPUT' && !document.activeElement.isContentEditable) {
+          if (e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement.tagName !== 'INPUT' && !document
+            .activeElement.isContentEditable) {
             e.preventDefault();
             Search.open();
           }
