@@ -1380,10 +1380,10 @@
          ========================================== -->
     <section class="aurea-hero" id="hero">
       <div class="aurea-hero__bg"></div>
-      <div class="aurea-hero__content" data-klar-style-bg>
+      <div class="aurea-hero__content">
         <span class="aurea-hero__ornament"></span>
         <p class="aurea-hero__subtitle">Est. 2019 · Fine Dining</p>
-        <h1 class="aurea-hero__title">Where Flavor<br>Meets <em>Artistry</em></h1>
+        <h1 class="aurea-hero__title" data-klar-style-bg>Where Flavor<br>Meets <em>Artistry</em></h1>
         <p class="aurea-hero__desc">An intimate culinary journey through seasonal ingredients, masterful technique, and
           unforgettable moments.</p>
         <div class="aurea-hero__cta-group">
@@ -2078,7 +2078,7 @@
             const y = (e.clientY - rect.top) / rect.height - 0.5;
 
             item.style.transform =
-            `perspective(600px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) scale(1.02)`;
+              `perspective(600px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) scale(1.02)`;
           });
 
           item.addEventListener('mouseleave', () => {
