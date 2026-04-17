@@ -2879,6 +2879,7 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
             });
 
             // Update URL
+            console.log(window.parent)
             if (pushState) history.pushState(null, '', `#${pageId}`);
 
             // Update ToC
