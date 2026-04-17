@@ -6,14 +6,13 @@
     <title>Klar CMS — Clean HTML, Zero Bloat</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet">
     <style>
       /* ═══════════════════════════════════════
    CSS VARIABLES & THEMING
    ═══════════════════════════════════════ */
       :root {
-        /* Spacing scale */
         --sp-1: 4px;
         --sp-2: 8px;
         --sp-3: 12px;
@@ -26,111 +25,115 @@
         --sp-16: 64px;
         --sp-20: 80px;
 
-        /* Typography */
-        --font-display: 'Source Serif 4', Georgia, serif;
-        --font-body: 'DM Sans', system-ui, sans-serif;
+        --font-display: 'Instrument Serif', Georgia, serif;
+        --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-        /* Sizes */
-        --sidebar-w: 280px;
-        --toc-w: 220px;
-        --nav-h: 56px;
-        --max-content: 760px;
+        --sidebar-w: 272px;
+        --toc-w: 224px;
+        --nav-h: 57px;
+        --max-content: 740px;
 
-        /* Transitions */
         --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
         --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-        --dur-fast: 150ms;
-        --dur-med: 300ms;
-        --dur-slow: 500ms;
+        --dur-fast: 120ms;
+        --dur-med: 250ms;
+        --dur-slow: 450ms;
+
+        --radius-sm: 6px;
+        --radius-md: 10px;
+        --radius-lg: 14px;
+        --radius-xl: 18px;
       }
 
       [data-theme="light"] {
-        --bg-primary: #FAFAF8;
-        --bg-secondary: #F2F1EE;
-        --bg-tertiary: #E8E7E3;
-        --bg-code: #F5F4F1;
-        --bg-nav: rgba(250, 250, 248, 0.85);
-        --bg-sidebar: #FAFAF8;
+        --bg-primary: #FFFFFF;
+        --bg-secondary: #F8FAFC;
+        --bg-tertiary: #F1F5F9;
+        --bg-code: #F8FAFC;
+        --bg-nav: rgba(255, 255, 255, 0.82);
+        --bg-sidebar: #FFFFFF;
         --bg-card: #FFFFFF;
-        --bg-hover: rgba(0, 0, 0, 0.04);
-        --bg-active: rgba(0, 0, 0, 0.06);
-        --bg-tooltip: #1A1918;
+        --bg-hover: rgba(15, 23, 42, 0.04);
+        --bg-active: rgba(15, 23, 42, 0.06);
+        --bg-tooltip: #0F172A;
 
-        --text-primary: #1A1918;
-        --text-secondary: #5C5B57;
-        --text-tertiary: #8D8C88;
-        --text-inverse: #FAFAF8;
-        --text-link: #B44D2D;
+        --text-primary: #0F172A;
+        --text-secondary: #475569;
+        --text-tertiary: #94A3B8;
+        --text-inverse: #F8FAFC;
+        --text-link: #0EA5E9;
 
-        --border-primary: #E0DFDB;
-        --border-secondary: #ECEAE6;
-        --border-focus: #B44D2D;
+        --border-primary: #E2E8F0;
+        --border-secondary: #F1F5F9;
+        --border-focus: #0EA5E9;
 
-        --accent: #B44D2D;
-        --accent-hover: #9A3F24;
-        --accent-subtle: rgba(180, 77, 45, 0.08);
-        --accent-muted: rgba(180, 77, 45, 0.15);
+        --accent: #0EA5E9;
+        --accent-hover: #0284C7;
+        --accent-subtle: rgba(14, 165, 233, 0.07);
+        --accent-muted: rgba(14, 165, 233, 0.14);
 
-        --success: #2D7A4F;
-        --warning: #C2880E;
-        --error: #C23B22;
-        --info: #2D6AB4;
+        --success: #10B981;
+        --warning: #F59E0B;
+        --error: #EF4444;
+        --info: #3B82F6;
 
-        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
-        --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
+        --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+        --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+        --shadow-lg: 0 20px 60px rgba(15, 23, 42, 0.08), 0 4px 16px rgba(15, 23, 42, 0.04);
+        --shadow-ring: 0 0 0 3px rgba(14, 165, 233, 0.15);
 
-        --code-keyword: #8B3FC7;
-        --code-string: #2D7A4F;
-        --code-comment: #8D8C88;
-        --code-tag: #B44D2D;
-        --code-attr: #2D6AB4;
-        --code-number: #C2880E;
+        --code-keyword: #7C3AED;
+        --code-string: #059669;
+        --code-comment: #94A3B8;
+        --code-tag: #0EA5E9;
+        --code-attr: #2563EB;
+        --code-number: #D97706;
       }
 
       [data-theme="dark"] {
-        --bg-primary: #131211;
-        --bg-secondary: #1C1B19;
-        --bg-tertiary: #252421;
-        --bg-code: #1C1B19;
-        --bg-nav: rgba(19, 18, 17, 0.88);
-        --bg-sidebar: #161514;
-        --bg-card: #1C1B19;
-        --bg-hover: rgba(255, 255, 255, 0.05);
-        --bg-active: rgba(255, 255, 255, 0.08);
-        --bg-tooltip: #E8E7E3;
+        --bg-primary: #0B1120;
+        --bg-secondary: #0F1729;
+        --bg-tertiary: #152037;
+        --bg-code: #0F1729;
+        --bg-nav: rgba(11, 17, 32, 0.84);
+        --bg-sidebar: #0B1120;
+        --bg-card: #0F1729;
+        --bg-hover: rgba(148, 163, 184, 0.06);
+        --bg-active: rgba(148, 163, 184, 0.09);
+        --bg-tooltip: #E2E8F0;
 
-        --text-primary: #E8E7E3;
-        --text-secondary: #A09F9B;
-        --text-tertiary: #6E6D69;
-        --text-inverse: #131211;
-        --text-link: #E08B6D;
+        --text-primary: #E2E8F0;
+        --text-secondary: #94A3B8;
+        --text-tertiary: #475569;
+        --text-inverse: #0B1120;
+        --text-link: #38BDF8;
 
-        --border-primary: #2A2926;
-        --border-secondary: #1F1E1C;
-        --border-focus: #E08B6D;
+        --border-primary: #1E293B;
+        --border-secondary: #152037;
+        --border-focus: #38BDF8;
 
-        --accent: #E08B6D;
-        --accent-hover: #D47A5A;
-        --accent-subtle: rgba(224, 139, 109, 0.08);
-        --accent-muted: rgba(224, 139, 109, 0.15);
+        --accent: #38BDF8;
+        --accent-hover: #0EA5E9;
+        --accent-subtle: rgba(56, 189, 248, 0.07);
+        --accent-muted: rgba(56, 189, 248, 0.14);
 
-        --success: #5CB882;
-        --warning: #E0B84D;
-        --error: #E06B5A;
-        --info: #6BA3E0;
+        --success: #34D399;
+        --warning: #FBBF24;
+        --error: #F87171;
+        --info: #60A5FA;
 
-        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
-        --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4);
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+        --shadow-ring: 0 0 0 3px rgba(56, 189, 248, 0.2);
 
-        --code-keyword: #C49BEB;
-        --code-string: #5CB882;
-        --code-comment: #6E6D69;
-        --code-tag: #E08B6D;
-        --code-attr: #6BA3E0;
-        --code-number: #E0B84D;
+        --code-keyword: #A78BFA;
+        --code-string: #34D399;
+        --code-comment: #475569;
+        --code-tag: #38BDF8;
+        --code-attr: #60A5FA;
+        --code-number: #FBBF24;
       }
 
       /* ═══════════════════════════════════════
@@ -152,14 +155,15 @@
 
       body {
         font-family: var(--font-body);
-        font-size: 15px;
-        line-height: 1.65;
+        font-size: 14.5px;
+        line-height: 1.7;
         color: var(--text-primary);
         background: var(--bg-primary);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         overflow-x: hidden;
         transition: background var(--dur-med) ease, color var(--dur-med) ease;
+        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
       }
 
       ::selection {
@@ -196,10 +200,10 @@
         font-family: var(--font-mono);
       }
 
-      /* Focus styles */
       :focus-visible {
         outline: 2px solid var(--border-focus);
         outline-offset: 2px;
+        border-radius: 4px;
       }
 
       /* ═══════════════════════════════════════
@@ -212,8 +216,8 @@
         right: 0;
         height: var(--nav-h);
         background: var(--bg-nav);
-        backdrop-filter: blur(16px) saturate(180%);
-        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
         border-bottom: 1px solid var(--border-secondary);
         z-index: 1000;
         display: flex;
@@ -226,20 +230,24 @@
         display: flex;
         align-items: center;
         gap: var(--sp-3);
-        font-family: var(--font-display);
-        font-size: 18px;
+        font-family: var(--font-body);
+        font-size: 15px;
         font-weight: 700;
         color: var(--text-primary);
-        letter-spacing: -0.02em;
+        letter-spacing: -0.03em;
         text-decoration: none;
         flex-shrink: 0;
       }
 
+      .klar-nav__logo:hover {
+        color: var(--text-primary);
+      }
+
       .klar-nav__logo-mark {
-        width: 26px;
-        height: 26px;
-        background: var(--accent);
-        border-radius: 6px;
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, var(--accent), #6366F1);
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -248,16 +256,23 @@
         font-weight: 700;
         font-family: var(--font-mono);
         letter-spacing: 0;
+        box-shadow: 0 2px 8px rgba(14, 165, 233, 0.25);
+      }
+
+      [data-theme="dark"] .klar-nav__logo-mark {
+        box-shadow: 0 2px 12px rgba(56, 189, 248, 0.3);
       }
 
       .klar-nav__version {
         font-family: var(--font-mono);
-        font-size: 11px;
+        font-size: 10.5px;
         color: var(--text-tertiary);
-        background: var(--bg-secondary);
-        padding: 2px 7px;
-        border-radius: 4px;
+        background: var(--bg-tertiary);
+        padding: 2px 8px;
+        border-radius: 100px;
         margin-left: var(--sp-1);
+        font-weight: 500;
+        letter-spacing: 0;
       }
 
       .klar-nav__center {
@@ -270,20 +285,21 @@
       .klar-nav__search {
         position: relative;
         width: 100%;
-        max-width: 400px;
+        max-width: 420px;
       }
 
       .klar-nav__search-input {
         width: 100%;
-        height: 34px;
+        height: 36px;
         background: var(--bg-secondary);
-        border: 1px solid var(--border-secondary);
-        border-radius: 8px;
-        padding: 0 var(--sp-4) 0 34px;
+        border: 1px solid var(--border-primary);
+        border-radius: 10px;
+        padding: 0 var(--sp-4) 0 36px;
         font-family: var(--font-body);
         font-size: 13px;
         color: var(--text-primary);
         transition: all var(--dur-fast) ease;
+        cursor: pointer;
       }
 
       .klar-nav__search-input::placeholder {
@@ -293,16 +309,16 @@
       .klar-nav__search-input:focus {
         background: var(--bg-card);
         border-color: var(--border-focus);
-        box-shadow: 0 0 0 3px var(--accent-subtle);
+        box-shadow: var(--shadow-ring);
       }
 
       .klar-nav__search-icon {
         position: absolute;
-        left: 10px;
+        left: 11px;
         top: 50%;
         transform: translateY(-50%);
-        width: 16px;
-        height: 16px;
+        width: 15px;
+        height: 15px;
         color: var(--text-tertiary);
         pointer-events: none;
       }
@@ -317,27 +333,28 @@
         color: var(--text-tertiary);
         background: var(--bg-primary);
         border: 1px solid var(--border-primary);
-        padding: 1px 5px;
-        border-radius: 4px;
-        line-height: 1.4;
+        padding: 1px 6px;
+        border-radius: 5px;
+        line-height: 1.5;
         pointer-events: none;
+        font-weight: 500;
       }
 
       .klar-nav__actions {
         display: flex;
         align-items: center;
-        gap: var(--sp-2);
+        gap: var(--sp-1);
         flex-shrink: 0;
       }
 
       .klar-nav__btn {
-        width: 34px;
-        height: 34px;
-        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--text-secondary);
+        color: var(--text-tertiary);
         transition: all var(--dur-fast) ease;
       }
 
@@ -353,9 +370,9 @@
 
       .klar-nav__menu-btn {
         display: none;
-        width: 34px;
-        height: 34px;
-        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
         align-items: center;
         justify-content: center;
         color: var(--text-secondary);
@@ -369,13 +386,13 @@
       /* Theme toggle */
       .klar-theme-toggle {
         position: relative;
-        width: 34px;
-        height: 34px;
-        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--text-secondary);
+        color: var(--text-tertiary);
         transition: all var(--dur-fast) ease;
       }
 
@@ -385,8 +402,8 @@
       }
 
       .klar-theme-toggle svg {
-        width: 18px;
-        height: 18px;
+        width: 17px;
+        height: 17px;
       }
 
       .klar-theme-toggle .klar-icon-sun,
@@ -425,7 +442,7 @@
         display: flex;
         align-items: flex-start;
         justify-content: center;
-        padding-top: 120px;
+        padding-top: min(120px, 15vh);
         opacity: 0;
         visibility: hidden;
         transition: all var(--dur-med) var(--ease-out);
@@ -439,7 +456,8 @@
       .klar-search-modal__backdrop {
         position: absolute;
         inset: 0;
-        background: rgba(0, 0, 0, 0.4);
+        background: rgba(15, 23, 42, 0.4);
+        backdrop-filter: blur(4px);
       }
 
       [data-theme="dark"] .klar-search-modal__backdrop {
@@ -452,10 +470,10 @@
         max-width: 560px;
         background: var(--bg-card);
         border: 1px solid var(--border-primary);
-        border-radius: 14px;
+        border-radius: var(--radius-xl);
         box-shadow: var(--shadow-lg);
         overflow: hidden;
-        transform: translateY(-10px) scale(0.98);
+        transform: translateY(-8px) scale(0.98);
         transition: transform var(--dur-med) var(--ease-out);
       }
 
@@ -504,7 +522,7 @@
         align-items: center;
         gap: var(--sp-3);
         padding: var(--sp-3) var(--sp-4);
-        border-radius: 8px;
+        border-radius: var(--radius-md);
         cursor: pointer;
         transition: background var(--dur-fast) ease;
       }
@@ -527,7 +545,7 @@
       }
 
       .klar-search-modal__result-title {
-        font-size: 14px;
+        font-size: 13.5px;
         font-weight: 500;
         color: var(--text-primary);
         white-space: nowrap;
@@ -563,7 +581,7 @@
         background: var(--bg-secondary);
         border: 1px solid var(--border-primary);
         padding: 1px 5px;
-        border-radius: 3px;
+        border-radius: 4px;
       }
 
       /* ═══════════════════════════════════════
@@ -588,15 +606,19 @@
         border-right: 1px solid var(--border-secondary);
         overflow-y: auto;
         overflow-x: hidden;
-        padding: var(--sp-6) var(--sp-4) var(--sp-16);
+        padding: var(--sp-6) var(--sp-5) var(--sp-16);
         z-index: 100;
         transition: transform var(--dur-med) var(--ease-out), background var(--dur-med) ease;
         scrollbar-width: thin;
+        scrollbar-color: transparent transparent;
+      }
+
+      .klar-sidebar:hover {
         scrollbar-color: var(--border-primary) transparent;
       }
 
       .klar-sidebar::-webkit-scrollbar {
-        width: 4px;
+        width: 5px;
       }
 
       .klar-sidebar::-webkit-scrollbar-track {
@@ -604,8 +626,12 @@
       }
 
       .klar-sidebar::-webkit-scrollbar-thumb {
+        background: transparent;
+        border-radius: 3px;
+      }
+
+      .klar-sidebar:hover::-webkit-scrollbar-thumb {
         background: var(--border-primary);
-        border-radius: 2px;
       }
 
       .klar-sidebar__section {
@@ -617,7 +643,7 @@
         font-size: 11px;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.1em;
         color: var(--text-tertiary);
         padding: 0 var(--sp-3) var(--sp-2);
       }
@@ -627,7 +653,7 @@
         align-items: center;
         gap: var(--sp-2);
         padding: 6px var(--sp-3);
-        border-radius: 6px;
+        border-radius: var(--radius-sm);
         font-size: 13.5px;
         font-weight: 400;
         color: var(--text-secondary);
@@ -650,7 +676,7 @@
       .klar-sidebar__link.is-active::before {
         content: '';
         position: absolute;
-        left: -4px;
+        left: -5px;
         top: 6px;
         bottom: 6px;
         width: 2px;
@@ -662,22 +688,24 @@
         margin-left: auto;
         font-size: 10px;
         font-family: var(--font-mono);
-        padding: 1px 6px;
-        border-radius: 4px;
+        padding: 1px 7px;
+        border-radius: 100px;
         background: var(--accent-subtle);
         color: var(--accent);
         font-weight: 500;
+        letter-spacing: 0;
       }
 
       /* Sidebar overlay for mobile */
       .klar-sidebar-overlay {
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(15, 23, 42, 0.3);
         z-index: 99;
         opacity: 0;
         visibility: hidden;
         transition: all var(--dur-med) ease;
+        backdrop-filter: blur(2px);
       }
 
       .klar-sidebar-overlay.is-visible {
@@ -700,8 +728,8 @@
         width: 100%;
         max-width: calc(var(--max-content) + var(--toc-w) + var(--sp-16));
         display: flex;
-        gap: var(--sp-12);
-        padding: var(--sp-10) var(--sp-8) var(--sp-20);
+        gap: var(--sp-16);
+        padding: var(--sp-12) var(--sp-10) var(--sp-20);
       }
 
       .klar-article {
@@ -715,7 +743,7 @@
    ═══════════════════════════════════════ */
       .klar-toc {
         position: sticky;
-        top: calc(var(--nav-h) + var(--sp-10));
+        top: calc(var(--nav-h) + var(--sp-12));
         width: var(--toc-w);
         max-height: calc(100vh - var(--nav-h) - var(--sp-20));
         overflow-y: auto;
@@ -732,7 +760,7 @@
         font-size: 11px;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.1em;
         color: var(--text-tertiary);
         margin-bottom: var(--sp-3);
       }
@@ -748,14 +776,14 @@
         font-size: 12.5px;
         color: var(--text-tertiary);
         text-decoration: none;
-        border-left: 1px solid transparent;
+        border-left: 2px solid transparent;
         margin-left: -1px;
         transition: all var(--dur-fast) ease;
         line-height: 1.5;
       }
 
       .klar-toc__link:hover {
-        color: var(--text-primary);
+        color: var(--text-secondary);
       }
 
       .klar-toc__link.is-active {
@@ -788,6 +816,7 @@
 
       .klar-article__breadcrumb a {
         color: var(--text-tertiary);
+        transition: color var(--dur-fast) ease;
       }
 
       .klar-article__breadcrumb a:hover {
@@ -796,37 +825,38 @@
 
       .klar-article h1 {
         font-family: var(--font-display);
-        font-size: 36px;
-        font-weight: 700;
-        line-height: 1.2;
-        letter-spacing: -0.025em;
+        font-size: 42px;
+        font-weight: 400;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
         color: var(--text-primary);
-        margin-bottom: var(--sp-3);
+        margin-bottom: var(--sp-4);
       }
 
       .klar-article__description {
-        font-size: 17px;
+        font-size: 16px;
         color: var(--text-secondary);
-        line-height: 1.6;
+        line-height: 1.65;
         max-width: 560px;
       }
 
       .klar-article h2 {
-        font-family: var(--font-display);
-        font-size: 24px;
+        font-family: var(--font-body);
+        font-size: 22px;
         font-weight: 600;
-        line-height: 1.3;
-        letter-spacing: -0.015em;
+        line-height: 1.35;
+        letter-spacing: -0.02em;
         color: var(--text-primary);
         margin: var(--sp-12) 0 var(--sp-4);
         scroll-margin-top: calc(var(--nav-h) + var(--sp-8));
       }
 
       .klar-article h3 {
-        font-family: var(--font-display);
-        font-size: 18px;
+        font-family: var(--font-body);
+        font-size: 16px;
         font-weight: 600;
         line-height: 1.4;
+        letter-spacing: -0.01em;
         color: var(--text-primary);
         margin: var(--sp-8) 0 var(--sp-3);
         scroll-margin-top: calc(var(--nav-h) + var(--sp-8));
@@ -835,6 +865,7 @@
       .klar-article p {
         margin-bottom: var(--sp-5);
         color: var(--text-secondary);
+        line-height: 1.7;
       }
 
       .klar-article ul,
@@ -846,6 +877,7 @@
 
       .klar-article li {
         margin-bottom: var(--sp-2);
+        line-height: 1.7;
       }
 
       .klar-article li::marker {
@@ -858,11 +890,11 @@
       }
 
       .klar-article code:not(pre code) {
-        font-size: 0.88em;
+        font-size: 0.86em;
         background: var(--bg-code);
         border: 1px solid var(--border-secondary);
-        padding: 1px 6px;
-        border-radius: 4px;
+        padding: 2px 7px;
+        border-radius: var(--radius-sm);
         color: var(--accent);
         font-weight: 500;
       }
@@ -874,16 +906,17 @@
         opacity: 0;
         margin-left: var(--sp-2);
         font-weight: 400;
-        transition: opacity var(--dur-fast) ease;
+        transition: opacity var(--dur-fast) ease, color var(--dur-fast) ease;
       }
 
       .klar-article h2:hover .klar-heading-anchor,
       .klar-article h3:hover .klar-heading-anchor {
-        opacity: 1;
+        opacity: 0.6;
       }
 
       .klar-heading-anchor:hover {
         color: var(--accent);
+        opacity: 1 !important;
       }
 
       /* ═══════════════════════════════════════
@@ -892,10 +925,11 @@
       .klar-code-block {
         position: relative;
         margin-bottom: var(--sp-6);
-        border-radius: 10px;
+        border-radius: var(--radius-lg);
         border: 1px solid var(--border-primary);
         overflow: hidden;
         background: var(--bg-code);
+        box-shadow: var(--shadow-sm);
       }
 
       .klar-code-block__header {
@@ -909,11 +943,11 @@
 
       .klar-code-block__lang {
         font-family: var(--font-mono);
-        font-size: 11px;
+        font-size: 10.5px;
         font-weight: 500;
         color: var(--text-tertiary);
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.06em;
       }
 
       .klar-code-block__copy {
@@ -923,8 +957,8 @@
         font-family: var(--font-mono);
         font-size: 11px;
         color: var(--text-tertiary);
-        padding: 4px 8px;
-        border-radius: 5px;
+        padding: 4px 10px;
+        border-radius: var(--radius-sm);
         transition: all var(--dur-fast) ease;
       }
 
@@ -934,8 +968,8 @@
       }
 
       .klar-code-block__copy svg {
-        width: 14px;
-        height: 14px;
+        width: 13px;
+        height: 13px;
       }
 
       .klar-code-block__copy.is-copied {
@@ -944,10 +978,10 @@
 
       .klar-code-block pre {
         margin: 0;
-        padding: var(--sp-4);
+        padding: var(--sp-5);
         overflow-x: auto;
         font-size: 13px;
-        line-height: 1.65;
+        line-height: 1.7;
         scrollbar-width: thin;
         scrollbar-color: var(--border-primary) transparent;
       }
@@ -1002,23 +1036,23 @@
         display: flex;
         gap: var(--sp-3);
         padding: var(--sp-4) var(--sp-5);
-        border-radius: 8px;
+        border-radius: var(--radius-md);
         margin-bottom: var(--sp-6);
-        font-size: 14px;
-        line-height: 1.6;
-        border-left: 3px solid;
+        font-size: 13.5px;
+        line-height: 1.65;
+        border: 1px solid;
       }
 
       .klar-callout svg {
-        width: 18px;
-        height: 18px;
+        width: 17px;
+        height: 17px;
         flex-shrink: 0;
-        margin-top: 1px;
+        margin-top: 2px;
       }
 
       .klar-callout--info {
-        background: rgba(45, 106, 180, 0.06);
-        border-left-color: var(--info);
+        background: rgba(59, 130, 246, 0.04);
+        border-color: rgba(59, 130, 246, 0.15);
         color: var(--text-secondary);
       }
 
@@ -1027,8 +1061,8 @@
       }
 
       .klar-callout--warning {
-        background: rgba(194, 136, 14, 0.06);
-        border-left-color: var(--warning);
+        background: rgba(245, 158, 11, 0.04);
+        border-color: rgba(245, 158, 11, 0.15);
         color: var(--text-secondary);
       }
 
@@ -1037,8 +1071,8 @@
       }
 
       .klar-callout--success {
-        background: rgba(45, 122, 79, 0.06);
-        border-left-color: var(--success);
+        background: rgba(16, 185, 129, 0.04);
+        border-color: rgba(16, 185, 129, 0.15);
         color: var(--text-secondary);
       }
 
@@ -1046,45 +1080,78 @@
         color: var(--success);
       }
 
+      [data-theme="dark"] .klar-callout--info {
+        background: rgba(59, 130, 246, 0.06);
+        border-color: rgba(59, 130, 246, 0.12);
+      }
+
+      [data-theme="dark"] .klar-callout--warning {
+        background: rgba(245, 158, 11, 0.06);
+        border-color: rgba(245, 158, 11, 0.12);
+      }
+
+      [data-theme="dark"] .klar-callout--success {
+        background: rgba(16, 185, 129, 0.06);
+        border-color: rgba(16, 185, 129, 0.12);
+      }
+
       /* ═══════════════════════════════════════
    FEATURE CARDS
    ═══════════════════════════════════════ */
       .klar-features {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
         gap: var(--sp-4);
         margin-bottom: var(--sp-8);
       }
 
       .klar-feature-card {
         background: var(--bg-card);
-        border: 1px solid var(--border-secondary);
-        border-radius: 10px;
-        padding: var(--sp-5);
+        border: 1px solid var(--border-primary);
+        border-radius: var(--radius-lg);
+        padding: var(--sp-6);
         transition: all var(--dur-med) var(--ease-out);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .klar-feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent), transparent);
+        opacity: 0;
+        transition: opacity var(--dur-med) ease;
       }
 
       .klar-feature-card:hover {
-        border-color: var(--border-primary);
+        border-color: var(--border-focus);
         box-shadow: var(--shadow-md);
         transform: translateY(-2px);
       }
 
+      .klar-feature-card:hover::before {
+        opacity: 1;
+      }
+
       .klar-feature-card__icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 8px;
+        width: 40px;
+        height: 40px;
+        border-radius: var(--radius-md);
         background: var(--accent-subtle);
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: var(--sp-3);
+        margin-bottom: var(--sp-4);
         color: var(--accent);
       }
 
       .klar-feature-card__icon svg {
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
       }
 
       .klar-feature-card__title {
@@ -1092,12 +1159,13 @@
         font-weight: 600;
         color: var(--text-primary);
         margin-bottom: var(--sp-1);
+        letter-spacing: -0.01em;
       }
 
       .klar-feature-card__desc {
         font-size: 13px;
         color: var(--text-tertiary);
-        line-height: 1.5;
+        line-height: 1.55;
       }
 
       /* ═══════════════════════════════════════
@@ -1105,10 +1173,11 @@
    ═══════════════════════════════════════ */
       .klar-cms-demo {
         border: 1px solid var(--border-primary);
-        border-radius: 12px;
+        border-radius: var(--radius-lg);
         overflow: hidden;
         margin-bottom: var(--sp-8);
         background: var(--bg-card);
+        box-shadow: var(--shadow-sm);
       }
 
       .klar-cms-demo__toolbar {
@@ -1130,7 +1199,7 @@
       .klar-cms-demo__toolbar-btn {
         width: 30px;
         height: 30px;
-        border-radius: 5px;
+        border-radius: var(--radius-sm);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1186,16 +1255,18 @@
         border-radius: 10px;
         cursor: pointer;
         transition: background var(--dur-fast) ease;
+        border: 1px solid var(--border-primary);
       }
 
       .klar-cms-demo__toggle-track.is-on {
         background: var(--accent);
+        border-color: var(--accent);
       }
 
       .klar-cms-demo__toggle-thumb {
         position: absolute;
-        top: 2px;
-        left: 2px;
+        top: 1px;
+        left: 1px;
         width: 16px;
         height: 16px;
         background: white;
@@ -1209,25 +1280,26 @@
       }
 
       .klar-cms-demo__editor {
-        padding: var(--sp-6);
+        padding: var(--sp-8);
         min-height: 200px;
         font-family: var(--font-body);
         font-size: 15px;
-        line-height: 1.65;
+        line-height: 1.7;
         color: var(--text-primary);
         outline: none;
         transition: background var(--dur-fast) ease;
       }
 
       .klar-cms-demo__editor.is-editing {
-        background: rgba(180, 77, 45, 0.02);
+        background: var(--accent-subtle);
       }
 
       .klar-cms-demo__editor h2 {
-        font-family: var(--font-display);
+        font-family: var(--font-body);
         font-size: 22px;
         font-weight: 600;
         margin-bottom: var(--sp-3);
+        letter-spacing: -0.02em;
       }
 
       .klar-cms-demo__editor p {
@@ -1267,6 +1339,7 @@
 
       .klar-cms-demo__status-dot.is-dirty {
         background: var(--warning);
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
       }
 
       .klar-cms-demo__actions {
@@ -1278,21 +1351,24 @@
         display: inline-flex;
         align-items: center;
         gap: var(--sp-2);
-        padding: 6px 14px;
-        border-radius: 7px;
+        padding: 7px 16px;
+        border-radius: var(--radius-sm);
         font-size: 13px;
         font-weight: 500;
         transition: all var(--dur-fast) ease;
+        letter-spacing: -0.01em;
       }
 
       .klar-btn--primary {
         background: var(--accent);
         color: white;
+        box-shadow: 0 1px 3px rgba(14, 165, 233, 0.25);
       }
 
       .klar-btn--primary:hover {
         background: var(--accent-hover);
         transform: translateY(-1px);
+        box-shadow: 0 3px 8px rgba(14, 165, 233, 0.3);
       }
 
       .klar-btn--secondary {
@@ -1304,6 +1380,7 @@
       .klar-btn--secondary:hover {
         border-color: var(--text-tertiary);
         color: var(--text-primary);
+        background: var(--bg-hover);
       }
 
       .klar-btn svg {
@@ -1322,12 +1399,17 @@
         display: flex;
         gap: var(--sp-1);
         margin-bottom: var(--sp-3);
+        background: var(--bg-secondary);
+        padding: 3px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-secondary);
+        width: fit-content;
       }
 
       .klar-output-panel__tab {
         padding: 6px 14px;
-        border-radius: 6px;
-        font-size: 13px;
+        border-radius: 7px;
+        font-size: 12.5px;
         font-weight: 500;
         color: var(--text-tertiary);
         transition: all var(--dur-fast) ease;
@@ -1335,12 +1417,12 @@
 
       .klar-output-panel__tab:hover {
         color: var(--text-primary);
-        background: var(--bg-hover);
       }
 
       .klar-output-panel__tab.is-active {
-        color: var(--accent);
-        background: var(--accent-subtle);
+        color: var(--text-primary);
+        background: var(--bg-card);
+        box-shadow: var(--shadow-sm);
       }
 
       .klar-output-panel__content {
@@ -1363,12 +1445,12 @@
       }
 
       .klar-diff__line--add {
-        background: rgba(45, 122, 79, 0.1);
+        background: rgba(16, 185, 129, 0.08);
         color: var(--success);
       }
 
       .klar-diff__line--remove {
-        background: rgba(194, 59, 34, 0.1);
+        background: rgba(239, 68, 68, 0.08);
         color: var(--error);
         text-decoration: line-through;
       }
@@ -1393,9 +1475,9 @@
         display: flex;
         flex-direction: column;
         gap: var(--sp-1);
-        padding: var(--sp-4) var(--sp-5);
-        border: 1px solid var(--border-secondary);
-        border-radius: 10px;
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--border-primary);
+        border-radius: var(--radius-lg);
         text-decoration: none;
         transition: all var(--dur-med) var(--ease-out);
       }
@@ -1403,6 +1485,7 @@
       .klar-article-nav__link:hover {
         border-color: var(--accent);
         background: var(--accent-subtle);
+        box-shadow: 0 0 0 3px var(--accent-subtle);
       }
 
       .klar-article-nav__link--next {
@@ -1413,7 +1496,7 @@
         font-size: 11px;
         font-weight: 500;
         text-transform: uppercase;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.08em;
         color: var(--text-tertiary);
       }
 
@@ -1421,6 +1504,7 @@
         font-size: 14px;
         font-weight: 600;
         color: var(--accent);
+        letter-spacing: -0.01em;
       }
 
       /* ═══════════════════════════════════════
@@ -1429,7 +1513,7 @@
       @keyframes klar-fade-up {
         from {
           opacity: 0;
-          transform: translateY(12px);
+          transform: translateY(8px);
         }
 
         to {
@@ -1464,6 +1548,94 @@
       }
 
       /* ═══════════════════════════════════════
+   TABLE STYLES
+   ═══════════════════════════════════════ */
+      .klar-table-wrap {
+        overflow-x: auto;
+        margin-bottom: var(--sp-6);
+        border: 1px solid var(--border-primary);
+        border-radius: var(--radius-md);
+      }
+
+      .klar-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+
+      .klar-table th {
+        text-align: left;
+        padding: var(--sp-3) var(--sp-4);
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-tertiary);
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border-primary);
+      }
+
+      .klar-table td {
+        padding: var(--sp-3) var(--sp-4);
+        border-bottom: 1px solid var(--border-secondary);
+        color: var(--text-secondary);
+        font-size: 13.5px;
+      }
+
+      .klar-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .klar-table tr:hover td {
+        background: var(--bg-hover);
+      }
+
+      .klar-table code {
+        font-size: 0.86em;
+        background: var(--bg-code);
+        padding: 1px 6px;
+        border-radius: 4px;
+        color: var(--accent);
+      }
+
+      /* ═══════════════════════════════════════
+   HIDDEN PAGES
+   ═══════════════════════════════════════ */
+      .klar-page {
+        display: none;
+      }
+
+      .klar-page.is-active {
+        display: block;
+      }
+
+      /* ═══════════════════════════════════════
+   TOAST NOTIFICATION
+   ═══════════════════════════════════════ */
+      .klar-toast {
+        position: fixed;
+        bottom: var(--sp-6);
+        right: var(--sp-6);
+        background: var(--bg-tooltip);
+        color: var(--text-inverse);
+        padding: var(--sp-3) var(--sp-5);
+        border-radius: var(--radius-md);
+        font-size: 13px;
+        font-weight: 500;
+        box-shadow: var(--shadow-lg);
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all var(--dur-med) var(--ease-out);
+        z-index: 3000;
+        pointer-events: none;
+      }
+
+      .klar-toast.is-visible {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* ═══════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════ */
       @media (max-width: 1200px) {
@@ -1491,15 +1663,15 @@
         }
 
         .klar-content {
-          padding: var(--sp-6) var(--sp-5) var(--sp-16);
+          padding: var(--sp-8) var(--sp-5) var(--sp-16);
         }
 
         .klar-article h1 {
-          font-size: 28px;
+          font-size: 32px;
         }
 
         .klar-article h2 {
-          font-size: 20px;
+          font-size: 19px;
         }
 
         .klar-nav__search {
@@ -1509,6 +1681,10 @@
         .klar-article-nav {
           flex-direction: column;
         }
+
+        .klar-features {
+          grid-template-columns: 1fr;
+        }
       }
 
       @media (max-width: 480px) {
@@ -1517,7 +1693,7 @@
         }
 
         .klar-article h1 {
-          font-size: 24px;
+          font-size: 28px;
         }
 
         .klar-features {
@@ -1527,87 +1703,10 @@
         .klar-cms-demo__toolbar {
           gap: var(--sp-1);
         }
-      }
 
-      /* ═══════════════════════════════════════
-   HIDDEN PAGES
-   ═══════════════════════════════════════ */
-      .klar-page {
-        display: none;
-      }
-
-      .klar-page.is-active {
-        display: block;
-      }
-
-      /* Table styles */
-      .klar-table-wrap {
-        overflow-x: auto;
-        margin-bottom: var(--sp-6);
-        border: 1px solid var(--border-secondary);
-        border-radius: 8px;
-      }
-
-      .klar-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 13.5px;
-      }
-
-      .klar-table th {
-        text-align: left;
-        padding: var(--sp-3) var(--sp-4);
-        font-weight: 600;
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: var(--text-tertiary);
-        background: var(--bg-secondary);
-        border-bottom: 1px solid var(--border-secondary);
-      }
-
-      .klar-table td {
-        padding: var(--sp-3) var(--sp-4);
-        border-bottom: 1px solid var(--border-secondary);
-        color: var(--text-secondary);
-      }
-
-      .klar-table tr:last-child td {
-        border-bottom: none;
-      }
-
-      .klar-table code {
-        font-size: 0.88em;
-        background: var(--bg-code);
-        padding: 1px 5px;
-        border-radius: 3px;
-        color: var(--accent);
-      }
-
-      /* ═══════════════════════════════════════
-   TOAST NOTIFICATION
-   ═══════════════════════════════════════ */
-      .klar-toast {
-        position: fixed;
-        bottom: var(--sp-6);
-        right: var(--sp-6);
-        background: var(--bg-tooltip);
-        color: var(--text-inverse);
-        padding: var(--sp-3) var(--sp-5);
-        border-radius: 8px;
-        font-size: 13px;
-        font-weight: 500;
-        box-shadow: var(--shadow-lg);
-        transform: translateY(20px);
-        opacity: 0;
-        transition: all var(--dur-med) var(--ease-out);
-        z-index: 3000;
-        pointer-events: none;
-      }
-
-      .klar-toast.is-visible {
-        transform: translateY(0);
-        opacity: 1;
+        .klar-cms-demo__editor {
+          padding: var(--sp-5);
+        }
       }
     </style>
   </head>
@@ -2797,13 +2896,9 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
     <div class="klar-toast" id="klarToast"></div>
 
     <script>
-      /* ═══════════════════════════════════════
-     KLAR DOCS — APPLICATION SCRIPT
-    ═══════════════════════════════════════ */
       (() => {
         'use strict';
 
-        /* ─── Utilities ─── */
         const $ = (sel, ctx = document) => ctx.querySelector(sel);
         const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
@@ -2815,7 +2910,6 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
           toast._timeout = setTimeout(() => toast.classList.remove('is-visible'), duration);
         }
 
-        /* ─── Theme Management ─── */
         const ThemeManager = {
           init() {
             const saved = localStorage.getItem('klar-theme');
@@ -2839,7 +2933,6 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
           }
         };
 
-        /* ─── Router ─── */
         const Router = {
           currentPage: 'getting-started',
 
@@ -2859,53 +2952,38 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
           },
 
           navigate(pageId, pushState = true) {
-            // Hide all pages
             $$('.klar-page').forEach(p => p.classList.remove('is-active'));
 
-            // Show target page
             const page = $(`#page-${pageId}`);
             if (!page) return;
             page.classList.add('is-active');
 
-            // Update sidebar
             $$('.klar-sidebar__link').forEach(l => l.classList.remove('is-active'));
             const sidebarLink = $(`.klar-sidebar__link[data-nav="${pageId}"]`);
             if (sidebarLink) sidebarLink.classList.add('is-active');
 
-            // Scroll to top
-            window.scrollTo({
-              top: 0,
-              behavior: 'instant'
-            });
+            window.scrollTo({ top: 0, behavior: 'instant' });
 
-            // Update URL
-            try { 
+            try {
               if (pushState) history.pushState(null, '', `#${pageId}`);
             } catch (e) {
               console.log('error', e);
             }
-            
-            // Update ToC
+
             TOC.generate(page);
 
-            // Re-run animations
             $$('.klar-animate', page).forEach(el => {
               el.style.animation = 'none';
-              el.offsetHeight; // force reflow
+              el.offsetHeight;
               el.style.animation = '';
             });
 
-            // Close mobile sidebar
             Sidebar.close();
-
             this.currentPage = pageId;
-
-            // Close search
             Search.close();
           }
         };
 
-        /* ─── Sidebar ─── */
         const Sidebar = {
           isOpen: false,
 
@@ -2931,7 +3009,6 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
           }
         };
 
-        /* ─── Table of Contents ─── */
         const TOC = {
           observer: null,
 
@@ -2982,117 +3059,37 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
           }
         };
 
-        /* ─── Search ─── */
         const Search = {
           isOpen: false,
           activeIndex: -1,
 
-          // Searchable content index
-          index: [{
-              title: 'Introduction',
-              section: 'Getting Started',
-              page: 'getting-started',
-              keywords: 'intro overview about klar cms'
-            },
-            {
-              title: 'Installation',
-              section: 'Getting Started',
-              page: 'installation',
-              keywords: 'install setup npm cdn script'
-            },
-            {
-              title: 'Quick Start',
-              section: 'Getting Started',
-              page: 'quick-start',
-              keywords: 'start begin tutorial'
-            },
-            {
-              title: 'Clean HTML Output',
-              section: 'Core Concepts',
-              page: 'clean-html',
-              keywords: 'sanitize clean semantic html output'
-            },
-            {
-              title: 'Editing Content',
-              section: 'Core Concepts',
-              page: 'editing',
-              keywords: 'edit contenteditable regions'
-            },
-            {
-              title: 'Configuration',
-              section: 'Core Concepts',
-              page: 'configuration',
-              keywords: 'config options settings defaults'
-            },
-            {
-              title: 'Live CMS Demo',
-              section: 'CMS Features',
-              page: 'cms-demo',
-              keywords: 'demo editor interactive try'
-            },
-            {
-              title: 'HTML Sanitization',
-              section: 'CMS Features',
-              page: 'sanitization',
-              keywords: 'sanitize clean strip remove'
-            },
-            {
-              title: 'Export & Save',
-              section: 'CMS Features',
-              page: 'export',
-              keywords: 'export save download file github'
-            },
-            {
-              title: 'API Overview',
-              section: 'API Reference',
-              page: 'api-overview',
-              keywords: 'api constructor options'
-            },
-            {
-              title: 'Methods',
-              section: 'API Reference',
-              page: 'api-methods',
-              keywords: 'methods enable disable save gethtml destroy'
-            },
-            {
-              title: 'Events',
-              section: 'API Reference',
-              page: 'api-events',
-              keywords: 'events on change save enable disable'
-            },
-            {
-              title: 'Plugin System',
-              section: 'Advanced',
-              page: 'plugins',
-              keywords: 'plugins extend hooks lifecycle'
-            },
-            {
-              title: 'Performance',
-              section: 'Advanced',
-              page: 'performance',
-              keywords: 'performance speed bundle size fast'
-            },
-            {
-              title: 'Accessibility',
-              section: 'Advanced',
-              page: 'accessibility',
-              keywords: 'accessibility a11y wcag keyboard aria'
-            },
+          index: [
+            { title: 'Introduction', section: 'Getting Started', page: 'getting-started', keywords: 'intro overview about klar cms' },
+            { title: 'Installation', section: 'Getting Started', page: 'installation', keywords: 'install setup npm cdn script' },
+            { title: 'Quick Start', section: 'Getting Started', page: 'quick-start', keywords: 'start begin tutorial' },
+            { title: 'Clean HTML Output', section: 'Core Concepts', page: 'clean-html', keywords: 'sanitize clean semantic html output' },
+            { title: 'Editing Content', section: 'Core Concepts', page: 'editing', keywords: 'edit contenteditable regions' },
+            { title: 'Configuration', section: 'Core Concepts', page: 'configuration', keywords: 'config options settings defaults' },
+            { title: 'Live CMS Demo', section: 'CMS Features', page: 'cms-demo', keywords: 'demo editor interactive try' },
+            { title: 'HTML Sanitization', section: 'CMS Features', page: 'sanitization', keywords: 'sanitize clean strip remove' },
+            { title: 'Export & Save', section: 'CMS Features', page: 'export', keywords: 'export save download file github' },
+            { title: 'API Overview', section: 'API Reference', page: 'api-overview', keywords: 'api constructor options' },
+            { title: 'Methods', section: 'API Reference', page: 'api-methods', keywords: 'methods enable disable save gethtml destroy' },
+            { title: 'Events', section: 'API Reference', page: 'api-events', keywords: 'events on change save enable disable' },
+            { title: 'Plugin System', section: 'Advanced', page: 'plugins', keywords: 'plugins extend hooks lifecycle' },
+            { title: 'Performance', section: 'Advanced', page: 'performance', keywords: 'performance speed bundle size fast' },
+            { title: 'Accessibility', section: 'Advanced', page: 'accessibility', keywords: 'accessibility a11y wcag keyboard aria' },
           ],
 
           init() {
             const searchInput = $('#klarSearchInput');
-            const modal = $('#klarSearchModal');
             const modalInput = $('#klarSearchModalInput');
             const backdrop = $('#klarSearchBackdrop');
 
             searchInput.addEventListener('click', () => this.open());
-
             backdrop.addEventListener('click', () => this.close());
-
             modalInput.addEventListener('input', () => this.search(modalInput.value));
 
-            // Keyboard shortcuts
             document.addEventListener('keydown', (e) => {
               if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
                 e.preventDefault();
@@ -3136,9 +3133,7 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
             query = query.toLowerCase().trim();
 
             if (!query) {
-              results.innerHTML = this.index.map((item, i) =>
-                this.renderResult(item, i)
-              ).join('');
+              results.innerHTML = this.index.map((item, i) => this.renderResult(item, i)).join('');
               this.activeIndex = -1;
               return;
             }
@@ -3155,38 +3150,33 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
               return;
             }
 
-            results.innerHTML = matches.map((item, i) =>
-              this.renderResult(item, i)
-            ).join('');
+            results.innerHTML = matches.map((item, i) => this.renderResult(item, i)).join('');
             this.activeIndex = -1;
           },
 
           renderResult(item, index) {
             return `
-      <div class="klar-search-modal__result" data-result-page="${item.page}" data-result-index="${index}">
-        <svg class="klar-search-modal__result-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
-        </svg>
-        <div class="klar-search-modal__result-text">
-          <div class="klar-search-modal__result-title">${item.title}</div>
-          <div class="klar-search-modal__result-section">${item.section}</div>
-        </div>
-      </div>
-    `;
+              <div class="klar-search-modal__result" data-result-page="${item.page}" data-result-index="${index}">
+                <svg class="klar-search-modal__result-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                </svg>
+                <div class="klar-search-modal__result-text">
+                  <div class="klar-search-modal__result-title">${item.title}</div>
+                  <div class="klar-search-modal__result-section">${item.section}</div>
+                </div>
+              </div>
+            `;
           },
 
           moveActive(dir) {
             const results = $$('.klar-search-modal__result');
             if (!results.length) return;
-
             results.forEach(r => r.classList.remove('is-active'));
             this.activeIndex += dir;
             if (this.activeIndex < 0) this.activeIndex = results.length - 1;
             if (this.activeIndex >= results.length) this.activeIndex = 0;
             results[this.activeIndex].classList.add('is-active');
-            results[this.activeIndex].scrollIntoView({
-              block: 'nearest'
-            });
+            results[this.activeIndex].scrollIntoView({ block: 'nearest' });
           },
 
           selectActive() {
@@ -3198,7 +3188,6 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
           }
         };
 
-        // Click handler for search results
         document.addEventListener('click', (e) => {
           const result = e.target.closest('.klar-search-modal__result');
           if (result) {
@@ -3206,22 +3195,18 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
           }
         });
 
-        /* ─── Copy to Clipboard ─── */
         document.addEventListener('click', (e) => {
           const btn = e.target.closest('[data-copy]');
           if (!btn) return;
-
           const block = btn.closest('.klar-code-block');
           if (!block) return;
-
           const code = $('pre code', block);
           if (!code) return;
 
           navigator.clipboard.writeText(code.textContent).then(() => {
             btn.classList.add('is-copied');
             const originalHTML = btn.innerHTML;
-            btn.innerHTML =
-              `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+            btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
             setTimeout(() => {
               btn.classList.remove('is-copied');
               btn.innerHTML = originalHTML;
@@ -3229,7 +3214,6 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
           });
         });
 
-        /* ─── CMS Demo Editor ─── */
         const CMSDemo = {
           isEditing: false,
           originalContent: '',
@@ -3254,7 +3238,6 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
             saveBtn.addEventListener('click', () => this.save());
             exportBtn.addEventListener('click', () => this.export());
 
-            // Formatting buttons
             $$('.klar-cms-demo__toolbar-btn[data-format]').forEach(btn => {
               btn.addEventListener('click', () => {
                 if (!this.isEditing) return;
@@ -3268,7 +3251,6 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
               });
             });
 
-            // Track dirty state
             editor.addEventListener('input', () => {
               if (this.isEditing) {
                 this.isDirty = true;
@@ -3276,14 +3258,12 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
               }
             });
 
-            // Output tabs
             $$('[data-output-tab]').forEach(tab => {
               tab.addEventListener('click', () => {
                 $$('.klar-output-panel__tab').forEach(t => t.classList.remove('is-active'));
                 $$('.klar-output-panel__content').forEach(c => c.classList.remove('is-visible'));
                 tab.classList.add('is-active');
-                $(`#klarOutput${tab.dataset.outputTab.charAt(0).toUpperCase() + tab.dataset.outputTab.slice(1)}`)
-                  .classList.add('is-visible');
+                $(`#klarOutput${tab.dataset.outputTab.charAt(0).toUpperCase() + tab.dataset.outputTab.slice(1)}`).classList.add('is-visible');
               });
             });
           },
@@ -3309,7 +3289,6 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
               this.originalContent = editor.innerHTML;
               editor.focus();
             }
-
             this.updateStatus();
           },
 
@@ -3330,20 +3309,16 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
           },
 
           sanitizeHTML(html) {
-            // Create a temporary container
             const temp = document.createElement('div');
             temp.innerHTML = html;
 
-            // Remove contenteditable attributes
             temp.querySelectorAll('[contenteditable]').forEach(el => {
               el.removeAttribute('contenteditable');
             });
 
-            // Remove data-* attributes (editor artifacts)
             temp.querySelectorAll('*').forEach(el => {
               [...el.attributes].forEach(attr => {
                 if (attr.name.startsWith('data-') || attr.name === 'style' || attr.name === 'class') {
-                  // Keep class only if it's a semantic class
                   if (attr.name === 'class' && el.className.trim() === '') {
                     el.removeAttribute('class');
                   } else if (attr.name !== 'class') {
@@ -3352,7 +3327,6 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
                 }
               });
 
-              // Convert styled spans to semantic elements
               if (el.tagName === 'SPAN') {
                 if (el.style.fontWeight === 'bold' || el.style.fontWeight === '700') {
                   const strong = document.createElement('strong');
@@ -3363,25 +3337,19 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
                   em.innerHTML = el.innerHTML;
                   el.replaceWith(em);
                 } else if (!el.attributes.length) {
-                  // Unwrap empty spans
                   el.replaceWith(...el.childNodes);
                 }
               }
 
-              // Remove empty divs that wrap single elements
               if (el.tagName === 'DIV' && el.children.length === 1 && !el.attributes.length) {
                 el.replaceWith(...el.childNodes);
               }
             });
 
-            // Remove empty class attributes
             temp.querySelectorAll('[class=""]').forEach(el => el.removeAttribute('class'));
 
-            // Clean and format
             let clean = temp.innerHTML;
-            // Normalize whitespace between tags
             clean = clean.replace(/>\s+</g, '>\n<');
-            // Trim lines
             clean = clean.split('\n').map(l => l.trim()).filter(l => l).join('\n');
 
             return clean;
@@ -3392,17 +3360,13 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
             const rawHTML = editor.innerHTML;
             const cleanHTML = this.sanitizeHTML(rawHTML);
 
-            // Update clean output
             const output = $('#klarCleanOutput');
             output.textContent = cleanHTML;
-            // Apply basic highlighting to the output
             output.innerHTML = this.highlightHTML(cleanHTML);
 
-            // Update diff
             const diffOutput = $('#klarDiffOutput');
             diffOutput.innerHTML = this.generateDiff(rawHTML, cleanHTML);
 
-            // Update stats
             const statsOutput = $('#klarStatsOutput');
             const rawSize = new Blob([rawHTML]).size;
             const cleanSize = new Blob([cleanHTML]).size;
@@ -3439,7 +3403,6 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
             const cleanLines = clean.split('\n').filter(l => l);
             let diff = '';
 
-            // Simple diff: show removed lines and kept lines
             const cleanSet = new Set(cleanLines.map(l => l.trim()));
 
             rawLines.forEach(line => {
@@ -3458,17 +3421,12 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
             return diff || '<span class="klar-hl-comment">No differences detected</span>';
           },
 
-          export () {
+          export() {
             const editor = $('#klarEditorContent');
             const cleanHTML = this.sanitizeHTML(editor.innerHTML);
-            const fullDoc =
-              `<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Exported Content</title></head><body>${cleanHTML}</body></html>`;
+            const fullDoc = `<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Exported Content</title></head><body>${cleanHTML}</body></html>`;
 
-
-
-            const blob = new Blob([fullDoc], {
-              type: 'text/html'
-            });
+            const blob = new Blob([fullDoc], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -3479,31 +3437,22 @@ editor.on(<span class="klar-hl-string">'save'</span>, (regions) => {
           }
         };
 
-        /* ─── Keyboard Navigation ─── */
         document.addEventListener('keydown', (e) => {
-          // '/' to focus search
-          if (e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement.tagName !== 'INPUT' && !document
-            .activeElement.isContentEditable) {
+          if (e.key === '/' && !e.metaKey && !e.ctrlKey && document.activeElement.tagName !== 'INPUT' && !document.activeElement.isContentEditable) {
             e.preventDefault();
             Search.open();
           }
         });
 
-        /* ─── Scroll Spy for Sidebar ─── */
-        // Already handled by TOC observer
-
-        /* ─── Initialize ─── */
         ThemeManager.init();
         Sidebar.init();
         Router.init();
         Search.init();
         CMSDemo.init();
 
-        // Generate initial TOC
         const activePage = $('.klar-page.is-active');
         if (activePage) TOC.generate(activePage);
 
-        // Handle popstate
         window.addEventListener('popstate', () => {
           const hash = location.hash.replace('#', '');
           if (hash && $(`#page-${hash}`)) {
