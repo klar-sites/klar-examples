@@ -1,0 +1,3091 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klar CMS — Clean HTML, Zero Bloat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      /* ═══════════════════════════════════════
+   CSS VARIABLES & THEMING
+   ═══════════════════════════════════════ */
+      :root {
+        /* Spacing scale */
+        --sp-1: 4px;
+        --sp-2: 8px;
+        --sp-3: 12px;
+        --sp-4: 16px;
+        --sp-5: 20px;
+        --sp-6: 24px;
+        --sp-8: 32px;
+        --sp-10: 40px;
+        --sp-12: 48px;
+        --sp-16: 64px;
+        --sp-20: 80px;
+
+        /* Typography */
+        --font-display: 'Inter', system-ui, sans-serif;
+        --font-body: 'Inter', system-ui, sans-serif;
+        --font-mono: 'IBM Plex Mono', 'Fira Code', monospace;
+
+        /* Sizes */
+        --sidebar-w: 272px;
+        --toc-w: 208px;
+        --nav-h: 56px;
+        --max-content: 720px;
+
+        /* Transitions */
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        --dur-fast: 150ms;
+        --dur-med: 200ms;
+        --dur-slow: 300ms;
+      }
+
+      [data-theme="light"] {
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8fafc;
+        --bg-tertiary: #f1f5f9;
+        --bg-code: #f8fafc;
+        --bg-nav: rgba(255, 255, 255, 0.9);
+        --bg-sidebar: #ffffff;
+        --bg-card: #ffffff;
+        --bg-hover: rgba(0, 0, 0, 0.03);
+        --bg-active: rgba(0, 0, 0, 0.05);
+        --bg-tooltip: #0f172a;
+
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-tertiary: #64748b;
+        --text-inverse: #ffffff;
+        --text-link: #0ea5e9;
+
+        --border-primary: rgba(0, 0, 0, 0.05);
+        --border-secondary: rgba(0, 0, 0, 0.05);
+        --border-focus: #0ea5e9;
+        --border-sidebar: rgba(0, 0, 0, 0.08);
+
+        --accent: #0ea5e9;
+        --accent-hover: #0284c7;
+        --accent-subtle: rgba(14, 165, 233, 0.06);
+        --accent-muted: rgba(14, 165, 233, 0.12);
+
+        --success: #16a34a;
+        --warning: #d97706;
+        --error: #dc2626;
+        --info: #0ea5e9;
+
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.1);
+
+        --code-keyword: #7c3aed;
+        --code-string: #16a34a;
+        --code-comment: #94a3b8;
+        --code-tag: #0ea5e9;
+        --code-attr: #2563eb;
+        --code-number: #d97706;
+      }
+
+      [data-theme="dark"] {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-tertiary: #334155;
+        --bg-code: #1e293b;
+        --bg-nav: rgba(15, 23, 42, 0.92);
+        --bg-sidebar: #0f172a;
+        --bg-card: #1e293b;
+        --bg-hover: rgba(255, 255, 255, 0.05);
+        --bg-active: rgba(255, 255, 255, 0.08);
+        --bg-tooltip: #e2e8f0;
+
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-tertiary: #64748b;
+        --text-inverse: #0f172a;
+        --text-link: #38bdf8;
+
+        --border-primary: rgba(255, 255, 255, 0.1);
+        --border-secondary: rgba(255, 255, 255, 0.06);
+        --border-focus: #38bdf8;
+        --border-sidebar: rgba(255, 255, 255, 0.08);
+
+        --accent: #38bdf8;
+        --accent-hover: #7dd3fc;
+        --accent-subtle: rgba(56, 189, 248, 0.08);
+        --accent-muted: rgba(56, 189, 248, 0.15);
+
+        --success: #4ade80;
+        --warning: #fbbf24;
+        --error: #f87171;
+        --info: #38bdf8;
+
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+
+        --code-keyword: #a78bfa;
+        --code-string: #4ade80;
+        --code-comment: #475569;
+        --code-tag: #38bdf8;
+        --code-attr: #60a5fa;
+        --code-number: #fbbf24;
+      }
+
+      /* ═══════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: calc(var(--nav-h) + var(--sp-8));
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        font-family: var(--font-body);
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--text-primary);
+        background: var(--bg-primary);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+        transition: background var(--dur-med) ease, color var(--dur-med) ease;
+      }
+
+      ::selection {
+        background: var(--accent-muted);
+        color: var(--text-primary);
+      }
+
+      a {
+        color: var(--text-link);
+        text-decoration: none;
+        transition: color var(--dur-fast) ease;
+      }
+
+      a:hover {
+        color: var(--accent-hover);
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      button {
+        font-family: inherit;
+        font-size: inherit;
+        cursor: pointer;
+        border: none;
+        background: none;
+        color: inherit;
+      }
+
+      code,
+      pre {
+        font-family: var(--font-mono);
+      }
+
+      /* Focus styles */
+      :focus-visible {
+        outline: 2px solid var(--border-focus);
+        outline-offset: 2px;
+      }
+
+      /* ═══════════════════════════════════════
+   TOP NAVIGATION
+   ═══════════════════════════════════════ */
+      .klar-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--nav-h);
+        background: var(--bg-nav);
+        backdrop-filter: blur(12px) saturate(180%);
+        -webkit-backdrop-filter: blur(12px) saturate(180%);
+        border-bottom: 1px solid var(--border-primary);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        padding: 0 var(--sp-6);
+        transition: background var(--dur-med) ease, border-color var(--dur-med) ease;
+      }
+
+      .klar-nav__logo {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+        font-family: var(--font-display);
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-primary);
+        letter-spacing: -0.02em;
+        text-decoration: none;
+        flex-shrink: 0;
+      }
+
+      .klar-nav__logo-mark {
+        width: 24px;
+        height: 24px;
+        background: var(--accent);
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        font-weight: 700;
+        font-family: var(--font-mono);
+        letter-spacing: 0;
+      }
+
+      .klar-nav__version {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--text-tertiary);
+        background: var(--bg-tertiary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        margin-left: 2px;
+      }
+
+      .klar-nav__center {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        padding: 0 var(--sp-8);
+      }
+
+      .klar-nav__search {
+        position: relative;
+        width: 100%;
+        max-width: 360px;
+      }
+
+      .klar-nav__search-input {
+        width: 100%;
+        height: 34px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-primary);
+        border-radius: 8px;
+        padding: 0 var(--sp-4) 0 34px;
+        font-family: var(--font-body);
+        font-size: 13px;
+        color: var(--text-primary);
+        transition: all var(--dur-fast) ease;
+      }
+
+      .klar-nav__search-input::placeholder {
+        color: var(--text-tertiary);
+      }
+
+      .klar-nav__search-input:focus {
+        background: var(--bg-card);
+        border-color: var(--border-focus);
+        box-shadow: 0 0 0 3px var(--accent-subtle);
+      }
+
+      .klar-nav__search-icon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 15px;
+        height: 15px;
+        color: var(--text-tertiary);
+        pointer-events: none;
+      }
+
+      .klar-nav__search-kbd {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--text-tertiary);
+        background: var(--bg-primary);
+        border: 1px solid var(--border-primary);
+        padding: 1px 5px;
+        border-radius: 4px;
+        line-height: 1.4;
+        pointer-events: none;
+      }
+
+      .klar-nav__actions {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-1);
+        flex-shrink: 0;
+      }
+
+      .klar-nav__btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-tertiary);
+        transition: all var(--dur-fast) ease;
+      }
+
+      .klar-nav__btn:hover {
+        color: var(--text-primary);
+      }
+
+      .klar-nav__btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .klar-nav__menu-btn {
+        display: none;
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        margin-right: var(--sp-2);
+      }
+
+      .klar-nav__menu-btn:hover {
+        color: var(--text-primary);
+      }
+
+      /* Theme toggle */
+      .klar-theme-toggle {
+        position: relative;
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-tertiary);
+        transition: all var(--dur-fast) ease;
+      }
+
+      .klar-theme-toggle:hover {
+        color: var(--text-primary);
+      }
+
+      .klar-theme-toggle svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .klar-theme-toggle .klar-icon-sun,
+      .klar-theme-toggle .klar-icon-moon {
+        position: absolute;
+        transition: all var(--dur-med) var(--ease-out);
+      }
+
+      [data-theme="light"] .klar-icon-sun {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+      }
+
+      [data-theme="light"] .klar-icon-moon {
+        opacity: 0;
+        transform: rotate(-90deg) scale(0.5);
+      }
+
+      [data-theme="dark"] .klar-icon-sun {
+        opacity: 0;
+        transform: rotate(90deg) scale(0.5);
+      }
+
+      [data-theme="dark"] .klar-icon-moon {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+      }
+
+      /* ═══════════════════════════════════════
+   SEARCH MODAL
+   ═══════════════════════════════════════ */
+      .klar-search-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding-top: 120px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--dur-med) var(--ease-out);
+      }
+
+      .klar-search-modal.is-open {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .klar-search-modal__backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+      }
+
+      [data-theme="dark"] .klar-search-modal__backdrop {
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      .klar-search-modal__container {
+        position: relative;
+        width: 90%;
+        max-width: 540px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-primary);
+        border-radius: 12px;
+        box-shadow: var(--shadow-lg);
+        overflow: hidden;
+        transform: translateY(-8px) scale(0.98);
+        transition: transform var(--dur-med) var(--ease-out);
+      }
+
+      .klar-search-modal.is-open .klar-search-modal__container {
+        transform: translateY(0) scale(1);
+      }
+
+      .klar-search-modal__input-wrap {
+        display: flex;
+        align-items: center;
+        padding: 0 var(--sp-5);
+        border-bottom: 1px solid var(--border-secondary);
+      }
+
+      .klar-search-modal__input-wrap svg {
+        width: 18px;
+        height: 18px;
+        color: var(--text-tertiary);
+        flex-shrink: 0;
+      }
+
+      .klar-search-modal__input {
+        flex: 1;
+        height: 52px;
+        border: none;
+        background: transparent;
+        font-family: var(--font-body);
+        font-size: 15px;
+        color: var(--text-primary);
+        padding: 0 var(--sp-3);
+        outline: none;
+      }
+
+      .klar-search-modal__input::placeholder {
+        color: var(--text-tertiary);
+      }
+
+      .klar-search-modal__results {
+        max-height: 360px;
+        overflow-y: auto;
+        padding: var(--sp-2);
+      }
+
+      .klar-search-modal__result {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+        padding: var(--sp-3) var(--sp-4);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background var(--dur-fast) ease;
+      }
+
+      .klar-search-modal__result:hover,
+      .klar-search-modal__result.is-active {
+        background: var(--bg-hover);
+      }
+
+      .klar-search-modal__result-icon {
+        width: 18px;
+        height: 18px;
+        color: var(--text-tertiary);
+        flex-shrink: 0;
+      }
+
+      .klar-search-modal__result-text {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .klar-search-modal__result-title {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .klar-search-modal__result-section {
+        font-size: 12px;
+        color: var(--text-tertiary);
+      }
+
+      .klar-search-modal__empty {
+        padding: var(--sp-10) var(--sp-6);
+        text-align: center;
+        color: var(--text-tertiary);
+        font-size: 14px;
+      }
+
+      .klar-search-modal__footer {
+        padding: var(--sp-3) var(--sp-5);
+        border-top: 1px solid var(--border-secondary);
+        display: flex;
+        align-items: center;
+        gap: var(--sp-4);
+        font-size: 11px;
+        color: var(--text-tertiary);
+      }
+
+      .klar-search-modal__footer kbd {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-primary);
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
+
+      /* ═══════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════ */
+      .klar-layout {
+        display: flex;
+        padding-top: var(--nav-h);
+        min-height: 100vh;
+      }
+
+      /* ═══════════════════════════════════════
+   SIDEBAR
+   ═══════════════════════════════════════ */
+      .klar-sidebar {
+        position: fixed;
+        top: var(--nav-h);
+        left: 0;
+        bottom: 0;
+        width: var(--sidebar-w);
+        background: var(--bg-sidebar);
+        border-right: 1px solid var(--border-secondary);
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: var(--sp-8) var(--sp-5) var(--sp-16);
+        z-index: 100;
+        transition: transform var(--dur-med) var(--ease-out), background var(--dur-med) ease;
+        scrollbar-width: thin;
+        scrollbar-color: transparent transparent;
+      }
+
+      .klar-sidebar:hover {
+        scrollbar-color: var(--border-primary) transparent;
+      }
+
+      .klar-sidebar::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .klar-sidebar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .klar-sidebar::-webkit-scrollbar-thumb {
+        background: transparent;
+        border-radius: 2px;
+      }
+
+      .klar-sidebar:hover::-webkit-scrollbar-thumb {
+        background: var(--border-primary);
+      }
+
+      .klar-sidebar__section {
+        margin-bottom: var(--sp-8);
+      }
+
+      .klar-sidebar__heading {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--text-tertiary);
+        padding: 0 var(--sp-3) var(--sp-3);
+      }
+
+      .klar-sidebar__links {
+        border-left: 1px solid var(--border-sidebar);
+        margin-left: var(--sp-3);
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+      }
+
+      .klar-sidebar__link {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-2);
+        padding: 5px var(--sp-4);
+        margin-left: -1px;
+        border-left: 1px solid transparent;
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--text-secondary);
+        transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+        text-decoration: none;
+        position: relative;
+        line-height: 1.75;
+      }
+
+      .klar-sidebar__link:hover {
+        color: var(--text-primary);
+      }
+
+      .klar-sidebar__link.is-active {
+        color: var(--text-primary);
+        font-weight: 600;
+        border-left-color: var(--text-primary);
+      }
+
+      .klar-sidebar__link-badge {
+        margin-left: auto;
+        font-size: 9px;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 2px 7px;
+        border-radius: 9999px;
+        background: rgba(14, 165, 233, 0.08);
+        color: var(--accent);
+        border: 1px dashed rgba(14, 165, 233, 0.3);
+      }
+
+      [data-theme="dark"] .klar-sidebar__link-badge {
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--accent);
+        border-color: rgba(56, 189, 248, 0.2);
+      }
+
+      /* Sidebar overlay for mobile */
+      .klar-sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 99;
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--dur-med) ease;
+      }
+
+      .klar-sidebar-overlay.is-visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* ═══════════════════════════════════════
+   MAIN CONTENT
+   ═══════════════════════════════════════ */
+      .klar-main {
+        flex: 1;
+        margin-left: var(--sidebar-w);
+        min-width: 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      .klar-content {
+        width: 100%;
+        max-width: calc(var(--max-content) + var(--toc-w) + var(--sp-16));
+        display: flex;
+        gap: var(--sp-12);
+        padding: var(--sp-10) var(--sp-8) var(--sp-20);
+      }
+
+      .klar-article {
+        flex: 1;
+        min-width: 0;
+        max-width: var(--max-content);
+      }
+
+      /* ═══════════════════════════════════════
+   TABLE OF CONTENTS (Right side)
+   ═══════════════════════════════════════ */
+      .klar-toc {
+        position: sticky;
+        top: calc(var(--nav-h) + var(--sp-10));
+        width: var(--toc-w);
+        max-height: calc(100vh - var(--nav-h) - var(--sp-20));
+        overflow-y: auto;
+        flex-shrink: 0;
+        padding-top: var(--sp-1);
+        scrollbar-width: none;
+      }
+
+      .klar-toc::-webkit-scrollbar {
+        display: none;
+      }
+
+      .klar-toc__title {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--text-tertiary);
+        margin-bottom: var(--sp-3);
+      }
+
+      .klar-toc__list {
+        list-style: none;
+        border-left: 1px solid var(--border-sidebar);
+      }
+
+      .klar-toc__link {
+        display: block;
+        padding: 3px 0 3px var(--sp-4);
+        font-size: 13px;
+        color: var(--text-tertiary);
+        text-decoration: none;
+        border-left: 1px solid transparent;
+        margin-left: -1px;
+        transition: all var(--dur-fast) ease;
+        line-height: 1.6;
+      }
+
+      .klar-toc__link:hover {
+        color: var(--text-primary);
+      }
+
+      .klar-toc__link.is-active {
+        color: var(--text-primary);
+        border-left-color: var(--text-primary);
+      }
+
+      .klar-toc__link[data-level="3"] {
+        padding-left: var(--sp-8);
+        font-size: 12px;
+      }
+
+      /* ═══════════════════════════════════════
+   ARTICLE TYPOGRAPHY
+   ═══════════════════════════════════════ */
+      .klar-article__header {
+        margin-bottom: var(--sp-10);
+        padding-bottom: var(--sp-8);
+        border-bottom: 1px solid var(--border-primary);
+      }
+
+      .klar-article__breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-2);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-tertiary);
+        margin-bottom: var(--sp-3);
+      }
+
+      .klar-article__breadcrumb a {
+        color: var(--text-tertiary);
+      }
+
+      .klar-article__breadcrumb a:hover {
+        color: var(--text-primary);
+      }
+
+      .klar-article h1 {
+        font-family: var(--font-display);
+        font-size: 32px;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+        color: var(--text-primary);
+        margin-bottom: var(--sp-3);
+      }
+
+      .klar-article__description {
+        font-size: 16px;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        max-width: 560px;
+      }
+
+      .klar-article h2 {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.02em;
+        color: var(--text-primary);
+        margin: var(--sp-12) 0 var(--sp-4);
+        scroll-margin-top: calc(var(--nav-h) + var(--sp-8));
+      }
+
+      .klar-article h3 {
+        font-family: var(--font-display);
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.5;
+        color: var(--text-primary);
+        margin: var(--sp-8) 0 var(--sp-3);
+        scroll-margin-top: calc(var(--nav-h) + var(--sp-8));
+      }
+
+      .klar-article p {
+        margin-bottom: var(--sp-5);
+        color: var(--text-secondary);
+      }
+
+      .klar-article ul,
+      .klar-article ol {
+        margin-bottom: var(--sp-5);
+        padding-left: var(--sp-6);
+        color: var(--text-secondary);
+      }
+
+      .klar-article li {
+        margin-bottom: var(--sp-2);
+      }
+
+      .klar-article li::marker {
+        color: var(--text-tertiary);
+      }
+
+      .klar-article strong {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .klar-article code:not(pre code) {
+        font-size: 0.875em;
+        background: var(--bg-code);
+        border: 1px solid var(--border-primary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      /* Anchor links on headings */
+      .klar-heading-anchor {
+        color: var(--text-tertiary);
+        text-decoration: none;
+        opacity: 0;
+        margin-left: var(--sp-2);
+        font-weight: 400;
+        transition: opacity var(--dur-fast) ease;
+      }
+
+      .klar-article h2:hover .klar-heading-anchor,
+      .klar-article h3:hover .klar-heading-anchor {
+        opacity: 1;
+      }
+
+      .klar-heading-anchor:hover {
+        color: var(--accent);
+      }
+
+      /* ═══════════════════════════════════════
+   CODE BLOCKS
+   ═══════════════════════════════════════ */
+      .klar-code-block {
+        position: relative;
+        margin-bottom: var(--sp-6);
+        border-radius: 8px;
+        border: 1px solid var(--border-primary);
+        overflow: hidden;
+        background: var(--bg-code);
+      }
+
+      .klar-code-block__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--sp-2) var(--sp-3) var(--sp-2) var(--sp-4);
+        border-bottom: 1px solid var(--border-secondary);
+        background: var(--bg-secondary);
+      }
+
+      .klar-code-block__lang {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text-tertiary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .klar-code-block__copy {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-1);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--text-tertiary);
+        padding: 4px 8px;
+        border-radius: 5px;
+        transition: all var(--dur-fast) ease;
+      }
+
+      .klar-code-block__copy:hover {
+        color: var(--text-primary);
+      }
+
+      .klar-code-block__copy svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .klar-code-block__copy.is-copied {
+        color: var(--success);
+      }
+
+      .klar-code-block pre {
+        margin: 0;
+        padding: var(--sp-4);
+        overflow-x: auto;
+        font-size: 13px;
+        line-height: 1.7;
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-primary) transparent;
+      }
+
+      .klar-code-block pre::-webkit-scrollbar {
+        height: 4px;
+      }
+
+      .klar-code-block pre::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .klar-code-block pre::-webkit-scrollbar-thumb {
+        background: var(--border-primary);
+        border-radius: 2px;
+      }
+
+      /* Syntax highlighting */
+      .klar-hl-keyword {
+        color: var(--code-keyword);
+      }
+
+      .klar-hl-string {
+        color: var(--code-string);
+      }
+
+      .klar-hl-comment {
+        color: var(--code-comment);
+        font-style: italic;
+      }
+
+      .klar-hl-tag {
+        color: var(--code-tag);
+      }
+
+      .klar-hl-attr {
+        color: var(--code-attr);
+      }
+
+      .klar-hl-number {
+        color: var(--code-number);
+      }
+
+      .klar-hl-punct {
+        color: var(--text-tertiary);
+      }
+
+      /* ═══════════════════════════════════════
+   CALLOUT BOXES
+   ═══════════════════════════════════════ */
+      .klar-callout {
+        display: flex;
+        gap: var(--sp-3);
+        padding: var(--sp-4) var(--sp-5);
+        border-radius: 8px;
+        margin-bottom: var(--sp-6);
+        font-size: 14px;
+        line-height: 1.65;
+        border: 1px solid;
+      }
+
+      .klar-callout svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .klar-callout--info {
+        background: rgba(14, 165, 233, 0.04);
+        border-color: rgba(14, 165, 233, 0.15);
+        color: var(--text-secondary);
+      }
+
+      .klar-callout--info svg {
+        color: var(--info);
+      }
+
+      .klar-callout--warning {
+        background: rgba(217, 119, 6, 0.04);
+        border-color: rgba(217, 119, 6, 0.15);
+        color: var(--text-secondary);
+      }
+
+      .klar-callout--warning svg {
+        color: var(--warning);
+      }
+
+      .klar-callout--success {
+        background: rgba(22, 163, 74, 0.04);
+        border-color: rgba(22, 163, 74, 0.15);
+        color: var(--text-secondary);
+      }
+
+      .klar-callout--success svg {
+        color: var(--success);
+      }
+
+      /* ═══════════════════════════════════════
+   FEATURE CARDS
+   ═══════════════════════════════════════ */
+      .klar-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--sp-4);
+        margin-bottom: var(--sp-8);
+      }
+
+      .klar-feature-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-primary);
+        border-radius: 8px;
+        padding: var(--sp-5);
+        transition: border-color var(--dur-fast) ease;
+      }
+
+      .klar-feature-card:hover {
+        border-color: var(--border-sidebar);
+      }
+
+      .klar-feature-card__icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: var(--accent-subtle);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: var(--sp-3);
+        color: var(--accent);
+      }
+
+      .klar-feature-card__icon svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .klar-feature-card__title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: var(--sp-1);
+      }
+
+      .klar-feature-card__desc {
+        font-size: 13px;
+        color: var(--text-tertiary);
+        line-height: 1.55;
+      }
+
+      /* ═══════════════════════════════════════
+   CMS DEMO
+   ═══════════════════════════════════════ */
+      .klar-cms-demo {
+        border: 1px solid var(--border-primary);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: var(--sp-8);
+        background: var(--bg-card);
+      }
+
+      .klar-cms-demo__toolbar {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-2);
+        padding: var(--sp-3) var(--sp-4);
+        border-bottom: 1px solid var(--border-secondary);
+        background: var(--bg-secondary);
+        flex-wrap: wrap;
+      }
+
+      .klar-cms-demo__toolbar-group {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-1);
+      }
+
+      .klar-cms-demo__toolbar-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 600;
+        transition: all var(--dur-fast) ease;
+      }
+
+      .klar-cms-demo__toolbar-btn:hover {
+        background: var(--bg-hover);
+        color: var(--text-primary);
+      }
+
+      .klar-cms-demo__toolbar-btn.is-active {
+        background: var(--accent-subtle);
+        color: var(--accent);
+      }
+
+      .klar-cms-demo__toolbar-btn svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .klar-cms-demo__toolbar-sep {
+        width: 1px;
+        height: 20px;
+        background: var(--border-primary);
+        margin: 0 var(--sp-1);
+      }
+
+      .klar-cms-demo__toolbar-right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: var(--sp-2);
+      }
+
+      .klar-cms-demo__mode-toggle {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-2);
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-tertiary);
+      }
+
+      .klar-cms-demo__toggle-track {
+        position: relative;
+        width: 36px;
+        height: 20px;
+        background: var(--bg-tertiary);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background var(--dur-fast) ease;
+      }
+
+      .klar-cms-demo__toggle-track.is-on {
+        background: var(--accent);
+      }
+
+      .klar-cms-demo__toggle-thumb {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+        background: white;
+        border-radius: 50%;
+        transition: transform var(--dur-fast) var(--ease-spring);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+      }
+
+      .klar-cms-demo__toggle-track.is-on .klar-cms-demo__toggle-thumb {
+        transform: translateX(16px);
+      }
+
+      .klar-cms-demo__editor {
+        padding: var(--sp-6);
+        min-height: 200px;
+        font-family: var(--font-body);
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--text-primary);
+        outline: none;
+        transition: background var(--dur-fast) ease;
+      }
+
+      .klar-cms-demo__editor.is-editing {
+        background: var(--accent-subtle);
+      }
+
+      .klar-cms-demo__editor h2 {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: var(--sp-3);
+      }
+
+      .klar-cms-demo__editor p {
+        margin-bottom: var(--sp-3);
+        color: var(--text-secondary);
+      }
+
+      .klar-cms-demo__editor [contenteditable="true"]:focus {
+        outline: 2px dashed var(--accent-muted);
+        outline-offset: 4px;
+        border-radius: 4px;
+      }
+
+      .klar-cms-demo__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--sp-3) var(--sp-4);
+        border-top: 1px solid var(--border-secondary);
+        background: var(--bg-secondary);
+      }
+
+      .klar-cms-demo__status {
+        font-size: 12px;
+        color: var(--text-tertiary);
+        display: flex;
+        align-items: center;
+        gap: var(--sp-2);
+      }
+
+      .klar-cms-demo__status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--success);
+      }
+
+      .klar-cms-demo__status-dot.is-dirty {
+        background: var(--warning);
+      }
+
+      .klar-cms-demo__actions {
+        display: flex;
+        gap: var(--sp-2);
+      }
+
+      .klar-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp-2);
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all var(--dur-fast) ease;
+      }
+
+      .klar-btn--primary {
+        background: var(--accent);
+        color: white;
+      }
+
+      .klar-btn--primary:hover {
+        background: var(--accent-hover);
+      }
+
+      .klar-btn--secondary {
+        background: var(--bg-primary);
+        color: var(--text-secondary);
+        border: 1px solid var(--border-primary);
+      }
+
+      .klar-btn--secondary:hover {
+        border-color: var(--border-sidebar);
+        color: var(--text-primary);
+      }
+
+      .klar-btn svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      /* ═══════════════════════════════════════
+   HTML OUTPUT PANEL
+   ═══════════════════════════════════════ */
+      .klar-output-panel {
+        margin-bottom: var(--sp-8);
+      }
+
+      .klar-output-panel__tabs {
+        display: flex;
+        gap: var(--sp-1);
+        margin-bottom: var(--sp-3);
+      }
+
+      .klar-output-panel__tab {
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-tertiary);
+        transition: all var(--dur-fast) ease;
+      }
+
+      .klar-output-panel__tab:hover {
+        color: var(--text-primary);
+      }
+
+      .klar-output-panel__tab.is-active {
+        color: var(--text-primary);
+        background: var(--bg-secondary);
+      }
+
+      .klar-output-panel__content {
+        display: none;
+      }
+
+      .klar-output-panel__content.is-visible {
+        display: block;
+      }
+
+      /* Diff view */
+      .klar-diff {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        line-height: 1.7;
+      }
+
+      .klar-diff__line {
+        padding: 1px var(--sp-4);
+      }
+
+      .klar-diff__line--add {
+        background: rgba(22, 163, 74, 0.08);
+        color: var(--success);
+      }
+
+      .klar-diff__line--remove {
+        background: rgba(220, 38, 38, 0.08);
+        color: var(--error);
+        text-decoration: line-through;
+      }
+
+      .klar-diff__line--context {
+        color: var(--text-tertiary);
+      }
+
+      /* ═══════════════════════════════════════
+   ARTICLE FOOTER NAV
+   ═══════════════════════════════════════ */
+      .klar-article-nav {
+        display: flex;
+        gap: var(--sp-4);
+        margin-top: var(--sp-12);
+        padding-top: var(--sp-8);
+        border-top: 1px solid var(--border-primary);
+      }
+
+      .klar-article-nav__link {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-1);
+        padding: var(--sp-4) var(--sp-5);
+        border: 1px solid var(--border-primary);
+        border-radius: 8px;
+        text-decoration: none;
+        transition: border-color var(--dur-fast) ease;
+      }
+
+      .klar-article-nav__link:hover {
+        border-color: var(--border-sidebar);
+      }
+
+      .klar-article-nav__link--next {
+        text-align: right;
+      }
+
+      .klar-article-nav__label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-tertiary);
+      }
+
+      .klar-article-nav__title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      /* ═══════════════════════════════════════
+   PAGE ANIMATIONS
+   ═══════════════════════════════════════ */
+      @keyframes klar-fade-up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .klar-animate {
+        opacity: 0;
+        animation: klar-fade-up var(--dur-slow) var(--ease-out) forwards;
+      }
+
+      .klar-animate--d1 {
+        animation-delay: 60ms;
+      }
+
+      .klar-animate--d2 {
+        animation-delay: 120ms;
+      }
+
+      .klar-animate--d3 {
+        animation-delay: 180ms;
+      }
+
+      .klar-animate--d4 {
+        animation-delay: 240ms;
+      }
+
+      .klar-animate--d5 {
+        animation-delay: 300ms;
+      }
+
+      /* ═══════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════ */
+      @media (max-width: 1200px) {
+        .klar-toc {
+          display: none;
+        }
+      }
+
+      @media (max-width: 860px) {
+        .klar-sidebar {
+          transform: translateX(-100%);
+        }
+
+        .klar-sidebar.is-open {
+          transform: translateX(0);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .klar-main {
+          margin-left: 0;
+        }
+
+        .klar-nav__menu-btn {
+          display: flex;
+        }
+
+        .klar-content {
+          padding: var(--sp-6) var(--sp-5) var(--sp-16);
+        }
+
+        .klar-article h1 {
+          font-size: 26px;
+        }
+
+        .klar-article h2 {
+          font-size: 18px;
+        }
+
+        .klar-nav__search {
+          display: none;
+        }
+
+        .klar-article-nav {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .klar-content {
+          padding: var(--sp-5) var(--sp-4) var(--sp-16);
+        }
+
+        .klar-article h1 {
+          font-size: 24px;
+        }
+
+        .klar-features {
+          grid-template-columns: 1fr;
+        }
+
+        .klar-cms-demo__toolbar {
+          gap: var(--sp-1);
+        }
+      }
+
+      /* ═══════════════════════════════════════
+   HIDDEN PAGES
+   ═══════════════════════════════════════ */
+      .klar-page {
+        display: none;
+      }
+
+      .klar-page.is-active {
+        display: block;
+      }
+
+      /* Table styles */
+      .klar-table-wrap {
+        overflow-x: auto;
+        margin-bottom: var(--sp-6);
+        border: 1px solid var(--border-primary);
+        border-radius: 8px;
+      }
+
+      .klar-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13.5px;
+      }
+
+      .klar-table th {
+        text-align: left;
+        padding: var(--sp-3) var(--sp-4);
+        font-family: var(--font-mono);
+        font-weight: 500;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-tertiary);
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border-primary);
+      }
+
+      .klar-table td {
+        padding: var(--sp-3) var(--sp-4);
+        border-bottom: 1px solid var(--border-secondary);
+        color: var(--text-secondary);
+      }
+
+      .klar-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .klar-table code {
+        font-size: 0.875em;
+        background: var(--bg-code);
+        padding: 1px 5px;
+        border-radius: 3px;
+        color: var(--text-primary);
+      }
+
+      /* ═══════════════════════════════════════
+   TOAST NOTIFICATION
+   ═══════════════════════════════════════ */
+      .klar-toast {
+        position: fixed;
+        bottom: var(--sp-6);
+        right: var(--sp-6);
+        background: var(--bg-tooltip);
+        color: var(--text-inverse);
+        padding: var(--sp-3) var(--sp-5);
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        box-shadow: var(--shadow-lg);
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all var(--dur-med) var(--ease-out);
+        z-index: 3000;
+        pointer-events: none;
+      }
+
+      .klar-toast.is-visible {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ════════════════════════════════════
+     NAVIGATION
+     ════════════════════════════════════ -->
+    <nav class="klar-nav" role="navigation" aria-label="Main navigation">
+      <button class="klar-nav__menu-btn" id="klarMenuBtn" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20"
+          height="20">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+
+      <a href="#" class="klar-nav__logo" data-nav="getting-started">
+        <span class="klar-nav__logo-mark">K</span>
+        Klar CMS
+        <span class="klar-nav__version">v0.9</span>
+      </a>
+
+      <div class="klar-nav__center">
+        <div class="klar-nav__search">
+          <svg class="klar-nav__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round">
+            <circle cx="11" cy="11" r="8" />
+            <path d="M21 21l-4.35-4.35" />
+          </svg>
+          <input type="text" class="klar-nav__search-input" placeholder="Search documentation..." id="klarSearchInput"
+            readonly aria-label="Search documentation">
+          <span class="klar-nav__search-kbd">&#8984;K</span>
+        </div>
+      </div>
+
+      <div class="klar-nav__actions">
+        <a href="https://github.com" class="klar-nav__btn" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+          </svg>
+        </a>
+        <button class="klar-theme-toggle" id="klarThemeToggle" aria-label="Toggle theme">
+          <svg class="klar-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round">
+            <circle cx="12" cy="12" r="5" />
+            <path
+              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+          </svg>
+          <svg class="klar-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ════════════════════════════════════
+     SEARCH MODAL
+     ════════════════════════════════════ -->
+    <div class="klar-search-modal" id="klarSearchModal" role="dialog" aria-label="Search">
+      <div class="klar-search-modal__backdrop" id="klarSearchBackdrop"></div>
+      <div class="klar-search-modal__container">
+        <div class="klar-search-modal__input-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="8" />
+            <path d="M21 21l-4.35-4.35" />
+          </svg>
+          <input type="text" class="klar-search-modal__input" placeholder="Search docs..." id="klarSearchModalInput"
+            autocomplete="off">
+        </div>
+        <div class="klar-search-modal__results" id="klarSearchResults"></div>
+        <div class="klar-search-modal__footer">
+          <span><kbd>&uarr;&darr;</kbd> Navigate</span>
+          <span><kbd>&crarr;</kbd> Select</span>
+          <span><kbd>Esc</kbd> Close</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════
+     SIDEBAR OVERLAY (mobile)
+     ════════════════════════════════════ -->
+    <div class="klar-sidebar-overlay" id="klarSidebarOverlay"></div>
+
+    <!-- ════════════════════════════════════
+     LAYOUT
+     ════════════════════════════════════ -->
+    <div class="klar-layout">
+
+      <!-- Sidebar -->
+      <aside class="klar-sidebar" id="klarSidebar" role="navigation" aria-label="Documentation navigation">
+        <div class="klar-sidebar__section">
+          <div class="klar-sidebar__heading">Getting Started</div>
+          <div class="klar-sidebar__links">
+            <a href="#" class="klar-sidebar__link is-active" data-nav="getting-started">Introduction</a>
+            <a href="#" class="klar-sidebar__link" data-nav="installation">Installation</a>
+            <a href="#" class="klar-sidebar__link" data-nav="quick-start">Quick Start</a>
+          </div>
+        </div>
+        <div class="klar-sidebar__section">
+          <div class="klar-sidebar__heading">Core Concepts</div>
+          <div class="klar-sidebar__links">
+            <a href="#" class="klar-sidebar__link" data-nav="clean-html">Clean HTML Output</a>
+            <a href="#" class="klar-sidebar__link" data-nav="editing">Editing Content</a>
+            <a href="#" class="klar-sidebar__link" data-nav="configuration">Configuration</a>
+          </div>
+        </div>
+        <div class="klar-sidebar__section">
+          <div class="klar-sidebar__heading">CMS Features</div>
+          <div class="klar-sidebar__links">
+            <a href="#" class="klar-sidebar__link" data-nav="cms-demo">
+              Live Demo
+              <span class="klar-sidebar__link-badge">New</span>
+            </a>
+            <a href="#" class="klar-sidebar__link" data-nav="sanitization">HTML Sanitization</a>
+            <a href="#" class="klar-sidebar__link" data-nav="export">Export &amp; Save</a>
+          </div>
+        </div>
+        <div class="klar-sidebar__section">
+          <div class="klar-sidebar__heading">API Reference</div>
+          <div class="klar-sidebar__links">
+            <a href="#" class="klar-sidebar__link" data-nav="api-overview">Overview</a>
+            <a href="#" class="klar-sidebar__link" data-nav="api-methods">Methods</a>
+            <a href="#" class="klar-sidebar__link" data-nav="api-events">Events</a>
+          </div>
+        </div>
+        <div class="klar-sidebar__section">
+          <div class="klar-sidebar__heading">Advanced</div>
+          <div class="klar-sidebar__links">
+            <a href="#" class="klar-sidebar__link" data-nav="plugins">Plugins</a>
+            <a href="#" class="klar-sidebar__link" data-nav="performance">Performance</a>
+            <a href="#" class="klar-sidebar__link" data-nav="accessibility">Accessibility</a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="klar-main" id="klarMain">
+        <div class="klar-content">
+          <article class="klar-article" id="klarArticle">
+
+            <!-- ═══ PAGE: GETTING STARTED ═══ -->
+            <div class="klar-page is-active" id="page-getting-started">
+              <div class="klar-article__header klar-animate">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>Getting Started</span>
+                </div>
+                <h1>Introduction</h1>
+                <p class="klar-article__description">
+                  Klar is a lightweight CMS that lets you edit HTML pages visually while preserving clean, semantic
+                  markup. No bloat. No unnecessary wrappers. Just your HTML.
+                </p>
+              </div>
+
+              <div class="klar-features klar-animate klar-animate--d1">
+                <div class="klar-feature-card">
+                  <div class="klar-feature-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                    </svg>
+                  </div>
+                  <div class="klar-feature-card__title">Zero Bloat</div>
+                  <div class="klar-feature-card__desc">No injected styles, no wrapper divs, no script tags in your
+                    output.</div>
+                </div>
+                <div class="klar-feature-card">
+                  <div class="klar-feature-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                      <polyline points="16 18 22 12 16 6" />
+                      <polyline points="8 6 2 12 8 18" />
+                    </svg>
+                  </div>
+                  <div class="klar-feature-card__title">Clean Output</div>
+                  <div class="klar-feature-card__desc">Outputs semantic HTML that humans can read and maintain.</div>
+                </div>
+                <div class="klar-feature-card">
+                  <div class="klar-feature-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                  </div>
+                  <div class="klar-feature-card__title">~8KB Gzipped</div>
+                  <div class="klar-feature-card__desc">Minimal JavaScript footprint. Fast load times on any device.
+                  </div>
+                </div>
+              </div>
+
+              <h2 id="why-klar">Why Klar?<a href="#why-klar" class="klar-heading-anchor">#</a></h2>
+              <p>Most CMS tools inject their own markup into your pages — wrapper divs, data attributes, inline styles,
+                and script tags that make the output unmaintainable. Klar takes a different approach:</p>
+              <ul>
+                <li><strong>Your HTML stays yours.</strong> Klar edits are applied server-side with surgical precision.
+                </li>
+                <li><strong>CSS selectors as identifiers.</strong> No <code>data-klar-id</code> attributes cluttering
+                  your markup.</li>
+                <li><strong>Semantic output.</strong> The HTML you get out is the HTML you'd write by hand.</li>
+              </ul>
+
+              <div class="klar-callout klar-callout--info">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 16v-4M12 8h.01" />
+                </svg>
+                <div>
+                  <strong>Good to know:</strong> Klar uses Cheerio server-side for all HTML transformations, ensuring
+                  your output is never polluted by client-side editing artifacts.
+                </div>
+              </div>
+
+              <h2 id="how-it-works">How it Works<a href="#how-it-works" class="klar-heading-anchor">#</a></h2>
+              <p>Klar renders your target page in a sandboxed iframe. When you click on any text element, it becomes
+                editable. Changes are tracked by CSS selector and applied server-side using Cheerio before being
+                committed back to your GitHub repository.</p>
+
+              <div class="klar-code-block klar-animate klar-animate--d2">
+                <div class="klar-code-block__header">
+                  <span class="klar-code-block__lang">HTML</span>
+                  <button class="klar-code-block__copy" data-copy>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" />
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                    </svg>
+                    Copy
+                  </button>
+                </div>
+                <pre><code><span class="klar-hl-comment">&lt;!-- Your original HTML --&gt;</span>
+<span class="klar-hl-tag">&lt;section</span> <span class="klar-hl-attr">class</span>=<span class="klar-hl-string">"hero"</span><span class="klar-hl-tag">&gt;</span>
+  <span class="klar-hl-tag">&lt;h1&gt;</span>Welcome to My Site<span class="klar-hl-tag">&lt;/h1&gt;</span>
+  <span class="klar-hl-tag">&lt;p&gt;</span>This is the description.<span class="klar-hl-tag">&lt;/p&gt;</span>
+<span class="klar-hl-tag">&lt;/section&gt;</span>
+
+<span class="klar-hl-comment">&lt;!-- After editing with Klar — still clean! --&gt;</span>
+<span class="klar-hl-tag">&lt;section</span> <span class="klar-hl-attr">class</span>=<span class="klar-hl-string">"hero"</span><span class="klar-hl-tag">&gt;</span>
+  <span class="klar-hl-tag">&lt;h1&gt;</span>Welcome to My Updated Site<span class="klar-hl-tag">&lt;/h1&gt;</span>
+  <span class="klar-hl-tag">&lt;p&gt;</span>A better description here.<span class="klar-hl-tag">&lt;/p&gt;</span>
+<span class="klar-hl-tag">&lt;/section&gt;</span></code></pre>
+              </div>
+
+              <h2 id="quick-overview">Quick Overview<a href="#quick-overview" class="klar-heading-anchor">#</a></h2>
+
+              <h3 id="three-edit-types">Three Edit Types</h3>
+              <p>Klar supports three types of edits, each applied differently:</p>
+              <div class="klar-table-wrap">
+                <table class="klar-table">
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th>Description</th>
+                      <th>Example</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>text</code></td>
+                      <td>Updates the text content of an element</td>
+                      <td>Changing a heading or paragraph</td>
+                    </tr>
+                    <tr>
+                      <td><code>attribute</code></td>
+                      <td>Modifies an HTML attribute value</td>
+                      <td>Changing an image <code>src</code> or link <code>href</code></td>
+                    </tr>
+                    <tr>
+                      <td><code>outerHTML</code></td>
+                      <td>Replaces the entire element markup</td>
+                      <td>Restructuring a complex component</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3 id="state-machine">Phase-Based Flow</h3>
+              <p>The app uses a state machine with three phases:</p>
+              <ul>
+                <li><strong>Setup</strong> — Configure your GitHub repository and target page</li>
+                <li><strong>Loading</strong> — Fetch and sanitize the HTML from your repo</li>
+                <li><strong>Editing</strong> — Visual editor with live preview and structured panel</li>
+              </ul>
+
+              <div class="klar-callout klar-callout--success">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                <div>
+                  <strong>Ready to get started?</strong> Head over to the <a href="#" data-nav="installation">Installation</a> guide to set up Klar in under 5 minutes.
+                </div>
+              </div>
+
+              <!-- Bottom nav -->
+              <div class="klar-article-nav">
+                <div></div>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="installation">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">Installation &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: INSTALLATION ═══ -->
+            <div class="klar-page" id="page-installation">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <a href="#" data-nav="getting-started">Getting Started</a>
+                  <span>›</span>
+                  <span>Installation</span>
+                </div>
+                <h1>Installation</h1>
+                <p class="klar-article__description">
+                  Get Klar up and running in your project with npm or yarn.
+                </p>
+              </div>
+
+              <h2 id="requirements">Requirements<a href="#requirements" class="klar-heading-anchor">#</a></h2>
+              <ul>
+                <li>Node.js 18 or later</li>
+                <li>A GitHub repository with HTML files</li>
+                <li>A GitHub personal access token (for the API)</li>
+              </ul>
+
+              <h2 id="install-steps">Install<a href="#install-steps" class="klar-heading-anchor">#</a></h2>
+
+              <div class="klar-code-block">
+                <div class="klar-code-block__header">
+                  <span class="klar-code-block__lang">Terminal</span>
+                  <button class="klar-code-block__copy" data-copy>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" />
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                    </svg>
+                    Copy
+                  </button>
+                </div>
+                <pre><code><span class="klar-hl-comment"># Clone the repository</span>
+git clone https://github.com/your-org/klar.git
+<span class="klar-hl-keyword">cd</span> klar
+
+<span class="klar-hl-comment"># Install dependencies</span>
+npm install
+
+<span class="klar-hl-comment"># Start the dev server</span>
+npm run dev</code></pre>
+              </div>
+
+              <h2 id="env-setup">Environment Setup<a href="#env-setup" class="klar-heading-anchor">#</a></h2>
+              <p>Create a <code>.env</code> file in the project root:</p>
+
+              <div class="klar-code-block">
+                <div class="klar-code-block__header">
+                  <span class="klar-code-block__lang">.env</span>
+                  <button class="klar-code-block__copy" data-copy>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" />
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                    </svg>
+                    Copy
+                  </button>
+                </div>
+                <pre><code>GITHUB_TOKEN=<span class="klar-hl-string">ghp_your_token_here</span>
+GOOGLE_CLIENT_ID=<span class="klar-hl-string">your_client_id</span>
+SESSION_SECRET=<span class="klar-hl-string">a_random_string</span></code></pre>
+              </div>
+
+              <div class="klar-callout klar-callout--warning">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                <div>
+                  <strong>Important:</strong> Never commit your <code>.env</code> file to version control. Add it to
+                  your <code>.gitignore</code>.
+                </div>
+              </div>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="getting-started">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; Introduction</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="quick-start">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">Quick Start &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: QUICK START ═══ -->
+            <div class="klar-page" id="page-quick-start">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <a href="#" data-nav="getting-started">Getting Started</a>
+                  <span>›</span>
+                  <span>Quick Start</span>
+                </div>
+                <h1>Quick Start</h1>
+                <p class="klar-article__description">
+                  Go from zero to editing your first page in under 5 minutes.
+                </p>
+              </div>
+
+              <h2 id="step-1">1. Start the Dev Server<a href="#step-1" class="klar-heading-anchor">#</a></h2>
+              <div class="klar-code-block">
+                <div class="klar-code-block__header">
+                  <span class="klar-code-block__lang">Terminal</span>
+                  <button class="klar-code-block__copy" data-copy>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" />
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                    </svg>
+                    Copy
+                  </button>
+                </div>
+                <pre><code>npm run dev</code></pre>
+              </div>
+              <p>This starts both the Vite dev server (port 5173) and Express backend (port 3001) with hot reload.</p>
+
+              <h2 id="step-2">2. Configure Your Project<a href="#step-2" class="klar-heading-anchor">#</a></h2>
+              <p>Enter your GitHub repository details in the setup form:</p>
+              <ul>
+                <li><strong>Repository owner</strong> — your GitHub username or org</li>
+                <li><strong>Repository name</strong> — the repo containing your HTML</li>
+                <li><strong>File path</strong> — path to the HTML file (e.g., <code>index.html</code>)</li>
+                <li><strong>Branch</strong> — defaults to <code>main</code></li>
+              </ul>
+
+              <h2 id="step-3">3. Start Editing<a href="#step-3" class="klar-heading-anchor">#</a></h2>
+              <p>Click any text element in the preview to edit it. Your changes are tracked automatically and can be
+                saved back to GitHub with a single click.</p>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="installation">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; Installation</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="clean-html">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">Clean HTML Output &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: CLEAN HTML ═══ -->
+            <div class="klar-page" id="page-clean-html">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>Core Concepts</span>
+                  <span>›</span>
+                  <span>Clean HTML Output</span>
+                </div>
+                <h1>Clean HTML Output</h1>
+                <p class="klar-article__description">
+                  How Klar preserves your markup integrity through every edit cycle.
+                </p>
+              </div>
+
+              <h2 id="the-problem">The Problem with Traditional CMS<a href="#the-problem"
+                  class="klar-heading-anchor">#</a></h2>
+              <p>Most visual editors inject their own markup — wrapper divs, data attributes, inline styles. After a few
+                edits, your clean HTML becomes an unmaintainable mess.</p>
+
+              <h2 id="klar-approach">The Klar Approach<a href="#klar-approach" class="klar-heading-anchor">#</a></h2>
+              <p>Klar tracks edits by CSS selector and applies them server-side using Cheerio. Your HTML goes through
+                three stages:</p>
+              <ol>
+                <li><strong>Fetch</strong> — raw HTML from your GitHub repo</li>
+                <li><strong>Sanitize</strong> — prepare for safe iframe rendering</li>
+                <li><strong>Apply</strong> — merge edits back into original structure</li>
+              </ol>
+
+              <div class="klar-code-block">
+                <div class="klar-code-block__header">
+                  <span class="klar-code-block__lang">Diff</span>
+                  <button class="klar-code-block__copy" data-copy>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" />
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                    </svg>
+                    Copy
+                  </button>
+                </div>
+                <pre><code><span class="klar-hl-comment">  &lt;section class="hero"&gt;</span>
+<span class="klar-hl-comment">    &lt;h1&gt;</span>
+<span style="color: var(--error); text-decoration: line-through;">-     Welcome to My Site</span>
+<span style="color: var(--success);">+     Welcome to My Updated Site</span>
+<span class="klar-hl-comment">    &lt;/h1&gt;</span>
+<span class="klar-hl-comment">  &lt;/section&gt;</span></code></pre>
+              </div>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="quick-start">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; Quick Start</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="editing">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">Editing Content &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: EDITING ═══ -->
+            <div class="klar-page" id="page-editing">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>Core Concepts</span>
+                  <span>›</span>
+                  <span>Editing Content</span>
+                </div>
+                <h1>Editing Content</h1>
+                <p class="klar-article__description">
+                  Click-to-edit visual editing with a structured panel for precise control.
+                </p>
+              </div>
+
+              <h2 id="visual-editing">Visual Editing<a href="#visual-editing" class="klar-heading-anchor">#</a></h2>
+              <p>Click any text element in the iframe preview to start editing. Klar highlights the selected element and
+                makes it contentEditable. Changes are tracked in real-time using a centralized edit reducer.</p>
+
+              <h2 id="structured-panel">Structured Panel<a href="#structured-panel"
+                  class="klar-heading-anchor">#</a></h2>
+              <p>The structured panel shows a tree view of all editable sections and elements, giving you an organized
+                overview of the page structure alongside the visual editor.</p>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="clean-html">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; Clean HTML Output</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="configuration">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">Configuration &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: CONFIGURATION ═══ -->
+            <div class="klar-page" id="page-configuration">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>Core Concepts</span>
+                  <span>›</span>
+                  <span>Configuration</span>
+                </div>
+                <h1>Configuration</h1>
+                <p class="klar-article__description">
+                  Configure Klar to match your project setup and workflow.
+                </p>
+              </div>
+
+              <h2 id="project-settings">Project Settings<a href="#project-settings"
+                  class="klar-heading-anchor">#</a></h2>
+              <p>Each project stores its configuration in SQLite. Settings include repository details, branch, file
+                path, and editing preferences.</p>
+
+              <div class="klar-table-wrap">
+                <table class="klar-table">
+                  <thead>
+                    <tr>
+                      <th>Setting</th>
+                      <th>Type</th>
+                      <th>Default</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>repoOwner</code></td>
+                      <td>string</td>
+                      <td>—</td>
+                      <td>GitHub username or organization</td>
+                    </tr>
+                    <tr>
+                      <td><code>repoName</code></td>
+                      <td>string</td>
+                      <td>—</td>
+                      <td>Repository name</td>
+                    </tr>
+                    <tr>
+                      <td><code>branch</code></td>
+                      <td>string</td>
+                      <td><code>main</code></td>
+                      <td>Target branch for commits</td>
+                    </tr>
+                    <tr>
+                      <td><code>filePath</code></td>
+                      <td>string</td>
+                      <td><code>index.html</code></td>
+                      <td>Path to the HTML file in the repo</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="editing">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; Editing Content</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="cms-demo">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">Live Demo &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: CMS DEMO ═══ -->
+            <div class="klar-page" id="page-cms-demo">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>CMS Features</span>
+                  <span>›</span>
+                  <span>Live Demo</span>
+                </div>
+                <h1>Live Demo</h1>
+                <p class="klar-article__description">
+                  Try Klar's editing experience right here. Click any text below to edit it.
+                </p>
+              </div>
+
+              <div class="klar-cms-demo" id="klarCmsDemo">
+                <div class="klar-cms-demo__toolbar">
+                  <div class="klar-cms-demo__toolbar-group">
+                    <button class="klar-cms-demo__toolbar-btn is-active" title="Bold"><strong>B</strong></button>
+                    <button class="klar-cms-demo__toolbar-btn" title="Italic"><em>I</em></button>
+                    <button class="klar-cms-demo__toolbar-btn" title="Underline"
+                      style="text-decoration:underline">U</button>
+                  </div>
+                  <div class="klar-cms-demo__toolbar-sep"></div>
+                  <div class="klar-cms-demo__toolbar-group">
+                    <button class="klar-cms-demo__toolbar-btn" title="Link">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" />
+                        <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" />
+                      </svg>
+                    </button>
+                    <button class="klar-cms-demo__toolbar-btn" title="Image">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="klar-cms-demo__toolbar-right">
+                    <div class="klar-cms-demo__mode-toggle">
+                      <span>Edit mode</span>
+                      <div class="klar-cms-demo__toggle-track is-on" id="klarDemoToggle">
+                        <div class="klar-cms-demo__toggle-thumb"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="klar-cms-demo__editor is-editing" id="klarDemoEditor">
+                  <h2 contenteditable="true">Welcome to Our Platform</h2>
+                  <p contenteditable="true">We build tools that help developers ship faster. Our platform provides
+                    everything you need to go from idea to production in record time.</p>
+                  <p contenteditable="true">Join thousands of teams who trust us with their most important projects.
+                    Start your free trial today.</p>
+                </div>
+                <div class="klar-cms-demo__footer">
+                  <div class="klar-cms-demo__status">
+                    <div class="klar-cms-demo__status-dot" id="klarDemoStatusDot"></div>
+                    <span id="klarDemoStatusText">No changes</span>
+                  </div>
+                  <div class="klar-cms-demo__actions">
+                    <button class="klar-btn klar-btn--secondary" id="klarDemoReset">Reset</button>
+                    <button class="klar-btn klar-btn--primary" id="klarDemoSave">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                        <polyline points="17 21 17 13 7 13 7 21" />
+                        <polyline points="7 3 7 8 15 8" />
+                      </svg>
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <h2 id="demo-output">HTML Output<a href="#demo-output" class="klar-heading-anchor">#</a></h2>
+              <p>As you edit the content above, watch how the output stays clean:</p>
+
+              <div class="klar-output-panel" id="klarOutputPanel">
+                <div class="klar-output-panel__tabs">
+                  <button class="klar-output-panel__tab is-active" data-tab="html">HTML</button>
+                  <button class="klar-output-panel__tab" data-tab="diff">Diff</button>
+                </div>
+                <div class="klar-output-panel__content is-visible" data-tab-content="html">
+                  <div class="klar-code-block">
+                    <div class="klar-code-block__header">
+                      <span class="klar-code-block__lang">Output HTML</span>
+                      <button class="klar-code-block__copy" data-copy>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round">
+                          <rect x="9" y="9" width="13" height="13" rx="2" />
+                          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                        </svg>
+                        Copy
+                      </button>
+                    </div>
+                    <pre id="klarDemoOutput"><code><span class="klar-hl-tag">&lt;h2&gt;</span>Welcome to Our Platform<span class="klar-hl-tag">&lt;/h2&gt;</span>
+<span class="klar-hl-tag">&lt;p&gt;</span>We build tools that help developers ship
+faster.<span class="klar-hl-tag">&lt;/p&gt;</span></code></pre>
+                  </div>
+                </div>
+                <div class="klar-output-panel__content" data-tab-content="diff">
+                  <div class="klar-code-block">
+                    <pre id="klarDemoDiff"><code><span class="klar-hl-comment">Make an edit above to see the diff</span></code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="configuration">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; Configuration</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="sanitization">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">HTML Sanitization &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: SANITIZATION ═══ -->
+            <div class="klar-page" id="page-sanitization">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>CMS Features</span>
+                  <span>›</span>
+                  <span>HTML Sanitization</span>
+                </div>
+                <h1>HTML Sanitization</h1>
+                <p class="klar-article__description">
+                  How Klar prepares HTML for safe rendering in the editor iframe.
+                </p>
+              </div>
+
+              <h2 id="sanitization-process">Sanitization Process<a href="#sanitization-process"
+                  class="klar-heading-anchor">#</a></h2>
+              <p>Before rendering in the iframe, Klar sanitizes the HTML to prevent scripts from executing and ensures
+                safe contentEditable behavior. The process includes:</p>
+              <ul>
+                <li>Removing all <code>&lt;script&gt;</code> tags</li>
+                <li>Neutralizing event handler attributes (<code>onclick</code>, etc.)</li>
+                <li>Wrapping naked text nodes for contentEditable compatibility</li>
+                <li>Rewriting relative URLs to absolute paths</li>
+              </ul>
+
+              <div class="klar-callout klar-callout--info">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 16v-4M12 8h.01" />
+                </svg>
+                <div>
+                  Sanitization only affects the editor preview. When saving, edits are applied to the original
+                  unsanitized HTML from your repository.
+                </div>
+              </div>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="cms-demo">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; Live Demo</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="export">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">Export &amp; Save &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: EXPORT ═══ -->
+            <div class="klar-page" id="page-export">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>CMS Features</span>
+                  <span>›</span>
+                  <span>Export &amp; Save</span>
+                </div>
+                <h1>Export &amp; Save</h1>
+                <p class="klar-article__description">
+                  Save your edits back to GitHub and publish with one click.
+                </p>
+              </div>
+
+              <h2 id="save-to-github">Save to GitHub<a href="#save-to-github" class="klar-heading-anchor">#</a></h2>
+              <p>When you click Save, Klar applies your edits to the original HTML using Cheerio and commits the
+                changes directly to your repository. The process:</p>
+              <ol>
+                <li>Fetches the latest file content from GitHub</li>
+                <li>Applies each edit by CSS selector</li>
+                <li>Commits the modified file with a descriptive message</li>
+              </ol>
+
+              <h2 id="publish">Publish<a href="#publish" class="klar-heading-anchor">#</a></h2>
+              <p>The Publish action goes a step further: it saves your changes to a <code>klar-publish</code> branch
+                and enables GitHub Pages, giving you a live preview URL instantly.</p>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="sanitization">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; HTML Sanitization</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="api-overview">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">API Overview &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: API OVERVIEW ═══ -->
+            <div class="klar-page" id="page-api-overview">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>API Reference</span>
+                  <span>›</span>
+                  <span>Overview</span>
+                </div>
+                <h1>API Overview</h1>
+                <p class="klar-article__description">
+                  All API endpoints accept POST requests with JSON bodies and require cookie-based authentication.
+                </p>
+              </div>
+
+              <h2 id="base-url">Base URL<a href="#base-url" class="klar-heading-anchor">#</a></h2>
+              <div class="klar-code-block">
+                <div class="klar-code-block__header">
+                  <span class="klar-code-block__lang">URL</span>
+                </div>
+                <pre><code>http://localhost:3001/api</code></pre>
+              </div>
+
+              <h2 id="endpoints-table">Endpoints<a href="#endpoints-table" class="klar-heading-anchor">#</a></h2>
+              <div class="klar-table-wrap">
+                <table class="klar-table">
+                  <thead>
+                    <tr>
+                      <th>Endpoint</th>
+                      <th>Purpose</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>/auth/google</code></td>
+                      <td>Google OAuth login</td>
+                    </tr>
+                    <tr>
+                      <td><code>/auth/me</code></td>
+                      <td>Check session, return user + projects</td>
+                    </tr>
+                    <tr>
+                      <td><code>/fetch-page</code></td>
+                      <td>Fetch and sanitize HTML from a URL</td>
+                    </tr>
+                    <tr>
+                      <td><code>/fetch-from-repo</code></td>
+                      <td>Fetch file from GitHub repo</td>
+                    </tr>
+                    <tr>
+                      <td><code>/github/save</code></td>
+                      <td>Apply edits and commit to GitHub</td>
+                    </tr>
+                    <tr>
+                      <td><code>/github/publish</code></td>
+                      <td>Save + create branch + enable Pages</td>
+                    </tr>
+                    <tr>
+                      <td><code>/github/media/*</code></td>
+                      <td>List, upload, delete media files</td>
+                    </tr>
+                    <tr>
+                      <td><code>/projects</code></td>
+                      <td>Create/update project</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="export">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; Export &amp; Save</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="api-methods">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">Methods &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: API METHODS ═══ -->
+            <div class="klar-page" id="page-api-methods">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>API Reference</span>
+                  <span>›</span>
+                  <span>Methods</span>
+                </div>
+                <h1>Methods</h1>
+                <p class="klar-article__description">
+                  Detailed reference for each API method with request/response examples.
+                </p>
+              </div>
+
+              <h2 id="fetch-page">fetchPage<a href="#fetch-page" class="klar-heading-anchor">#</a></h2>
+              <p>Fetches HTML from a URL, sanitizes it for iframe rendering, and returns the processed content.</p>
+              <div class="klar-code-block">
+                <div class="klar-code-block__header">
+                  <span class="klar-code-block__lang">Request</span>
+                </div>
+                <pre><code><span class="klar-hl-keyword">POST</span> /api/fetch-page
+Content-Type: application/json
+
+{
+  <span class="klar-hl-attr">"url"</span>: <span class="klar-hl-string">"https://example.com"</span>,
+  <span class="klar-hl-attr">"projectId"</span>: <span class="klar-hl-number">1</span>
+}</code></pre>
+              </div>
+
+              <h2 id="save-method">save<a href="#save-method" class="klar-heading-anchor">#</a></h2>
+              <p>Applies edits and commits the changes to GitHub.</p>
+              <div class="klar-code-block">
+                <div class="klar-code-block__header">
+                  <span class="klar-code-block__lang">Request</span>
+                </div>
+                <pre><code><span class="klar-hl-keyword">POST</span> /api/github/save
+Content-Type: application/json
+
+{
+  <span class="klar-hl-attr">"projectId"</span>: <span class="klar-hl-number">1</span>,
+  <span class="klar-hl-attr">"edits"</span>: [
+    {
+      <span class="klar-hl-attr">"selector"</span>: <span class="klar-hl-string">".hero h1"</span>,
+      <span class="klar-hl-attr">"type"</span>: <span class="klar-hl-string">"text"</span>,
+      <span class="klar-hl-attr">"value"</span>: <span class="klar-hl-string">"New Heading"</span>
+    }
+  ]
+}</code></pre>
+              </div>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="api-overview">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; API Overview</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="api-events">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">Events &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: API EVENTS ═══ -->
+            <div class="klar-page" id="page-api-events">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>API Reference</span>
+                  <span>›</span>
+                  <span>Events</span>
+                </div>
+                <h1>Events</h1>
+                <p class="klar-article__description">
+                  PostMessage events for parent-iframe communication.
+                </p>
+              </div>
+
+              <h2 id="message-types">Message Types<a href="#message-types" class="klar-heading-anchor">#</a></h2>
+              <p>Parent and iframe communicate via <code>postMessage</code> using discriminated union types. Each
+                message has a <code>type</code> field that determines its shape.</p>
+
+              <div class="klar-table-wrap">
+                <table class="klar-table">
+                  <thead>
+                    <tr>
+                      <th>Direction</th>
+                      <th>Type</th>
+                      <th>Purpose</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Parent → Iframe</td>
+                      <td><code>highlight</code></td>
+                      <td>Highlight an element by selector</td>
+                    </tr>
+                    <tr>
+                      <td>Parent → Iframe</td>
+                      <td><code>updateContent</code></td>
+                      <td>Update element content</td>
+                    </tr>
+                    <tr>
+                      <td>Iframe → Parent</td>
+                      <td><code>elementClicked</code></td>
+                      <td>User clicked an editable element</td>
+                    </tr>
+                    <tr>
+                      <td>Iframe → Parent</td>
+                      <td><code>contentChanged</code></td>
+                      <td>Content was modified in the iframe</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="api-methods">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; Methods</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="plugins">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">Plugins &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: PLUGINS ═══ -->
+            <div class="klar-page" id="page-plugins">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>Advanced</span>
+                  <span>›</span>
+                  <span>Plugins</span>
+                </div>
+                <h1>Plugins</h1>
+                <p class="klar-article__description">
+                  Extend Klar with custom plugins for additional editing capabilities.
+                </p>
+              </div>
+
+              <p>Klar's plugin system is designed to be minimal and non-intrusive. Plugins can hook into the editing
+                lifecycle to add custom behaviors without modifying the core.</p>
+
+              <div class="klar-callout klar-callout--info">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 16v-4M12 8h.01" />
+                </svg>
+                <div>
+                  The plugin API is under active development and may change in future releases.
+                </div>
+              </div>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="api-events">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; Events</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="performance">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">Performance &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: PERFORMANCE ═══ -->
+            <div class="klar-page" id="page-performance">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>Advanced</span>
+                  <span>›</span>
+                  <span>Performance</span>
+                </div>
+                <h1>Performance</h1>
+                <p class="klar-article__description">
+                  How Klar stays fast with ETag caching and efficient API usage.
+                </p>
+              </div>
+
+              <h2 id="etag-caching">ETag Caching<a href="#etag-caching" class="klar-heading-anchor">#</a></h2>
+              <p>Klar uses ETag-based caching for all GitHub API calls. When a file hasn't changed, GitHub returns a
+                <code>304 Not Modified</code> response, saving both bandwidth and API quota.</p>
+
+              <h2 id="api-quota">API Quota Management<a href="#api-quota" class="klar-heading-anchor">#</a></h2>
+              <p>The file cache is manually updated after successful commits, so subsequent reads don't require an API
+                call. This keeps Klar well within GitHub's rate limits even for active editing sessions.</p>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="plugins">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; Plugins</span>
+                </a>
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="accessibility">
+                  <span class="klar-article-nav__label">Next</span>
+                  <span class="klar-article-nav__title">Accessibility &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- ═══ PAGE: ACCESSIBILITY ═══ -->
+            <div class="klar-page" id="page-accessibility">
+              <div class="klar-article__header">
+                <div class="klar-article__breadcrumb">
+                  <a href="#">Docs</a>
+                  <span>›</span>
+                  <span>Advanced</span>
+                  <span>›</span>
+                  <span>Accessibility</span>
+                </div>
+                <h1>Accessibility</h1>
+                <p class="klar-article__description">
+                  Klar is built with accessibility in mind, ensuring the editor is usable by everyone.
+                </p>
+              </div>
+
+              <h2 id="keyboard-nav">Keyboard Navigation<a href="#keyboard-nav" class="klar-heading-anchor">#</a></h2>
+              <p>All editor controls are keyboard accessible. Use <kbd>Tab</kbd> to navigate between elements and
+                <kbd>Enter</kbd> to activate buttons.</p>
+
+              <h2 id="aria-support">ARIA Support<a href="#aria-support" class="klar-heading-anchor">#</a></h2>
+              <p>The editor uses proper ARIA attributes for screen reader compatibility, including
+                <code>aria-label</code> on interactive elements and <code>role</code> attributes on navigation
+                landmarks.</p>
+
+              <div class="klar-article-nav">
+                <a href="#" class="klar-article-nav__link" data-nav="performance">
+                  <span class="klar-article-nav__label">Previous</span>
+                  <span class="klar-article-nav__title">&larr; Performance</span>
+                </a>
+                <div></div>
+              </div>
+            </div>
+
+          </article>
+
+          <!-- Table of Contents -->
+          <nav class="klar-toc" id="klarToc" aria-label="Table of contents">
+            <div class="klar-toc__title">On this page</div>
+            <ul class="klar-toc__list" id="klarTocList">
+              <!-- Populated by JS -->
+            </ul>
+          </nav>
+        </div>
+      </main>
+    </div>
+
+    <!-- Toast -->
+    <div class="klar-toast" id="klarToast"></div>
+
+    <!-- ════════════════════════════════════
+     JAVASCRIPT
+     ════════════════════════════════════ -->
+    <script>
+      (function () {
+        'use strict';
+
+        // ─── Theme Toggle ───
+        const themeToggle = document.getElementById('klarThemeToggle');
+        const html = document.documentElement;
+
+        function setTheme(theme) {
+          html.setAttribute('data-theme', theme);
+          localStorage.setItem('klar-theme', theme);
+        }
+
+        // Load saved theme
+        const saved = localStorage.getItem('klar-theme');
+        if (saved) setTheme(saved);
+        else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme('dark');
+
+        themeToggle.addEventListener('click', () => {
+          setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        });
+
+        // ─── Mobile Menu ───
+        const menuBtn = document.getElementById('klarMenuBtn');
+        const sidebar = document.getElementById('klarSidebar');
+        const sidebarOverlay = document.getElementById('klarSidebarOverlay');
+
+        function toggleSidebar() {
+          const open = sidebar.classList.toggle('is-open');
+          sidebarOverlay.classList.toggle('is-visible', open);
+          document.body.style.overflow = open ? 'hidden' : '';
+        }
+
+        menuBtn.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        // ─── Search Modal ───
+        const searchInput = document.getElementById('klarSearchInput');
+        const searchModal = document.getElementById('klarSearchModal');
+        const searchModalInput = document.getElementById('klarSearchModalInput');
+        const searchBackdrop = document.getElementById('klarSearchBackdrop');
+        const searchResults = document.getElementById('klarSearchResults');
+
+        function openSearch() {
+          searchModal.classList.add('is-open');
+          setTimeout(() => searchModalInput.focus(), 100);
+        }
+
+        function closeSearch() {
+          searchModal.classList.remove('is-open');
+          searchModalInput.value = '';
+          searchResults.innerHTML = '';
+        }
+
+        searchInput.addEventListener('click', openSearch);
+        searchBackdrop.addEventListener('click', closeSearch);
+
+        document.addEventListener('keydown', (e) => {
+          if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            searchModal.classList.contains('is-open') ? closeSearch() : openSearch();
+          }
+          if (e.key === 'Escape') closeSearch();
+        });
+
+        // Search data
+        const pages = [
+          { id: 'getting-started', title: 'Introduction', section: 'Getting Started' },
+          { id: 'installation', title: 'Installation', section: 'Getting Started' },
+          { id: 'quick-start', title: 'Quick Start', section: 'Getting Started' },
+          { id: 'clean-html', title: 'Clean HTML Output', section: 'Core Concepts' },
+          { id: 'editing', title: 'Editing Content', section: 'Core Concepts' },
+          { id: 'configuration', title: 'Configuration', section: 'Core Concepts' },
+          { id: 'cms-demo', title: 'Live Demo', section: 'CMS Features' },
+          { id: 'sanitization', title: 'HTML Sanitization', section: 'CMS Features' },
+          { id: 'export', title: 'Export & Save', section: 'CMS Features' },
+          { id: 'api-overview', title: 'API Overview', section: 'API Reference' },
+          { id: 'api-methods', title: 'Methods', section: 'API Reference' },
+          { id: 'api-events', title: 'Events', section: 'API Reference' },
+          { id: 'plugins', title: 'Plugins', section: 'Advanced' },
+          { id: 'performance', title: 'Performance', section: 'Advanced' },
+          { id: 'accessibility', title: 'Accessibility', section: 'Advanced' },
+        ];
+
+        searchModalInput.addEventListener('input', () => {
+          const q = searchModalInput.value.toLowerCase().trim();
+          if (!q) { searchResults.innerHTML = ''; return; }
+
+          const matches = pages.filter(p =>
+            p.title.toLowerCase().includes(q) || p.section.toLowerCase().includes(q)
+          );
+
+          if (matches.length === 0) {
+            searchResults.innerHTML = '<div class="klar-search-modal__empty">No results found</div>';
+            return;
+          }
+
+          searchResults.innerHTML = matches.map(p => `
+            <div class="klar-search-modal__result" data-nav="${p.id}">
+              <svg class="klar-search-modal__result-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              <div class="klar-search-modal__result-text">
+                <div class="klar-search-modal__result-title">${p.title}</div>
+                <div class="klar-search-modal__result-section">${p.section}</div>
+              </div>
+            </div>
+          `).join('');
+
+          searchResults.querySelectorAll('.klar-search-modal__result').forEach(el => {
+            el.addEventListener('click', () => {
+              navigateTo(el.getAttribute('data-nav'));
+              closeSearch();
+            });
+          });
+        });
+
+        // ─── Page Navigation ───
+        function navigateTo(pageId) {
+          // Hide all pages
+          document.querySelectorAll('.klar-page').forEach(p => p.classList.remove('is-active'));
+          // Show target
+          const target = document.getElementById('page-' + pageId);
+          if (target) target.classList.add('is-active');
+
+          // Update sidebar
+          document.querySelectorAll('.klar-sidebar__link').forEach(link => {
+            link.classList.toggle('is-active', link.getAttribute('data-nav') === pageId);
+          });
+
+          // Close mobile sidebar
+          if (sidebar.classList.contains('is-open')) toggleSidebar();
+
+          // Update TOC
+          updateToc(pageId);
+
+          // Scroll to top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Handle all nav clicks
+        document.addEventListener('click', (e) => {
+          const navEl = e.target.closest('[data-nav]');
+          if (navEl) {
+            e.preventDefault();
+            navigateTo(navEl.getAttribute('data-nav'));
+          }
+        });
+
+        // ─── Table of Contents ───
+        function updateToc(pageId) {
+          const page = document.getElementById('page-' + pageId);
+          const tocList = document.getElementById('klarTocList');
+          if (!page || !tocList) return;
+
+          const headings = page.querySelectorAll('h2[id], h3[id]');
+          tocList.innerHTML = '';
+
+          headings.forEach(h => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.className = 'klar-toc__link';
+            a.href = '#' + h.id;
+            a.textContent = h.textContent.replace('#', '').trim();
+            if (h.tagName === 'H3') a.setAttribute('data-level', '3');
+            li.appendChild(a);
+            tocList.appendChild(li);
+          });
+
+          // Intersection observer for active TOC
+          if (window._klarTocObserver) window._klarTocObserver.disconnect();
+
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                tocList.querySelectorAll('.klar-toc__link').forEach(l => l.classList.remove('is-active'));
+                const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+                if (link) link.classList.add('is-active');
+              }
+            });
+          }, { rootMargin: '-80px 0px -70% 0px' });
+
+          headings.forEach(h => observer.observe(h));
+          window._klarTocObserver = observer;
+        }
+
+        // Init TOC for first page
+        updateToc('getting-started');
+
+        // ─── Copy Buttons ───
+        document.addEventListener('click', (e) => {
+          const copyBtn = e.target.closest('[data-copy]');
+          if (!copyBtn) return;
+
+          const block = copyBtn.closest('.klar-code-block');
+          const code = block?.querySelector('pre code');
+          if (!code) return;
+
+          navigator.clipboard.writeText(code.textContent).then(() => {
+            copyBtn.classList.add('is-copied');
+            const origHTML = copyBtn.innerHTML;
+            copyBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+            setTimeout(() => {
+              copyBtn.classList.remove('is-copied');
+              copyBtn.innerHTML = origHTML;
+            }, 2000);
+          });
+        });
+
+        // ─── CMS Demo ───
+        const demoEditor = document.getElementById('klarDemoEditor');
+        const demoToggle = document.getElementById('klarDemoToggle');
+        const demoStatusDot = document.getElementById('klarDemoStatusDot');
+        const demoStatusText = document.getElementById('klarDemoStatusText');
+        const demoReset = document.getElementById('klarDemoReset');
+        const demoSave = document.getElementById('klarDemoSave');
+
+        if (demoEditor) {
+          const originalContent = demoEditor.innerHTML;
+          let isDirty = false;
+
+          demoEditor.addEventListener('input', () => {
+            isDirty = true;
+            demoStatusDot.classList.add('is-dirty');
+            demoStatusText.textContent = 'Unsaved changes';
+          });
+
+          if (demoToggle) {
+            demoToggle.addEventListener('click', () => {
+              const isOn = demoToggle.classList.toggle('is-on');
+              demoEditor.classList.toggle('is-editing', isOn);
+              demoEditor.querySelectorAll('[contenteditable]').forEach(el => {
+                el.contentEditable = isOn ? 'true' : 'false';
+              });
+            });
+          }
+
+          if (demoReset) {
+            demoReset.addEventListener('click', () => {
+              demoEditor.innerHTML = originalContent;
+              isDirty = false;
+              demoStatusDot.classList.remove('is-dirty');
+              demoStatusText.textContent = 'No changes';
+              showToast('Content reset');
+            });
+          }
+
+          if (demoSave) {
+            demoSave.addEventListener('click', () => {
+              isDirty = false;
+              demoStatusDot.classList.remove('is-dirty');
+              demoStatusText.textContent = 'Saved';
+              showToast('Changes saved successfully');
+            });
+          }
+        }
+
+        // ─── Output Panel Tabs ───
+        const outputPanel = document.getElementById('klarOutputPanel');
+        if (outputPanel) {
+          outputPanel.querySelectorAll('.klar-output-panel__tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+              const target = tab.getAttribute('data-tab');
+              outputPanel.querySelectorAll('.klar-output-panel__tab').forEach(t =>
+                t.classList.toggle('is-active', t.getAttribute('data-tab') === target)
+              );
+              outputPanel.querySelectorAll('.klar-output-panel__content').forEach(c =>
+                c.classList.toggle('is-visible', c.getAttribute('data-tab-content') === target)
+              );
+            });
+          });
+        }
+
+        // ─── Toast ───
+        function showToast(msg) {
+          const toast = document.getElementById('klarToast');
+          toast.textContent = msg;
+          toast.classList.add('is-visible');
+          setTimeout(() => toast.classList.remove('is-visible'), 2500);
+        }
+
+      })();
+    </script>
+  </body>
+</html>
