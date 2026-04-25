@@ -16,7 +16,8 @@
       rel="stylesheet">
   </head>
   <body>
-    <style>
+    <nav class="nav" id="nav">
+      <style>
       /* =============================================
    HAMBURGER TOGGLE BUTTON
    ============================================= */
@@ -269,7 +270,6 @@
         }
       }
     </style>
-    <nav class="nav" id="nav">
       <div class="nav-inner">
         <a href="#" class="nav-logo">
           <img src="logo.png" alt="Mob Timer" width="28" height="28">
@@ -319,8 +319,7 @@
           </div>
         </div>
       </div>
-    </nav>
-    <script>
+      <script>
       // =============================================
       //  MOBILE MENU
       // =============================================
@@ -417,6 +416,7 @@
         document.querySelectorAll('section[id]').forEach((s) => sectionObserverMobile.observe(s));
       })();
     </script>
+    </nav>
 
     <!-- ========== HERO ========== -->
     <section class="hero" id="hero">
