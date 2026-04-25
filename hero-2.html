@@ -19,14 +19,48 @@
           <img src="logo.png" alt="Mob Timer" width="28" height="28">
           <span>Mob Timer</span>
         </a>
-        <ul class="nav-links">
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
+      </div>
+
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
           <li><a href="#mob-programming">Mob Programming</a></li>
           <li><a href="#break-timer">Break Timer</a></li>
           <li><a href="#features">Features</a></li>
           <li><a href="#how-it-works">How it works</a></li>
-          <li><a href="#why">Why Mob Timer</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
-        <a href="#download" class="btn btn-sm btn-primary">Download</a>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
+          </a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
+          </div>
+        </div>
       </div>
     </nav>
 
@@ -243,7 +277,7 @@
               turn it is.
             </p>
 
-            <div class="mob-steps" data-klar-list>
+            <div class="mob-steps" data-klar-list="">
               <div class="mob-step">
                 <div class="mob-step-num">1</div>
                 <div>
@@ -272,7 +306,7 @@
               </div>
             </div>
 
-            <div class="mob-tags" data-list><span class="mob-tag">Real-time sync</span>
+            <div class="mob-tags" data-list=""><span class="mob-tag">Real-time sync</span>
               <span class="mob-tag">Persistent named sessions</span>
               <span class="mob-tag">Auto-rotation</span>
             </div>

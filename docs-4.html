@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-  <head>
+<!DOCTYPE html><html lang="en" data-theme="light"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Klar CMS — Clean HTML, Zero Bloat</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap"
-      rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
     <style>
       /* ═══════════════════════════════════════
    CSS VARIABLES & THEMING
@@ -1766,54 +1762,54 @@
     <!-- ════════════════════════════════════
      NAVIGATION
      ════════════════════════════════════ -->
-    <nav class="klar-nav" role="navigation" aria-label="Main navigation">
-      <button class="klar-nav__menu-btn" id="klarMenuBtn" aria-label="Toggle menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20"
-          height="20">
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <line x1="3" y1="12" x2="21" y2="12" />
-          <line x1="3" y1="18" x2="21" y2="18" />
-        </svg>
-      </button>
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="logo.png" alt="Mob Timer" width="28" height="28">
+          <span>Mob Timer</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
 
-      <a href="#" class="klar-nav__logo" data-nav="getting-started">
-        <span class="klar-nav__logo-mark">K</span>
-        Klar CMS
-        <span class="klar-nav__version">v0.9</span>
-      </a>
-
-      <div class="klar-nav__center">
-        <div class="klar-nav__search">
-          <svg class="klar-nav__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round">
-            <circle cx="11" cy="11" r="8" />
-            <path d="M21 21l-4.35-4.35" />
-          </svg>
-          <input type="text" class="klar-nav__search-input" placeholder="Search documentation..." id="klarSearchInput"
-            readonly aria-label="Search documentation">
-          <span class="klar-nav__search-kbd">&#8984;K</span>
-        </div>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
       </div>
 
-      <div class="klar-nav__actions">
-        <a href="https://github.com" class="klar-nav__btn" aria-label="GitHub" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
-          </svg>
-        </a>
-        <button class="klar-theme-toggle" id="klarThemeToggle" aria-label="Toggle theme">
-          <svg class="klar-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round">
-            <circle cx="12" cy="12" r="5" />
-            <path
-              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-          </svg>
-          <svg class="klar-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round">
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
-          </svg>
-        </button>
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
+          <li><a href="#mob-programming">Mob Programming</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
+          </a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
+          </div>
+        </div>
       </div>
     </nav>
 
@@ -1825,16 +1821,15 @@
       <div class="klar-search-modal__container">
         <div class="klar-search-modal__input-wrap">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <circle cx="11" cy="11" r="8" />
-            <path d="M21 21l-4.35-4.35" />
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="M21 21l-4.35-4.35"></path>
           </svg>
-          <input type="text" class="klar-search-modal__input" placeholder="Search docs..." id="klarSearchModalInput"
-            autocomplete="off">
+          <input type="text" class="klar-search-modal__input" placeholder="Search docs..." id="klarSearchModalInput" autocomplete="off">
         </div>
         <div class="klar-search-modal__results" id="klarSearchResults"></div>
         <div class="klar-search-modal__footer">
-          <span><kbd>&uarr;&darr;</kbd> Navigate</span>
-          <span><kbd>&crarr;</kbd> Select</span>
+          <span><kbd>↑↓</kbd> Navigate</span>
+          <span><kbd>↵</kbd> Select</span>
           <span><kbd>Esc</kbd> Close</span>
         </div>
       </div>
@@ -1923,7 +1918,7 @@
                 <div class="klar-feature-card">
                   <div class="klar-feature-card__icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                      <path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5" />
+                      <path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"></path>
                     </svg>
                   </div>
                   <div class="klar-feature-card__title">Click-to-Edit</div>
@@ -1933,8 +1928,8 @@
                 <div class="klar-feature-card">
                   <div class="klar-feature-card__icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                      <polyline points="16 18 22 12 16 6" />
-                      <polyline points="8 6 2 12 8 18" />
+                      <polyline points="16 18 22 12 16 6"></polyline>
+                      <polyline points="8 6 2 12 8 18"></polyline>
                     </svg>
                   </div>
                   <div class="klar-feature-card__title">Clean HTML Output</div>
@@ -1944,8 +1939,7 @@
                 <div class="klar-feature-card">
                   <div class="klar-feature-card__icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                      <path
-                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
+                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path>
                     </svg>
                   </div>
                   <div class="klar-feature-card__title">GitHub-Native</div>
@@ -1982,10 +1976,10 @@
               <div class="klar-code-block klar-animate klar-animate--d2">
                 <div class="klar-code-block__header">
                   <span class="klar-code-block__lang">HTML</span>
-                  <button class="klar-code-block__copy" data-copy>
+                  <button class="klar-code-block__copy" data-copy="">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                      <rect x="9" y="9" width="13" height="13" rx="2" />
-                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                      <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
                     </svg>
                     Copy
                   </button>
@@ -2047,12 +2041,11 @@
 
               <div class="klar-callout klar-callout--success">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
+                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
                 <div>
-                  <strong>Ready to get started?</strong> Head over to the <a href="#"
-                    data-nav="installation">Installation</a> guide to set up Klar.
+                  <strong>Ready to get started?</strong> Head over to the <a href="#" data-nav="installation">Installation</a> guide to set up Klar.
                 </div>
               </div>
 
@@ -2060,7 +2053,7 @@
                 <div></div>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="installation">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">Installation &rarr;</span>
+                  <span class="klar-article-nav__title">Installation →</span>
                 </a>
               </div>
             </div>
@@ -2094,10 +2087,10 @@
               <div class="klar-code-block">
                 <div class="klar-code-block__header">
                   <span class="klar-code-block__lang">Terminal</span>
-                  <button class="klar-code-block__copy" data-copy>
+                  <button class="klar-code-block__copy" data-copy="">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                      <rect x="9" y="9" width="13" height="13" rx="2" />
-                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                      <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
                     </svg>
                     Copy
                   </button>
@@ -2116,10 +2109,10 @@ npm install</code></pre>
               <div class="klar-code-block">
                 <div class="klar-code-block__header">
                   <span class="klar-code-block__lang">.env</span>
-                  <button class="klar-code-block__copy" data-copy>
+                  <button class="klar-code-block__copy" data-copy="">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                      <rect x="9" y="9" width="13" height="13" rx="2" />
-                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                      <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
                     </svg>
                     Copy
                   </button>
@@ -2134,10 +2127,10 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-code-block">
                 <div class="klar-code-block__header">
                   <span class="klar-code-block__lang">Terminal</span>
-                  <button class="klar-code-block__copy" data-copy>
+                  <button class="klar-code-block__copy" data-copy="">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                      <rect x="9" y="9" width="13" height="13" rx="2" />
-                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                      <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
                     </svg>
                     Copy
                   </button>
@@ -2147,9 +2140,9 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
 
               <div class="klar-callout klar-callout--warning">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-                  <line x1="12" y1="9" x2="12" y2="13" />
-                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+                  <line x1="12" y1="9" x2="12" y2="13"></line>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
                 <div>
                   <strong>Important:</strong> Never commit your <code>.env</code> file to version control. The
@@ -2193,8 +2186,8 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
 
               <div class="klar-callout klar-callout--info">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 16v-4M12 8h.01" />
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 16v-4M12 8h.01"></path>
                 </svg>
                 <div>
                   In development, Vite proxies <code>/api</code> requests to the Express server automatically. In
@@ -2205,11 +2198,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="getting-started">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; Introduction</span>
+                  <span class="klar-article-nav__title">← Introduction</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="quick-start">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">Quick Start &rarr;</span>
+                  <span class="klar-article-nav__title">Quick Start →</span>
                 </a>
               </div>
             </div>
@@ -2234,10 +2227,10 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-code-block">
                 <div class="klar-code-block__header">
                   <span class="klar-code-block__lang">Terminal</span>
-                  <button class="klar-code-block__copy" data-copy>
+                  <button class="klar-code-block__copy" data-copy="">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                      <rect x="9" y="9" width="13" height="13" rx="2" />
-                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                      <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
                     </svg>
                     Copy
                   </button>
@@ -2280,11 +2273,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="installation">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; Installation</span>
+                  <span class="klar-article-nav__title">← Installation</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="visual-editing">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">Visual Editing &rarr;</span>
+                  <span class="klar-article-nav__title">Visual Editing →</span>
                 </a>
               </div>
             </div>
@@ -2356,8 +2349,8 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
 
               <div class="klar-callout klar-callout--info">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 16v-4M12 8h.01" />
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 16v-4M12 8h.01"></path>
                 </svg>
                 <div>
                   Edit state is centralized in a <code>useReducer</code> keyed by CSS selector (optionally suffixed with
@@ -2382,11 +2375,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="quick-start">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; Quick Start</span>
+                  <span class="klar-article-nav__title">← Quick Start</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="structured-panel">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">Structured Panel &rarr;</span>
+                  <span class="klar-article-nav__title">Structured Panel →</span>
                 </a>
               </div>
             </div>
@@ -2432,11 +2425,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="visual-editing">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; Visual Editing</span>
+                  <span class="klar-article-nav__title">← Visual Editing</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="iframe-communication">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">Iframe Communication &rarr;</span>
+                  <span class="klar-article-nav__title">Iframe Communication →</span>
                 </a>
               </div>
             </div>
@@ -2585,11 +2578,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="structured-panel">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; Structured Panel</span>
+                  <span class="klar-article-nav__title">← Structured Panel</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="media-management">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">Media &amp; Icons &rarr;</span>
+                  <span class="klar-article-nav__title">Media &amp; Icons →</span>
                 </a>
               </div>
             </div>
@@ -2639,11 +2632,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="iframe-communication">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; Iframe Communication</span>
+                  <span class="klar-article-nav__title">← Iframe Communication</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="github-integration">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">GitHub Integration &rarr;</span>
+                  <span class="klar-article-nav__title">GitHub Integration →</span>
                 </a>
               </div>
             </div>
@@ -2688,8 +2681,8 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
 
               <div class="klar-callout klar-callout--info">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 16v-4M12 8h.01" />
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 16v-4M12 8h.01"></path>
                 </svg>
                 <div>
                   Sanitization only affects the editor preview. When saving, edits are applied to the original
@@ -2710,11 +2703,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="media-management">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; Media &amp; Icons</span>
+                  <span class="klar-article-nav__title">← Media &amp; Icons</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="save-publish">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">Save &amp; Publish &rarr;</span>
+                  <span class="klar-article-nav__title">Save &amp; Publish →</span>
                 </a>
               </div>
             </div>
@@ -2757,8 +2750,8 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
 
               <div class="klar-callout klar-callout--info">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 16v-4M12 8h.01" />
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 16v-4M12 8h.01"></path>
                 </svg>
                 <div>
                   There is also a "Publish latest" option that publishes the current state of the main branch to GitHub
@@ -2775,11 +2768,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="github-integration">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; GitHub Integration</span>
+                  <span class="klar-article-nav__title">← GitHub Integration</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="project-settings">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">Project Settings &rarr;</span>
+                  <span class="klar-article-nav__title">Project Settings →</span>
                 </a>
               </div>
             </div>
@@ -2882,11 +2875,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="save-publish">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; Save &amp; Publish</span>
+                  <span class="klar-article-nav__title">← Save &amp; Publish</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="selectors">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">Custom Selectors &rarr;</span>
+                  <span class="klar-article-nav__title">Custom Selectors →</span>
                 </a>
               </div>
             </div>
@@ -2971,11 +2964,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="project-settings">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; Project Settings</span>
+                  <span class="klar-article-nav__title">← Project Settings</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="api-endpoints">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">API Endpoints &rarr;</span>
+                  <span class="klar-article-nav__title">API Endpoints →</span>
                 </a>
               </div>
             </div>
@@ -3056,8 +3049,7 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
                 </table>
               </div>
 
-              <h2 id="content-endpoints">Content &amp; Editing<a href="#content-endpoints"
-                  class="klar-heading-anchor">#</a></h2>
+              <h2 id="content-endpoints">Content &amp; Editing<a href="#content-endpoints" class="klar-heading-anchor">#</a></h2>
               <div class="klar-table-wrap">
                 <table class="klar-table">
                   <thead>
@@ -3142,8 +3134,7 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
                 </table>
               </div>
 
-              <h2 id="page-mgmt-endpoints">Page Management<a href="#page-mgmt-endpoints"
-                  class="klar-heading-anchor">#</a></h2>
+              <h2 id="page-mgmt-endpoints">Page Management<a href="#page-mgmt-endpoints" class="klar-heading-anchor">#</a></h2>
               <div class="klar-table-wrap">
                 <table class="klar-table">
                   <thead>
@@ -3186,11 +3177,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="selectors">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; Custom Selectors</span>
+                  <span class="klar-article-nav__title">← Custom Selectors</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="api-events">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">PostMessage Events &rarr;</span>
+                  <span class="klar-article-nav__title">PostMessage Events →</span>
                 </a>
               </div>
             </div>
@@ -3218,10 +3209,10 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-code-block">
                 <div class="klar-code-block__header">
                   <span class="klar-code-block__lang">TypeScript</span>
-                  <button class="klar-code-block__copy" data-copy>
+                  <button class="klar-code-block__copy" data-copy="">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                      <rect x="9" y="9" width="13" height="13" rx="2" />
-                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                      <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
                     </svg>
                     Copy
                   </button>
@@ -3244,11 +3235,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="api-endpoints">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; Endpoints</span>
+                  <span class="klar-article-nav__title">← Endpoints</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="architecture">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">Architecture &rarr;</span>
+                  <span class="klar-article-nav__title">Architecture →</span>
                 </a>
               </div>
             </div>
@@ -3281,8 +3272,7 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
                 keep the initial <code>original</code>. A <code>useRef</code> keeps a synchronized snapshot for save
                 operations.</p>
 
-              <h2 id="fullstack-pattern">Full-Stack Data Pattern<a href="#fullstack-pattern"
-                  class="klar-heading-anchor">#</a></h2>
+              <h2 id="fullstack-pattern">Full-Stack Data Pattern<a href="#fullstack-pattern" class="klar-heading-anchor">#</a></h2>
               <p>Adding a new project setting follows this path through the stack:</p>
               <ol>
                 <li><strong>DB column</strong> in <code>server/db.js</code> — <code>ALTER TABLE ADD COLUMN</code> in
@@ -3306,11 +3296,11 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="api-events">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; PostMessage Events</span>
+                  <span class="klar-article-nav__title">← PostMessage Events</span>
                 </a>
                 <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="project-structure">
                   <span class="klar-article-nav__label">Next</span>
-                  <span class="klar-article-nav__title">Project Structure &rarr;</span>
+                  <span class="klar-article-nav__title">Project Structure →</span>
                 </a>
               </div>
             </div>
@@ -3334,10 +3324,10 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-code-block">
                 <div class="klar-code-block__header">
                   <span class="klar-code-block__lang">Directory</span>
-                  <button class="klar-code-block__copy" data-copy>
+                  <button class="klar-code-block__copy" data-copy="">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                      <rect x="9" y="9" width="13" height="13" rx="2" />
-                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                      <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
                     </svg>
                     Copy
                   </button>
@@ -3420,7 +3410,7 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
               <div class="klar-article-nav">
                 <a href="#" class="klar-article-nav__link" data-nav="architecture">
                   <span class="klar-article-nav__label">Previous</span>
-                  <span class="klar-article-nav__title">&larr; Architecture</span>
+                  <span class="klar-article-nav__title">← Architecture</span>
                 </a>
                 <div></div>
               </div>
@@ -3735,5 +3725,5 @@ KLAR_ENCRYPTION_KEY=<span class="klar-hl-string">&lt;32-byte hex string for AES-
 
       })();
     </script>
-  </body>
-</html>
+  
+</body></html>

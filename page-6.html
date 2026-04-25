@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APEX FITNESS — Build Your Strongest Self</title>
@@ -1449,28 +1447,55 @@
     <!-- ========================================
          NAVIGATION
     ======================================== -->
-    <nav class="apex-nav" id="apexNav">
-        <div class="apex-nav-inner">
-            <a href="#" class="apex-nav-logo">APEX</a>
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="logo.png" alt="Mob Timer" width="28" height="28">
+          <span>Mob Timer</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
 
-            <div class="apex-nav-links" id="apexNavLinks">
-                <a href="#apex-about">About</a>
-                <a href="#apex-services">Programs</a>
-                <a href="#apex-pricing">Pricing</a>
-                <a href="#apex-trainers">Trainers</a>
-                <a href="#apex-testimonials">Reviews</a>
-                <a href="#apex-contact">Contact</a>
-                <div class="apex-theme-toggle" id="apexThemeToggle" title="Toggle theme" role="button" tabindex="0" aria-label="Toggle light/dark mode">
-                    <div class="apex-theme-toggle-circle" id="apexThemeCircle">🌙</div>
-                </div>
-            </div>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
+      </div>
 
-            <button class="apex-mobile-toggle" id="apexMobileToggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
+          <li><a href="#mob-programming">Mob Programming</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
+          </a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- ========================================
@@ -1652,7 +1677,7 @@
                     <ul class="apex-pricing-features">
                         <li><span class="check">✓</span> Everything in Basic</li>
                         <li><span class="check">✓</span> All group classes</li>
-                        <li><span class="check">✓</span> Sauna & steam room</li>
+                        <li><span class="check">✓</span> Sauna &amp; steam room</li>
                         <li><span class="check">✓</span> 1 PT session/month</li>
                         <li><span class="check">✓</span> Nutrition guide</li>
                         <li><span class="cross">✗</span> <span style="color:var(--text-muted)">Unlimited PT</span></li>
@@ -1697,7 +1722,7 @@
                         <div class="apex-trainer-avatar-placeholder">👨‍🦱</div>
                     </div>
                     <h3 class="apex-trainer-name">Marcus Rivera</h3>
-                    <p class="apex-trainer-specialty">Strength & Conditioning</p>
+                    <p class="apex-trainer-specialty">Strength &amp; Conditioning</p>
                     <p class="apex-trainer-bio">
                         Former collegiate athlete with 10+ years of coaching. Specializes in powerlifting and athletic performance.
                     </p>
@@ -1713,7 +1738,7 @@
                         <div class="apex-trainer-avatar-placeholder">👩</div>
                     </div>
                     <h3 class="apex-trainer-name">Sarah Chen</h3>
-                    <p class="apex-trainer-specialty">HIIT & Nutrition</p>
+                    <p class="apex-trainer-specialty">HIIT &amp; Nutrition</p>
                     <p class="apex-trainer-bio">
                         Certified nutritionist and HIIT specialist. Helped 500+ clients achieve their body transformation goals.
                     </p>
@@ -1729,7 +1754,7 @@
                         <div class="apex-trainer-avatar-placeholder">👨</div>
                     </div>
                     <h3 class="apex-trainer-name">James Okafor</h3>
-                    <p class="apex-trainer-specialty">Yoga & Mobility</p>
+                    <p class="apex-trainer-specialty">Yoga &amp; Mobility</p>
                     <p class="apex-trainer-bio">
                         200-hour certified yoga instructor with a background in physical therapy. Master of flexibility and recovery.
                     </p>
@@ -1745,7 +1770,7 @@
                         <div class="apex-trainer-avatar-placeholder">👩‍🦰</div>
                     </div>
                     <h3 class="apex-trainer-name">Elena Volkov</h3>
-                    <p class="apex-trainer-specialty">Boxing & Cardio</p>
+                    <p class="apex-trainer-specialty">Boxing &amp; Cardio</p>
                     <p class="apex-trainer-bio">
                         Former competitive boxer turned trainer. Her high-energy sessions are the most popular classes at APEX.
                     </p>
@@ -1878,15 +1903,15 @@
                     <form id="apexContactForm">
                         <div class="apex-form-group">
                             <label class="apex-form-label" for="apexFormName">Full Name</label>
-                            <input type="text" class="apex-form-input" id="apexFormName" placeholder="John Doe" required>
+                            <input type="text" class="apex-form-input" id="apexFormName" placeholder="John Doe" required="">
                         </div>
                         <div class="apex-form-group">
                             <label class="apex-form-label" for="apexFormEmail">Email Address</label>
-                            <input type="email" class="apex-form-input" id="apexFormEmail" placeholder="john@example.com" required>
+                            <input type="email" class="apex-form-input" id="apexFormEmail" placeholder="john@example.com" required="">
                         </div>
                         <div class="apex-form-group">
                             <label class="apex-form-label" for="apexFormMessage">Message</label>
-                            <textarea class="apex-form-textarea" id="apexFormMessage" placeholder="Tell us about your fitness goals..." required></textarea>
+                            <textarea class="apex-form-textarea" id="apexFormMessage" placeholder="Tell us about your fitness goals..." required=""></textarea>
                         </div>
                         <button type="submit" class="apex-btn apex-btn-primary" style="width:100%;justify-content:center;">
                             Send Message →
@@ -2298,5 +2323,5 @@
 
         sections.forEach(section => navHighlightObserver.observe(section));
     </script>
-</body>
-</html>
+
+</body></html>

@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aurelian — Fine Dining Experience</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 
   <style>
     /* ===========================
@@ -1226,27 +1224,56 @@
   <!-- ===========================
        NAVIGATION
        =========================== -->
-  <nav class="aurelian-nav" id="aurelianNav">
-    <div class="aurelian-nav__container">
-      <a href="#aurelianHero" class="aurelian-nav__logo">AURELIAN</a>
-      <ul class="aurelian-nav__links" id="aurelianNavLinks">
-        <li><a href="#aurelianAbout" class="aurelian-nav-link">About</a></li>
-        <li><a href="#aurelianMenu" class="aurelian-nav-link">Menu</a></li>
-        <li><a href="#aurelianGallery" class="aurelian-nav-link">Gallery</a></li>
-        <li><a href="#aurelianContact" class="aurelian-nav-link">Contact</a></li>
-        <li>
-          <button class="aurelian-theme-toggle" id="aurelianThemeToggle" aria-label="Toggle dark mode" title="Toggle theme">
-            ☀️
-          </button>
-        </li>
-      </ul>
-      <button class="aurelian-nav__hamburger" id="aurelianHamburger" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
+  <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="logo.png" alt="Mob Timer" width="28" height="28">
+          <span>Mob Timer</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
+      </div>
+
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
+          <li><a href="#mob-programming">Mob Programming</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
+          </a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
+          </div>
+        </div>
+      </div>
+    </nav>
 
   <!-- ===========================
        HERO SECTION
@@ -1261,7 +1288,7 @@
       <p class="aurelian-hero__tagline">Where culinary mastery meets timeless elegance</p>
       <a href="#aurelianContact" class="aurelian-hero__cta">
         Book a Table
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </a>
     </div>
     <div class="aurelian-hero__scroll">
@@ -1276,11 +1303,7 @@
   <section class="aurelian-section" id="aurelianAbout">
     <div class="aurelian-about">
       <div class="aurelian-about__image-wrapper aurelian-reveal">
-        <img 
-          src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80" 
-          alt="Aurelian restaurant interior showing elegant dining area with warm lighting"
-          loading="lazy"
-        />
+        <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&amp;q=80" alt="Aurelian restaurant interior showing elegant dining area with warm lighting" loading="lazy">
         <div class="aurelian-about__image-overlay aurelian-glass">
           <span>25+</span>
           <small>Years of Excellence</small>
@@ -1289,7 +1312,7 @@
       <div class="aurelian-about__text aurelian-reveal">
         <p class="aurelian-section__subtitle" style="text-align:left; margin-bottom: 0.5rem;">Our Story</p>
         <h2>A Legacy of <span class="aurelian-about__accent">Culinary</span> Passion</h2>
-        <hr class="aurelian-section__divider" style="margin-left:0;" />
+        <hr class="aurelian-section__divider" style="margin-left:0;">
         <p>
           Founded in 1998 by Chef Antoine Beaumont, Aurelian has become a beacon of gastronomic excellence in the heart of the city. Our philosophy is simple — source the finest ingredients, honor traditional techniques, and create unforgettable moments at every table.
         </p>
@@ -1320,7 +1343,7 @@
   <section class="aurelian-section" id="aurelianMenu">
     <p class="aurelian-section__subtitle aurelian-reveal">Curated Selection</p>
     <h2 class="aurelian-section__title aurelian-reveal">Our <span style="color:var(--accent); font-style:italic;">Menu</span></h2>
-    <hr class="aurelian-section__divider aurelian-reveal" />
+    <hr class="aurelian-section__divider aurelian-reveal">
 
     <!-- Filter buttons -->
     <div class="aurelian-menu__filters aurelian-reveal">
@@ -1448,31 +1471,31 @@
   <section class="aurelian-section" id="aurelianGallery">
     <p class="aurelian-section__subtitle aurelian-reveal">Visual Journey</p>
     <h2 class="aurelian-section__title aurelian-reveal">The <span style="color:var(--accent); font-style:italic;">Gallery</span></h2>
-    <hr class="aurelian-section__divider aurelian-reveal" />
+    <hr class="aurelian-section__divider aurelian-reveal">
 
     <div class="aurelian-gallery__grid aurelian-reveal">
       <div class="aurelian-gallery__item" data-caption="The Dining Room">
-        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80" alt="Elegant restaurant dining room with warm ambient lighting" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&amp;q=80" alt="Elegant restaurant dining room with warm ambient lighting" loading="lazy">
         <div class="aurelian-gallery__item-overlay"><span>The Dining Room</span></div>
       </div>
       <div class="aurelian-gallery__item" data-caption="Signature Plating">
-        <img src="https://images.unsplash.com/photo-1546039907-7fa05f864c02?w=600&q=80" alt="Beautifully plated fine dining dish" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1546039907-7fa05f864c02?w=600&amp;q=80" alt="Beautifully plated fine dining dish" loading="lazy">
         <div class="aurelian-gallery__item-overlay"><span>Signature Plating</span></div>
       </div>
       <div class="aurelian-gallery__item" data-caption="Our Cellar">
-        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80" alt="Wine cellar with vintage bottles" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&amp;q=80" alt="Wine cellar with vintage bottles" loading="lazy">
         <div class="aurelian-gallery__item-overlay"><span>Our Cellar</span></div>
       </div>
       <div class="aurelian-gallery__item" data-caption="Pastry Artistry">
-        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&q=80" alt="Artisan pastry dessert creation" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&amp;q=80" alt="Artisan pastry dessert creation" loading="lazy">
         <div class="aurelian-gallery__item-overlay"><span>Pastry Artistry</span></div>
       </div>
       <div class="aurelian-gallery__item" data-caption="Fresh Ingredients">
-        <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=600&q=80" alt="Fresh seasonal ingredients arrangement" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=600&amp;q=80" alt="Fresh seasonal ingredients arrangement" loading="lazy">
         <div class="aurelian-gallery__item-overlay"><span>Fresh Ingredients</span></div>
       </div>
       <div class="aurelian-gallery__item" data-caption="The Bar">
-        <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=600&q=80" alt="Stylish cocktail bar area" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=600&amp;q=80" alt="Stylish cocktail bar area" loading="lazy">
         <div class="aurelian-gallery__item-overlay"><span>The Bar</span></div>
       </div>
     </div>
@@ -1484,7 +1507,7 @@
   <section class="aurelian-section" id="aurelianContact">
     <p class="aurelian-section__subtitle aurelian-reveal">Get in Touch</p>
     <h2 class="aurelian-section__title aurelian-reveal">Reserve Your <span style="color:var(--accent); font-style:italic;">Experience</span></h2>
-    <hr class="aurelian-section__divider aurelian-reveal" />
+    <hr class="aurelian-section__divider aurelian-reveal">
 
     <div class="aurelian-contact aurelian-reveal">
       <!-- Info card -->
@@ -1531,21 +1554,21 @@
           <div class="aurelian-form__row">
             <div class="aurelian-form__group">
               <label for="aurelianName">Full Name</label>
-              <input type="text" id="aurelianName" placeholder="John Doe" required />
+              <input type="text" id="aurelianName" placeholder="John Doe" required="">
             </div>
             <div class="aurelian-form__group">
               <label for="aurelianEmail">Email</label>
-              <input type="email" id="aurelianEmail" placeholder="john@example.com" required />
+              <input type="email" id="aurelianEmail" placeholder="john@example.com" required="">
             </div>
           </div>
           <div class="aurelian-form__row">
             <div class="aurelian-form__group">
               <label for="aurelianDate">Preferred Date</label>
-              <input type="date" id="aurelianDate" required />
+              <input type="date" id="aurelianDate" required="">
             </div>
             <div class="aurelian-form__group">
               <label for="aurelianGuests">Guests</label>
-              <input type="number" id="aurelianGuests" placeholder="2" min="1" max="20" required />
+              <input type="number" id="aurelianGuests" placeholder="2" min="1" max="20" required="">
             </div>
           </div>
           <div class="aurelian-form__group">
@@ -1569,16 +1592,16 @@
       </div>
       <div class="aurelian-footer__social">
         <a href="#" class="aurelian-footer__social-link" aria-label="Instagram" title="Instagram">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
         </a>
         <a href="#" class="aurelian-footer__social-link" aria-label="Facebook" title="Facebook">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
         </a>
         <a href="#" class="aurelian-footer__social-link" aria-label="Twitter / X" title="Twitter / X">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"></path><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>
         </a>
         <a href="#" class="aurelian-footer__social-link" aria-label="TripAdvisor" title="TripAdvisor">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="13.5" r="3.5"/><circle cx="17.5" cy="13.5" r="3.5"/><path d="M3 13.5A9.5 9.5 0 0 1 12 4a9.5 9.5 0 0 1 9 9.5"/><circle cx="6.5" cy="13.5" r="1.5"/><circle cx="17.5" cy="13.5" r="1.5"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="13.5" r="3.5"></circle><circle cx="17.5" cy="13.5" r="3.5"></circle><path d="M3 13.5A9.5 9.5 0 0 1 12 4a9.5 9.5 0 0 1 9 9.5"></path><circle cx="6.5" cy="13.5" r="1.5"></circle><circle cx="17.5" cy="13.5" r="1.5"></circle></svg>
         </a>
       </div>
       <p class="aurelian-footer__copyright">
@@ -1590,7 +1613,7 @@
   <!-- Lightbox for gallery -->
   <div class="aurelian-lightbox" id="aurelianLightbox">
     <button class="aurelian-lightbox__close" id="aurelianLightboxClose" aria-label="Close lightbox">✕</button>
-    <img src="" alt="Gallery enlarged view" id="aurelianLightboxImg" />
+    <img src="" alt="Gallery enlarged view" id="aurelianLightboxImg">
   </div>
 
   <!-- ===========================
@@ -1893,5 +1916,5 @@
 
     })();
   </script>
-</body>
-</html>
+
+</body></html>

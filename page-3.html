@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FORGE FITNESS | Build Your Strongest Self</title>
@@ -1141,24 +1139,54 @@
 
     <!-- Navigation -->
     <nav class="nav" id="nav">
-        <div class="container nav-content">
-            <a href="#" class="logo">FORGE</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#trainers">Trainers</a></li>
-                <li><a href="#testimonials">Reviews</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="theme-toggle" id="themeToggle" role="button" aria-label="Toggle theme"></div>
-            <div class="mobile-menu-btn" id="mobileMenuBtn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="logo.png" alt="Mob Timer" width="28" height="28">
+          <span>Mob Timer</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
+      </div>
+
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
+          <li><a href="#mob-programming">Mob Programming</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
+          </a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
@@ -1283,7 +1311,7 @@
                     <ul class="pricing-features">
                         <li>Everything in Basic</li>
                         <li>All group classes</li>
-                        <li>Sauna & steam room</li>
+                        <li>Sauna &amp; steam room</li>
                         <li>2 PT sessions/month</li>
                         <li>Nutrition consultation</li>
                     </ul>
@@ -1315,7 +1343,7 @@
                 <div class="glass-card trainer-card fade-in stagger-1">
                     <div class="trainer-image">🏋️</div>
                     <h3>Marcus Chen</h3>
-                    <div class="trainer-specialty">Strength & Conditioning</div>
+                    <div class="trainer-specialty">Strength &amp; Conditioning</div>
                     <p>Former Olympic weightlifter with 12+ years coaching experience. Specializes in powerlifting and functional strength.</p>
                     <div class="trainer-socials">
                         <a href="#">📷</a>
@@ -1326,7 +1354,7 @@
                 <div class="glass-card trainer-card fade-in stagger-2">
                     <div class="trainer-image">🧘</div>
                     <h3>Sarah Mitchell</h3>
-                    <div class="trainer-specialty">Yoga & Mobility</div>
+                    <div class="trainer-specialty">Yoga &amp; Mobility</div>
                     <p>Certified yoga instructor and movement specialist. Helps clients improve flexibility and prevent injuries.</p>
                     <div class="trainer-socials">
                         <a href="#">📷</a>
@@ -1337,7 +1365,7 @@
                 <div class="glass-card trainer-card fade-in stagger-3">
                     <div class="trainer-image">⚡</div>
                     <h3>Jake Rodriguez</h3>
-                    <div class="trainer-specialty">HIIT & Weight Loss</div>
+                    <div class="trainer-specialty">HIIT &amp; Weight Loss</div>
                     <p>High-energy trainer focused on helping clients shred fat and build lean muscle through metabolic conditioning.</p>
                     <div class="trainer-socials">
                         <a href="#">📷</a>
@@ -1420,15 +1448,15 @@
                     <form id="contactForm">
                         <div class="form-group">
                             <label for="name">Your Name</label>
-                            <input type="text" id="name" name="name" placeholder="John Doe" required>
+                            <input type="text" id="name" name="name" placeholder="John Doe" required="">
                         </div>
                         <div class="form-group">
                             <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                            <input type="email" id="email" name="email" placeholder="john@example.com" required="">
                         </div>
                         <div class="form-group">
                             <label for="message">Your Message</label>
-                            <textarea id="message" name="message" placeholder="Tell us about your fitness goals..." required></textarea>
+                            <textarea id="message" name="message" placeholder="Tell us about your fitness goals..." required=""></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Send Message →</button>
                     </form>
@@ -1460,10 +1488,10 @@
                         <div class="info-content">
                             <h4>Opening Hours</h4>
                             <table class="hours-table">
-                                <tr><td>Monday - Friday</td><td>5:00 AM - 11:00 PM</td></tr>
+                                <tbody><tr><td>Monday - Friday</td><td>5:00 AM - 11:00 PM</td></tr>
                                 <tr><td>Saturday</td><td>6:00 AM - 10:00 PM</td></tr>
                                 <tr><td>Sunday</td><td>7:00 AM - 8:00 PM</td></tr>
-                            </table>
+                            </tbody></table>
                         </div>
                     </div>
                 </div>
@@ -1718,5 +1746,5 @@
             'color: #00f0ff; font-size: 14px;'
         );
     </script>
-</body>
-</html>
+
+</body></html>

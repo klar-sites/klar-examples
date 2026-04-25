@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Elena Vale — Freelance Graphic & UI Designer</title>
-  <meta
-    name="description"
-    content="Personal portfolio site for a freelance graphic and UI designer featuring portfolio categories, services, testimonials, blog, and contact."
-  />
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elena Vale — Freelance Graphic &amp; UI Designer</title>
+  <meta name="description" content="Personal portfolio site for a freelance graphic and UI designer featuring portfolio categories, services, testimonials, blog, and contact.">
   <style>
     :root {
       --bg: #ffffff;
@@ -1273,29 +1268,56 @@
 
     <header class="portfolio-header">
       <div class="portfolio-container">
-        <nav class="portfolio-nav">
-          <a href="#home" class="portfolio-brand" aria-label="Elena Vale home">
-            <span class="portfolio-brand-mark">EV</span>
-            <span>Elena Vale Studio</span>
+        <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="logo.png" alt="Mob Timer" width="28" height="28">
+          <span>Mob Timer</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
+      </div>
+
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
+          <li><a href="#mob-programming">Mob Programming</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
           </a>
-
-          <button class="portfolio-mobile-toggle" id="portfolioMobileToggle" aria-label="Toggle navigation">
-            Menu
-          </button>
-
-          <div class="portfolio-menu" id="portfolioMenu">
-            <a href="#home" class="active">Home</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#services">Services</a>
-            <a href="#about">About</a>
-            <a href="#blog">Blog</a>
-            <a href="#contact">Contact</a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
           </div>
-
-          <div class="portfolio-header-actions">
-            <a href="#contact" class="portfolio-button">Work with me</a>
-          </div>
-        </nav>
+        </div>
+      </div>
+    </nav>
       </div>
     </header>
 
@@ -1304,7 +1326,7 @@
         <div class="portfolio-container">
           <div class="portfolio-hero-grid">
             <div class="portfolio-fade-up">
-              <div class="portfolio-eyebrow">Freelance Graphic & UI Designer</div>
+              <div class="portfolio-eyebrow">Freelance Graphic &amp; UI Designer</div>
               <h1 class="portfolio-title-xl">
                 I design clear brands and digital experiences that convert.
               </h1>
@@ -1367,7 +1389,7 @@
                     </div>
                     <div class="portfolio-mini-card">
                       <span class="portfolio-ui-label">Engagement</span>
-                      <h3 class="portfolio-title-sm" style="color:white;margin:0;">Clear messaging & smoother conversion</h3>
+                      <h3 class="portfolio-title-sm" style="color:white;margin:0;">Clear messaging &amp; smoother conversion</h3>
                       <div class="portfolio-mini-bar"><span></span></div>
                     </div>
                   </div>
@@ -1720,15 +1742,15 @@
                 Strategic identity systems that clarify positioning and give your business a distinctive visual voice.
               </p>
               <ul class="portfolio-service-list">
-                <li>Logo systems & visual direction</li>
+                <li>Logo systems &amp; visual direction</li>
                 <li>Typography and color palettes</li>
-                <li>Brand guidelines & asset kits</li>
+                <li>Brand guidelines &amp; asset kits</li>
               </ul>
             </article>
 
             <article class="portfolio-service-card portfolio-fade-up">
               <div class="portfolio-service-icon">02</div>
-              <h3 class="portfolio-title-sm">UI/UX & Product Design</h3>
+              <h3 class="portfolio-title-sm">UI/UX &amp; Product Design</h3>
               <p class="portfolio-text">
                 Interfaces that feel elegant, intuitive, and focused on measurable user outcomes.
               </p>
@@ -1741,7 +1763,7 @@
 
             <article class="portfolio-service-card portfolio-fade-up">
               <div class="portfolio-service-icon">03</div>
-              <h3 class="portfolio-title-sm">Web Design & Art Direction</h3>
+              <h3 class="portfolio-title-sm">Web Design &amp; Art Direction</h3>
               <p class="portfolio-text">
                 Story-driven websites and campaign visuals built to showcase your work and convert the right audience.
               </p>
@@ -1925,7 +1947,7 @@
               </p>
 
               <form class="portfolio-newsletter-form" id="portfolioNewsletterForm">
-                <input type="email" id="portfolioNewsletterEmail" placeholder="Your email address" required />
+                <input type="email" id="portfolioNewsletterEmail" placeholder="Your email address" required="">
                 <button type="submit" class="portfolio-button">Subscribe</button>
               </form>
               <div class="portfolio-feedback" id="portfolioNewsletterFeedback" aria-live="polite"></div>
@@ -1979,22 +2001,22 @@
               <form class="portfolio-contact-form" id="portfolioContactForm">
                 <div class="portfolio-field">
                   <label for="portfolioName">Name</label>
-                  <input type="text" id="portfolioName" name="name" placeholder="Your name" required />
+                  <input type="text" id="portfolioName" name="name" placeholder="Your name" required="">
                 </div>
 
                 <div class="portfolio-field">
                   <label for="portfolioEmail">Email</label>
-                  <input type="email" id="portfolioEmail" name="email" placeholder="you@company.com" required />
+                  <input type="email" id="portfolioEmail" name="email" placeholder="you@company.com" required="">
                 </div>
 
                 <div class="portfolio-field">
                   <label for="portfolioCompany">Company / Brand</label>
-                  <input type="text" id="portfolioCompany" name="company" placeholder="Brand or business name" />
+                  <input type="text" id="portfolioCompany" name="company" placeholder="Brand or business name">
                 </div>
 
                 <div class="portfolio-field">
                   <label for="portfolioWorkType">Type of Work</label>
-                  <select id="portfolioWorkType" name="workType" required>
+                  <select id="portfolioWorkType" name="workType" required="">
                     <option value="">Select a service</option>
                     <option>Brand Identity Design</option>
                     <option>UI/UX Design</option>
@@ -2006,7 +2028,7 @@
 
                 <div class="portfolio-field">
                   <label for="portfolioBudget">Budget</label>
-                  <select id="portfolioBudget" name="budget" required>
+                  <select id="portfolioBudget" name="budget" required="">
                     <option value="">Select a range</option>
                     <option>$2k – $5k</option>
                     <option>$5k – $10k</option>
@@ -2017,7 +2039,7 @@
 
                 <div class="portfolio-field">
                   <label for="portfolioTimeline">Timeline</label>
-                  <select id="portfolioTimeline" name="timeline" required>
+                  <select id="portfolioTimeline" name="timeline" required="">
                     <option value="">Select a timeline</option>
                     <option>ASAP</option>
                     <option>2–4 weeks</option>
@@ -2028,7 +2050,7 @@
 
                 <div class="portfolio-field full">
                   <label for="portfolioBrief">Project Brief</label>
-                  <textarea id="portfolioBrief" name="brief" placeholder="Tell me about your goals, audience, deliverables, and any context that would be helpful." required></textarea>
+                  <textarea id="portfolioBrief" name="brief" placeholder="Tell me about your goals, audience, deliverables, and any context that would be helpful." required=""></textarea>
                 </div>
 
                 <div class="portfolio-field full">
@@ -2200,5 +2222,5 @@
     window.addEventListener('scroll', portfolioSetActiveLink);
     window.addEventListener('load', portfolioSetActiveLink);
   </script>
-</body>
-</html>
+
+</body></html>

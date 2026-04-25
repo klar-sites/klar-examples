@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-  <head>
+<!DOCTYPE html><html lang="en" data-theme="dark"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <title>Mob Timer — Focus Timer for macOS</title>
-    <meta name="description"
-      content="A minimal macOS timer designed for deep focus and mob programming. Start instantly, stay focused, get notified.">
+    <meta name="description" content="A minimal macOS timer designed for deep focus and mob programming. Start instantly, stay focused, get notified.">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
   </head>
   <body>
     
@@ -784,49 +779,56 @@
       <div class="cryptix-hero-glow cryptix-hero-glow-1"></div>
       <div class="cryptix-hero-glow cryptix-hero-glow-2"></div>
 
-      <nav class="cryptix-navbar">
-        <div class="cryptix-navbar-inner">
-          <div class="cryptix-logo">
-            <div class="cryptix-logo-icon">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M14 0L26 7V21L14 28L2 21V7L14 0Z" fill="url(#logoGrad)" />
-                <path d="M14 4L22 8.5V17.5L14 22L6 17.5V8.5L14 4Z" fill="#0a0a0f" />
-                <path d="M14 8L18 10.3V14.7L14 17L10 14.7V10.3L14 8Z" fill="url(#logoGrad2)" />
-                <defs>
-                  <linearGradient id="logoGrad" x1="2" y1="0" x2="26" y2="28">
-                    <stop stop-color="#a855f7" />
-                    <stop offset="1" stop-color="#6366f1" />
-                  </linearGradient>
-                  <linearGradient id="logoGrad2" x1="10" y1="8" x2="18" y2="17">
-                    <stop stop-color="#a855f7" />
-                    <stop offset="1" stop-color="#6366f1" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-            <span class="cryptix-logo-text">Cryptix</span>
+      <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="logo.png" alt="Mob Timer" width="28" height="28">
+          <span>Mob Timer</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
+      </div>
+
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
+          <li><a href="#mob-programming">Mob Programming</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
+          </a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
           </div>
-
-          <ul class="cryptix-nav-links">
-            <li><a href="#" class="cryptix-nav-link">Features</a></li>
-            <li><a href="#" class="cryptix-nav-link">About</a></li>
-            <li><a href="#" class="cryptix-nav-link">Pricing</a></li>
-            <li><a href="#" class="cryptix-nav-link">Blog</a></li>
-            <li><a href="#" class="cryptix-nav-link">Contact</a></li>
-          </ul>
-
-          <div class="cryptix-nav-actions">
-            <a href="#" class="cryptix-nav-btn-secondary">Log In</a>
-            <a href="#" class="cryptix-nav-btn-primary">Get Started</a>
-          </div>
-
-          <button class="cryptix-mobile-toggle" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
         </div>
-      </nav>
+      </div>
+    </nav>
 
       <div class="cryptix-hero-content">
         <div class="cryptix-hero-badge">
@@ -837,7 +839,7 @@
         <h1 class="cryptix-hero-title">
           Trade Crypto with
           <br>
-          <span class="cryptix-hero-title-gradient">Confidence</span> & Speed
+          <span class="cryptix-hero-title-gradient">Confidence</span> &amp; Speed
         </h1>
 
         <p class="cryptix-hero-description">
@@ -849,14 +851,13 @@
           <a href="#" class="cryptix-hero-btn-primary">
             Start Trading Now
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="cryptix-btn-arrow">
-              <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
+              <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
           </a>
           <a href="#" class="cryptix-hero-btn-secondary">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" />
-              <path d="M6.5 5.5L11 8L6.5 10.5V5.5Z" fill="currentColor" />
+              <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"></circle>
+              <path d="M6.5 5.5L11 8L6.5 10.5V5.5Z" fill="currentColor"></path>
             </svg>
             Watch Demo
           </a>
@@ -902,7 +903,7 @@
             <span class="cryptix-balance-amount">$48,352.67</span>
             <span class="cryptix-balance-change">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M6 2L10 7H2L6 2Z" fill="#22c55e" />
+                <path d="M6 2L10 7H2L6 2Z" fill="#22c55e"></path>
               </svg>
               +12.5% this week
             </span>
@@ -912,16 +913,14 @@
             <svg class="cryptix-chart-svg" viewBox="0 0 500 120" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#a855f7" stop-opacity="0.3" />
-                  <stop offset="100%" stop-color="#a855f7" stop-opacity="0" />
+                  <stop offset="0%" stop-color="#a855f7" stop-opacity="0.3"></stop>
+                  <stop offset="100%" stop-color="#a855f7" stop-opacity="0"></stop>
                 </linearGradient>
               </defs>
-              <path d="M0,80 Q30,75 60,70 T120,55 T180,60 T240,35 T300,40 T360,20 T420,25 T500,10 V120 H0 Z"
-                fill="url(#chartGradient)" />
-              <path d="M0,80 Q30,75 60,70 T120,55 T180,60 T240,35 T300,40 T360,20 T420,25 T500,10" fill="none"
-                stroke="#a855f7" stroke-width="2.5" />
-              <circle cx="500" cy="10" r="4" fill="#a855f7" />
-              <circle cx="500" cy="10" r="8" fill="#a855f7" opacity="0.3" class="cryptix-chart-pulse" />
+              <path d="M0,80 Q30,75 60,70 T120,55 T180,60 T240,35 T300,40 T360,20 T420,25 T500,10 V120 H0 Z" fill="url(#chartGradient)"></path>
+              <path d="M0,80 Q30,75 60,70 T120,55 T180,60 T240,35 T300,40 T360,20 T420,25 T500,10" fill="none" stroke="#a855f7" stroke-width="2.5"></path>
+              <circle cx="500" cy="10" r="4" fill="#a855f7"></circle>
+              <circle cx="500" cy="10" r="8" fill="#a855f7" opacity="0.3" class="cryptix-chart-pulse"></circle>
             </svg>
           </div>
 
@@ -962,7 +961,7 @@
               </div>
               <div class="cryptix-crypto-price-info">
                 <span class="cryptix-crypto-price">
-                  <body>78.42
+                  78.42
                 </span>
                 <span class="cryptix-crypto-change positive">+8.91%</span>
               </div>
@@ -973,10 +972,8 @@
         <div class="cryptix-floating-card cryptix-float-card-1">
           <div class="cryptix-float-icon cryptix-float-icon-shield">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M10 1L18 5V10C18 14.4 14.6 18.4 10 19.5C5.4 18.4 2 14.4 2 10V5L10 1Z" stroke="#22c55e"
-                stroke-width="1.5" fill="none" />
-              <path d="M7 10L9 12L13 8" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
+              <path d="M10 1L18 5V10C18 14.4 14.6 18.4 10 19.5C5.4 18.4 2 14.4 2 10V5L10 1Z" stroke="#22c55e" stroke-width="1.5" fill="none"></path>
+              <path d="M7 10L9 12L13 8" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
           </div>
           <div>
@@ -988,7 +985,7 @@
         <div class="cryptix-floating-card cryptix-float-card-2">
           <div class="cryptix-float-icon cryptix-float-icon-bolt">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M11 1L3 11H10L9 19L17 9H10L11 1Z" fill="#eab308" />
+              <path d="M11 1L3 11H10L9 19L17 9H10L11 1Z" fill="#eab308"></path>
             </svg>
           </div>
           <div>
@@ -1115,7 +1112,7 @@
               turn it is.
             </p>
 
-            <div class="mob-steps" data-klar-list>
+            <div class="mob-steps" data-klar-list="">
               <div class="mob-step">
                 <div class="mob-step-num">1</div>
                 <div>
@@ -1144,7 +1141,7 @@
               </div>
             </div>
 
-            <div class="mob-tags" data-list><span class="mob-tag">Real-time sync</span>
+            <div class="mob-tags" data-list=""><span class="mob-tag">Real-time sync</span>
               <span class="mob-tag">Persistent named sessions</span>
               <span class="mob-tag">Auto-rotation</span>
             </div>
@@ -1172,8 +1169,7 @@
               <!-- Arrow -->
               <div class="flow-arrow">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round"></path>
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
               </div>
 
@@ -1278,8 +1274,7 @@
           <div class="feature-card feature-card-large">
             <div class="feature-icon">
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M11 3C7.134 3 4 6.134 4 10s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" stroke="currentColor"
-                  stroke-width="1.5"></path>
+                <path d="M11 3C7.134 3 4 6.134 4 10s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" stroke="currentColor" stroke-width="1.5"></path>
                 <path d="M11 7v4l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
               </svg>
             </div>
@@ -1322,10 +1317,8 @@
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M4 11a7 7 0 0 1 7-7M18 11a7 7 0 0 1-7 7" stroke="currentColor" stroke-width="1.5"
-                  stroke-linecap="round"></path>
-                <path d="M15 7l3-3 1 4-4-1M7 15l-3 3-1-4 4 1" stroke="currentColor" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M4 11a7 7 0 0 1 7-7M18 11a7 7 0 0 1-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                <path d="M15 7l3-3 1 4-4-1M7 15l-3 3-1-4 4 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
             </div>
             <h3>Turn Rotation</h3>
@@ -1412,8 +1405,7 @@
                 <div class="app-ring-container">
                   <svg viewBox="0 0 100 100" class="app-ring-svg">
                     <circle cx="50" cy="50" r="42" class="app-ring-track"></circle>
-                    <circle cx="50" cy="50" r="42" class="app-ring-progress" id="step-ring-progress"
-                      style="--progress: 0.5"></circle>
+                    <circle cx="50" cy="50" r="42" class="app-ring-progress" id="step-ring-progress" style="--progress: 0.5"></circle>
                   </svg>
                   <div class="app-ring-inner">
                     <div class="app-ring-name">GABRIEL</div>
@@ -1753,36 +1745,31 @@
               <ul class="compare-list">
                 <li class="compare-item good">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
+                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>
                   Minimal, focused UI
                 </li>
                 <li class="compare-item good">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
+                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>
                   Native SwiftUI app
                 </li>
                 <li class="compare-item good">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
+                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>
                   Free forever
                 </li>
                 <li class="compare-item good">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
+                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>
                   Real-time mob sync
                 </li>
                 <li class="compare-item good">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
+                    <path d="M1.5 7l4 4 7-7" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>
                   Designed for macOS
                 </li>
@@ -1801,8 +1788,7 @@
       <div class="container">
         <div class="cta-content">
           <div class="cta-icon">
-            <img src="logo-large.png" alt="Mob Timer" width="72" height="72"
-              style="filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5))">
+            <img src="logo-large.png" alt="Mob Timer" width="72" height="72" style="filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5))">
           </div>
           <h2 class="cta-title">Start focusing today.</h2>
           <p class="cta-subtitle">
@@ -1810,8 +1796,7 @@
           </p>
           <a href="#" id="download-btn" class="btn btn-cta">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M9 1v11M4 8l5 5 5-5M2 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round"></path>
+              <path d="M9 1v11M4 8l5 5 5-5M2 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
             Download Mob Timer for macOS
           </a>
@@ -2116,8 +2101,7 @@
             <div class="contact-details">
               <div class="contact-detail-item">
                 <div class="contact-detail-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                   </svg>
@@ -2129,8 +2113,7 @@
               </div>
               <div class="contact-detail-item">
                 <div class="contact-detail-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
                     <circle cx="12" cy="9" r="2.5"></circle>
                   </svg>
@@ -2142,8 +2125,7 @@
               </div>
               <div class="contact-detail-item">
                 <div class="contact-detail-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
@@ -2173,20 +2155,17 @@
               </div>
               <div class="form-group">
                 <label class="form-label" for="contact-message">Message</label>
-                <textarea class="form-input form-textarea" id="contact-message" rows="5" placeholder="Tell us more..."
-                  required=""></textarea>
+                <textarea class="form-input form-textarea" id="contact-message" rows="5" placeholder="Tell us more..." required=""></textarea>
               </div>
               <button type="submit" class="btn btn-primary btn-lg contact-submit">
                 <span class="contact-submit-text">Send Message</span>
-                <svg class="contact-submit-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="contact-submit-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13"></line>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                 </svg>
               </button>
               <div id="contact-success" class="contact-success">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
@@ -2237,5 +2216,5 @@
 
 
 
-  </body>
-</html>
+  
+</body></html>

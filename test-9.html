@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AURA | Luminous Gastronomy</title>
     
     <!-- Google Fonts: Playfair Display for elegance, Montserrat for modern legibility -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&amp;family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet">
 
     <style>
         /* --- CSS VARIABLES & THEME SETUP --- */
@@ -408,22 +406,59 @@
 
     <!-- Fixed Hero Image Background -->
     <div class="hero-bg-wrapper">
-        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2600&auto=format&fit=crop" alt="Restaurant Ambiance">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&amp;w=2600&amp;auto=format&amp;fit=crop" alt="Restaurant Ambiance">
     </div>
 
     <!-- Navigation -->
-    <nav id="navbar">
-        <div class="container nav-inner">
-            <a href="#" class="logo">AURA</a>
-            <button class="menu-toggle" aria-label="Toggle Menu">☰</button>
-            <ul class="nav-links">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#about">Philosophy</a></li>
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#gallery">Atmosphere</a></li>
-                <li><a href="#contact">Reservations</a></li>
-            </ul>
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="logo.png" alt="Mob Timer" width="28" height="28">
+          <span>Mob Timer</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
+      </div>
+
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
+          <li><a href="#mob-programming">Mob Programming</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
+          </a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
@@ -449,8 +484,8 @@
                     <p>Designed around the concept of transparency and light, our glasshouse sanctuary strips away the superfluous, allowing the raw beauty of the ingredients and the mastery of technique to take center stage.</p>
                 </div>
                 <div class="about-images fade-up delay-1">
-                    <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=1200&auto=format&fit=crop" alt="Chef plating" class="about-img about-img-1">
-                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1200&auto=format&fit=crop" alt="Fine dining dish" class="about-img about-img-2 glass">
+                    <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&amp;w=1200&amp;auto=format&amp;fit=crop" alt="Chef plating" class="about-img about-img-1">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&amp;w=1200&amp;auto=format&amp;fit=crop" alt="Fine dining dish" class="about-img about-img-2 glass">
                 </div>
             </div>
         </div>
@@ -466,7 +501,7 @@
                 <!-- Item 1 -->
                 <article class="menu-item glass fade-up">
                     <div class="menu-header">
-                        <h3 class="menu-title">Wagyu & Pearl</h3>
+                        <h3 class="menu-title">Wagyu &amp; Pearl</h3>
                         <span class="menu-price">$85</span>
                     </div>
                     <p class="menu-desc">A5 Miyazaki Wagyu, white truffle emulsion, Beluga caviar, smoked sea salt.</p>
@@ -528,23 +563,23 @@
             
             <div class="gallery-wrap">
                 <div class="gallery-item fade-up">
-                    <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=1200&auto=format&fit=crop" alt="Interior Details">
+                    <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&amp;w=1200&amp;auto=format&amp;fit=crop" alt="Interior Details">
                     <div class="gallery-overlay"><span class="gallery-icon">+</span></div>
                 </div>
                 <div class="gallery-item fade-up delay-1">
-                    <img src="https://images.unsplash.com/photo-1623916972410-b1d5c225a652?q=80&w=1200&auto=format&fit=crop" alt="Wine Pour">
+                    <img src="https://images.unsplash.com/photo-1623916972410-b1d5c225a652?q=80&amp;w=1200&amp;auto=format&amp;fit=crop" alt="Wine Pour">
                     <div class="gallery-overlay"><span class="gallery-icon">+</span></div>
                 </div>
                 <div class="gallery-item fade-up delay-2">
-                    <img src="https://images.unsplash.com/photo-1505826759037-406b40feb4cd?q=80&w=1200&auto=format&fit=crop" alt="Cocktail">
+                    <img src="https://images.unsplash.com/photo-1505826759037-406b40feb4cd?q=80&amp;w=1200&amp;auto=format&amp;fit=crop" alt="Cocktail">
                     <div class="gallery-overlay"><span class="gallery-icon">+</span></div>
                 </div>
                 <div class="gallery-item fade-up">
-                    <img src="https://images.unsplash.com/photo-1514361892635-6b07e31e75f3?q=80&w=1200&auto=format&fit=crop" alt="Table Setting">
+                    <img src="https://images.unsplash.com/photo-1514361892635-6b07e31e75f3?q=80&amp;w=1200&amp;auto=format&amp;fit=crop" alt="Table Setting">
                     <div class="gallery-overlay"><span class="gallery-icon">+</span></div>
                 </div>
                 <div class="gallery-item fade-up delay-1">
-                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop" alt="Exquisite Dish">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&amp;w=1200&amp;auto=format&amp;fit=crop" alt="Exquisite Dish">
                     <div class="gallery-overlay"><span class="gallery-icon">+</span></div>
                 </div>
             </div>
@@ -576,16 +611,16 @@
                 <div class="contact-form-wrap glass fade-up delay-1">
                     <form action="#" onsubmit="event.preventDefault(); alert('Reservation request sent. We will confirm shortly.');">
                         <div class="form-group">
-                            <input type="text" id="name" class="form-control" placeholder=" " required>
+                            <input type="text" id="name" class="form-control" placeholder=" " required="">
                             <label for="name" class="form-label">Full Name</label>
                         </div>
                         <div class="form-group">
-                            <input type="email" id="email" class="form-control" placeholder=" " required>
+                            <input type="email" id="email" class="form-control" placeholder=" " required="">
                             <label for="email" class="form-label">Email Address</label>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="datetime" class="form-control" placeholder=" " required>
-                            <label for="datetime" class="form-label">Date & Time / Party Size</label>
+                            <input type="text" id="datetime" class="form-control" placeholder=" " required="">
+                            <label for="datetime" class="form-label">Date &amp; Time / Party Size</label>
                         </div>
                         <div class="form-group">
                             <textarea id="message" class="form-control" placeholder=" "></textarea>
@@ -691,5 +726,5 @@
 
         });
     </script>
-</body>
-</html>
+
+</body></html>

@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexova — Strategic Digital Solutions</title>
@@ -1167,25 +1165,55 @@
 <body>
 
     <!-- ========== NAVIGATION ========== -->
-    <nav class="nexova-navbar" id="nexovaNavbar">
-        <div class="nexova-navbar__container">
-            <a href="#" class="nexova-navbar__logo">
-                <span class="nexova-navbar__logo-icon"><i class="fas fa-bolt"></i></span>
-                Nexova
-            </a>
-            <ul class="nexova-navbar__links" id="nexovaNavLinks">
-                <li><a href="#nexova-services">Services</a></li>
-                <li><a href="#nexova-stats">Results</a></li>
-                <li><a href="#nexova-team">Team</a></li>
-                <li><a href="#nexova-footer">Contact</a></li>
-                <li><a href="#" class="nexova-navbar__cta">Get Started</a></li>
-            </ul>
-            <button class="nexova-navbar__hamburger" id="nexovaHamburger" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="logo.png" alt="Mob Timer" width="28" height="28">
+          <span>Mob Timer</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
+      </div>
+
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
+          <li><a href="#mob-programming">Mob Programming</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
+          </a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- ========== HERO ========== -->
@@ -1267,7 +1295,7 @@
                         <ul class="nexova-tabs__features">
                             <li><i class="fas fa-check"></i> Digital transformation strategy</li>
                             <li><i class="fas fa-check"></i> Technology stack assessment</li>
-                            <li><i class="fas fa-check"></i> Process optimization & automation</li>
+                            <li><i class="fas fa-check"></i> Process optimization &amp; automation</li>
                             <li><i class="fas fa-check"></i> Change management support</li>
                         </ul>
                     </div>
@@ -1290,8 +1318,8 @@
                         <p>We conduct deep-dive audits across your digital ecosystem — from infrastructure security to UX performance — delivering actionable insights that reduce risk and improve efficiency.</p>
                         <ul class="nexova-tabs__features">
                             <li><i class="fas fa-check"></i> Security vulnerability assessment</li>
-                            <li><i class="fas fa-check"></i> Performance & scalability audit</li>
-                            <li><i class="fas fa-check"></i> Compliance & regulatory review</li>
+                            <li><i class="fas fa-check"></i> Performance &amp; scalability audit</li>
+                            <li><i class="fas fa-check"></i> Compliance &amp; regulatory review</li>
                             <li><i class="fas fa-check"></i> UX/UI heuristic evaluation</li>
                         </ul>
                     </div>
@@ -1299,7 +1327,7 @@
                         <div class="nexova-tabs__visual-card">
                             <div class="nexova-tabs__visual-card-icon" style="background: linear-gradient(135deg, #06B6D4, #22D3EE)"><i class="fas fa-shield-alt"></i></div>
                             <h4>Security Rating</h4>
-                            <p>Real-time vulnerability & compliance tracking</p>
+                            <p>Real-time vulnerability &amp; compliance tracking</p>
                             <div class="nexova-tabs__visual-bar">
                                 <div class="nexova-tabs__visual-bar-fill" style="--fill-width: 92%"></div>
                             </div>
@@ -1313,17 +1341,17 @@
                         <h3>Custom Development</h3>
                         <p>From MVPs to enterprise platforms, our engineering team builds robust, scalable solutions using modern technologies and agile methodologies tailored to your unique requirements.</p>
                         <ul class="nexova-tabs__features">
-                            <li><i class="fas fa-check"></i> Full-stack web & mobile development</li>
+                            <li><i class="fas fa-check"></i> Full-stack web &amp; mobile development</li>
                             <li><i class="fas fa-check"></i> Cloud-native architecture</li>
-                            <li><i class="fas fa-check"></i> API design & integration</li>
-                            <li><i class="fas fa-check"></i> CI/CD & DevOps automation</li>
+                            <li><i class="fas fa-check"></i> API design &amp; integration</li>
+                            <li><i class="fas fa-check"></i> CI/CD &amp; DevOps automation</li>
                         </ul>
                     </div>
                     <div class="nexova-tabs__panel-visual">
                         <div class="nexova-tabs__visual-card">
                             <div class="nexova-tabs__visual-card-icon" style="background: linear-gradient(135deg, #A855F7, #C084FC)"><i class="fas fa-code"></i></div>
                             <h4>Sprint Velocity</h4>
-                            <p>Development progress & deployment frequency</p>
+                            <p>Development progress &amp; deployment frequency</p>
                             <div class="nexova-tabs__visual-bar">
                                 <div class="nexova-tabs__visual-bar-fill" style="--fill-width: 78%"></div>
                             </div>
@@ -1337,17 +1365,17 @@
                         <h3>Growth Marketing</h3>
                         <p>Data-driven marketing strategies that attract, convert, and retain customers. We blend creativity with analytics to maximize your ROI across every digital channel.</p>
                         <ul class="nexova-tabs__features">
-                            <li><i class="fas fa-check"></i> SEO & content marketing</li>
-                            <li><i class="fas fa-check"></i> Paid media & PPC management</li>
-                            <li><i class="fas fa-check"></i> Marketing automation & CRM</li>
-                            <li><i class="fas fa-check"></i> Analytics & conversion optimization</li>
+                            <li><i class="fas fa-check"></i> SEO &amp; content marketing</li>
+                            <li><i class="fas fa-check"></i> Paid media &amp; PPC management</li>
+                            <li><i class="fas fa-check"></i> Marketing automation &amp; CRM</li>
+                            <li><i class="fas fa-check"></i> Analytics &amp; conversion optimization</li>
                         </ul>
                     </div>
                     <div class="nexova-tabs__panel-visual">
                         <div class="nexova-tabs__visual-card">
                             <div class="nexova-tabs__visual-card-icon" style="background: linear-gradient(135deg, #22C55E, #4ADE80)"><i class="fas fa-chart-line"></i></div>
                             <h4>Growth Rate</h4>
-                            <p>Monthly traffic & conversion improvements</p>
+                            <p>Monthly traffic &amp; conversion improvements</p>
                             <div class="nexova-tabs__visual-bar">
                                 <div class="nexova-tabs__visual-bar-fill" style="--fill-width: 88%"></div>
                             </div>
@@ -1494,7 +1522,7 @@
                         <li><a href="#">Consulting</a></li>
                         <li><a href="#">Development</a></li>
                         <li><a href="#">Cloud Services</a></li>
-                        <li><a href="#">AI & Analytics</a></li>
+                        <li><a href="#">AI &amp; Analytics</a></li>
                         <li><a href="#">Cybersecurity</a></li>
                     </ul>
                 </div>
@@ -1523,7 +1551,7 @@
             </div>
 
             <div class="nexova-footer__bottom">
-                <p>&copy; 2025 Nexova. All rights reserved.</p>
+                <p>© 2025 Nexova. All rights reserved.</p>
                 <div class="nexova-footer__bottom-links">
                     <a href="#">Privacy</a>
                     <a href="#">Terms</a>
@@ -1717,5 +1745,5 @@
             });
         });
     </script>
-</body>
-</html>
+
+</body></html>

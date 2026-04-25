@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elara Clinic — Specialists in Shoulder & Hand Surgery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Elara Clinic — Specialists in Shoulder &amp; Hand Surgery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&amp;display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -1219,33 +1217,64 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="elara-nav" id="elaraNav">
-        <div class="elara-nav__container">
-            <a href="#" class="elara-nav__logo">
-                <span class="elara-nav__logo-accent">Elara</span> Clinic<span class="elara-nav__logo-dot"></span>
-            </a>
-            <ul class="elara-nav__links">
-                <li><a href="#about" class="elara-nav__link">About</a></li>
-                <li><a href="#services" class="elara-nav__link">Services</a></li>
-                <li><a href="#why" class="elara-nav__link">Why Us</a></li>
-                <li><a href="#testimonials" class="elara-nav__link">Testimonials</a></li>
-                <li><a href="#contact" class="elara-nav__cta">Book Consultation</a></li>
-            </ul>
-            <button class="elara-nav__mobile-toggle" id="elaraMobileToggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="logo.png" alt="Mob Timer" width="28" height="28">
+          <span>Mob Timer</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
+      </div>
+
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
+          <li><a href="#mob-programming">Mob Programming</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
+          </a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- Mobile Menu -->
     <div class="elara-mobile-menu" id="elaraMobileMenu">
-        <a href="#about" class="elara-mobile-menu__link" data-mobile-link>About</a>
-        <a href="#services" class="elara-mobile-menu__link" data-mobile-link>Services</a>
-        <a href="#why" class="elara-mobile-menu__link" data-mobile-link>Why Us</a>
-        <a href="#testimonials" class="elara-mobile-menu__link" data-mobile-link>Testimonials</a>
-        <a href="#contact" class="elara-mobile-menu__link" data-mobile-link>Book Consultation</a>
+        <a href="#about" class="elara-mobile-menu__link" data-mobile-link="">About</a>
+        <a href="#services" class="elara-mobile-menu__link" data-mobile-link="">Services</a>
+        <a href="#why" class="elara-mobile-menu__link" data-mobile-link="">Why Us</a>
+        <a href="#testimonials" class="elara-mobile-menu__link" data-mobile-link="">Testimonials</a>
+        <a href="#contact" class="elara-mobile-menu__link" data-mobile-link="">Book Consultation</a>
     </div>
 
     <!-- Hero -->
@@ -1256,7 +1285,7 @@
                 Private Specialist Clinic
             </div>
             <h1 class="elara-hero__title elara-fade-up elara-fade-up--d1">
-                Specialists in<br><strong>Shoulder</strong> & <strong><em>Hand</em></strong> Surgery
+                Specialists in<br><strong>Shoulder</strong> &amp; <strong><em>Hand</em></strong> Surgery
             </h1>
             <p class="elara-hero__description elara-fade-up elara-fade-up--d2">
                 Exceptional surgical care delivered with precision and compassion. 
@@ -1394,7 +1423,7 @@
                             <path d="M6 14l-1.5-1.5a2 2 0 0 0-3 0 2 2 0 0 0 0 3L6 20"></path>
                         </svg>
                     </div>
-                    <h3 class="elara-service-card__title">Hand & Wrist Surgery</h3>
+                    <h3 class="elara-service-card__title">Hand &amp; Wrist Surgery</h3>
                     <p class="elara-service-card__description">
                         Carpal tunnel release, tendon repair, Dupuytren's treatment, fracture fixation, 
                         and microsurgery. Precision care for complex hand conditions.
@@ -1624,17 +1653,17 @@
                         <div class="elara-contact__form-row">
                             <div class="elara-form-group">
                                 <label class="elara-form-group__label" for="elaraFirstName">First Name</label>
-                                <input class="elara-form-group__input" type="text" id="elaraFirstName" placeholder="John" required>
+                                <input class="elara-form-group__input" type="text" id="elaraFirstName" placeholder="John" required="">
                             </div>
                             <div class="elara-form-group">
                                 <label class="elara-form-group__label" for="elaraLastName">Last Name</label>
-                                <input class="elara-form-group__input" type="text" id="elaraLastName" placeholder="Smith" required>
+                                <input class="elara-form-group__input" type="text" id="elaraLastName" placeholder="Smith" required="">
                             </div>
                         </div>
                         <div class="elara-contact__form-row">
                             <div class="elara-form-group">
                                 <label class="elara-form-group__label" for="elaraEmail">Email</label>
-                                <input class="elara-form-group__input" type="email" id="elaraEmail" placeholder="john@example.com" required>
+                                <input class="elara-form-group__input" type="email" id="elaraEmail" placeholder="john@example.com" required="">
                             </div>
                             <div class="elara-form-group">
                                 <label class="elara-form-group__label" for="elaraPhone">Phone</label>
@@ -1644,9 +1673,9 @@
                         <div class="elara-form-group">
                             <label class="elara-form-group__label" for="elaraService">Area of Concern</label>
                             <select class="elara-form-group__select" id="elaraService">
-                                <option value="" disabled selected>Select a specialty</option>
+                                <option value="" disabled="" selected="">Select a specialty</option>
                                 <option value="shoulder">Shoulder</option>
-                                <option value="hand">Hand & Wrist</option>
+                                <option value="hand">Hand &amp; Wrist</option>
                                 <option value="elbow">Elbow</option>
                                 <option value="sports">Sports Injury</option>
                                 <option value="other">Other / Not Sure</option>
@@ -1672,7 +1701,7 @@
     <!-- Footer -->
     <footer class="elara-footer">
         <div class="elara-footer__container">
-            <p class="elara-footer__copy">&copy; 2024 Elara Clinic. All rights reserved.</p>
+            <p class="elara-footer__copy">© 2024 Elara Clinic. All rights reserved.</p>
             <div class="elara-footer__links">
                 <a href="#" class="elara-footer__link">Privacy Policy</a>
                 <a href="#" class="elara-footer__link">Terms of Service</a>
@@ -1789,5 +1818,5 @@
             });
         })();
     </script>
-</body>
-</html>
+
+</body></html>

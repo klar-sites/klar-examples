@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aurelia Clinic — Shoulder & Hand Specialists</title>
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurelia Clinic — Shoulder &amp; Hand Specialists</title>
 
     <!-- Distinctive modern sans-serif pairing -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Sora:wght@500;600;700&amp;display=swap" rel="stylesheet">
 
     <style>
       :root {
@@ -494,20 +489,54 @@
     <div class="aurelia-bg-orb aurelia-bg-orb--three"></div>
 
     <!-- Navigation -->
-    <nav class="aurelia-nav" id="aureliaNav">
-      <div class="aurelia-container aurelia-nav__inner">
-        <a href="#hero" class="aurelia-brand">
-          <span class="aurelia-brand__mark" aria-hidden="true"></span>
-          Aurelia Private Clinic
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="logo.png" alt="Mob Timer" width="28" height="28">
+          <span>Mob Timer</span>
         </a>
-        <div class="aurelia-nav__links">
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#why">Why Us</a>
-          <a href="#testimonials">Testimonials</a>
-          <a href="#contact">Contact</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
+      </div>
+
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
+          <li><a href="#mob-programming">Mob Programming</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
+          </a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
+          </div>
         </div>
-        <a href="#contact" class="aurelia-nav__cta">Book</a>
       </div>
     </nav>
 
@@ -560,7 +589,7 @@
             <article class="aurelia-service-card aurelia-glass reveal">
               <div class="aurelia-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                  <path d="M8 5c0 2 2 3 4 3s4-1 4-3M12 8v11M9 19h6" />
+                  <path d="M8 5c0 2 2 3 4 3s4-1 4-3M12 8v11M9 19h6"></path>
                 </svg>
               </div>
               <h3>Shoulder Injuries</h3>
@@ -570,7 +599,7 @@
             <article class="aurelia-service-card aurelia-glass reveal">
               <div class="aurelia-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                  <path d="M7 12V7a2 2 0 114 0v5M11 12V6a2 2 0 114 0v6M15 12V8a2 2 0 114 0v8a5 5 0 01-5 5h-2a7 7 0 01-7-7v-2a2 2 0 114 0v2" />
+                  <path d="M7 12V7a2 2 0 114 0v5M11 12V6a2 2 0 114 0v6M15 12V8a2 2 0 114 0v8a5 5 0 01-5 5h-2a7 7 0 01-7-7v-2a2 2 0 114 0v2"></path>
                 </svg>
               </div>
               <h3>Hand Injuries</h3>
@@ -580,8 +609,8 @@
             <article class="aurelia-service-card aurelia-glass reveal">
               <div class="aurelia-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                  <path d="M5 16l4-8 4 6 3-4 3 6" />
-                  <path d="M3 20h18" />
+                  <path d="M5 16l4-8 4 6 3-4 3 6"></path>
+                  <path d="M3 20h18"></path>
                 </svg>
               </div>
               <h3>Sports Injuries</h3>
@@ -675,13 +704,13 @@
 
             <form class="aurelia-form aurelia-glass reveal" id="aureliaContactForm">
               <label for="aureliaName">Name</label>
-              <input id="aureliaName" name="name" type="text" required />
+              <input id="aureliaName" name="name" type="text" required="">
 
               <label for="aureliaEmail">Email</label>
-              <input id="aureliaEmail" name="email" type="email" required />
+              <input id="aureliaEmail" name="email" type="email" required="">
 
               <label for="aureliaMessage">Message</label>
-              <textarea id="aureliaMessage" name="message" required></textarea>
+              <textarea id="aureliaMessage" name="message" required=""></textarea>
 
               <button type="submit" class="aurelia-btn aurelia-btn--primary">
                 Submit Enquiry
@@ -735,5 +764,5 @@
         }, 2200);
       });
     </script>
-  </body>
-</html>
+  
+</body></html>

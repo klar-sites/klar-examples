@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-  <head>
+<!DOCTYPE html><html lang="en" data-theme="light"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Klar CMS — Clean HTML, Zero Bloat</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
     <style>
       /* ═══════════════════════════════════════
    CSS VARIABLES & THEMING
@@ -1897,56 +1893,54 @@
     <!-- ════════════════════════════════════
      NAVIGATION
      ════════════════════════════════════ -->
-    <nav class="klar-nav" role="navigation" aria-label="Main navigation">
-      <button class="klar-nav__menu-btn" id="klarMenuBtn" aria-label="Toggle menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20"
-          height="20">
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="logo.png" alt="Mob Timer" width="28" height="28">
+          <span>Mob Timer</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
 
-      <a href="#" class="klar-nav__logo" data-nav="page-getting-started">
-        <span class="klar-nav__logo-mark">K</span>
-        Klar CMS
-        <span class="klar-nav__version">v0.9</span>
-      </a>
-
-      <div class="klar-nav__center">
-        <div class="klar-nav__search">
-          <svg class="klar-nav__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="M21 21l-4.35-4.35"></path>
-          </svg>
-          <input type="text" class="klar-nav__search-input" placeholder="Search documentation..." id="klarSearchInput"
-            readonly="" aria-label="Search documentation">
-          <span class="klar-nav__search-kbd">⌘K</span>
-        </div>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
       </div>
 
-      <div class="klar-nav__actions">
-        <a href="https://github.com" class="klar-nav__btn" aria-label="GitHub" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z">
-            </path>
-          </svg>
-        </a>
-        <button class="klar-theme-toggle" id="klarThemeToggle" aria-label="Toggle theme">
-          <svg class="klar-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round">
-            <circle cx="12" cy="12" r="5"></circle>
-            <path
-              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42">
-            </path>
-          </svg>
-          <svg class="klar-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round">
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-          </svg>
-        </button>
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
+          <li><a href="#mob-programming">Mob Programming</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
+          </a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
+          </div>
+        </div>
       </div>
     </nav>
 
@@ -1961,8 +1955,7 @@
             <circle cx="11" cy="11" r="8"></circle>
             <path d="M21 21l-4.35-4.35"></path>
           </svg>
-          <input type="text" class="klar-search-modal__input" placeholder="Search docs..." id="klarSearchModalInput"
-            autocomplete="off">
+          <input type="text" class="klar-search-modal__input" placeholder="Search docs..." id="klarSearchModalInput" autocomplete="off">
         </div>
         <div class="klar-search-modal__results" id="klarSearchResults"></div>
         <div class="klar-search-modal__footer">
@@ -2074,8 +2067,7 @@
                 <div class="klar-feature-card">
                   <div class="klar-feature-card__icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                      <path
-                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22">
+                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22">
                       </path>
                     </svg>
                   </div>
@@ -2086,7 +2078,7 @@
                   </div>
                 </div>
               </div>
-              <div data-klar-blocks>
+              <div data-klar-blocks="">
                 <h2 id="what-you-can-do">
                   What You Can Do<a href="#what-you-can-do" class="klar-heading-anchor">#</a>
                 </h2>
@@ -2251,8 +2243,7 @@
               </div>
               <p>
                 You can also optionally set an <strong>Images Folder</strong> (for the media library), <strong>CSS
-                  File</strong> and <strong>JS File</strong> paths (for the code editor), and more. See <a href="#"
-                  data-nav="page-project-settings">Project Settings</a> for all options.
+                  File</strong> and <strong>JS File</strong> paths (for the code editor), and more. See <a href="#" data-nav="page-project-settings">Project Settings</a> for all options.
               </p>
 
               <h2 id="dashboard">
@@ -2401,8 +2392,7 @@
               <p>Click any text element to start typing directly on the page. Your changes are tracked and shown in the
                 structured panel on the right. Line breaks are preserved using <code>&lt;br&gt;</code> tags.</p>
 
-              <h2 id="container-editing">Container &amp; List Editing<a href="#container-editing"
-                  class="klar-heading-anchor">#</a></h2>
+              <h2 id="container-editing">Container &amp; List Editing<a href="#container-editing" class="klar-heading-anchor">#</a></h2>
               <p>For repeating elements like lists, feature grids, or card layouts, Klar provides a dedicated container
                 editor. Hover over the container and click the <strong>"Edit list"</strong> button that appears. This
                 opens a modal where you can:</p>
@@ -2418,12 +2408,10 @@
                   Selectors</a>.
               </p>
 
-              <h2 id="sections-navigation">Sections Navigation<a href="#sections-navigation"
-                  class="klar-heading-anchor">#</a></h2>
+              <h2 id="sections-navigation">Sections Navigation<a href="#sections-navigation" class="klar-heading-anchor">#</a></h2>
               <p>The left panel shows your page structure organized by sections (header, content areas, footer, etc.).
                 Click any section name to scroll the preview directly to it. Sections are auto-detected from your HTML
-                structure, or you can configure a custom sections selector in <a href="#"
-                  data-nav="page-project-settings">Project Settings</a>.</p>
+                structure, or you can configure a custom sections selector in <a href="#" data-nav="page-project-settings">Project Settings</a>.</p>
 
               <h2 id="script-toggle">Script Toggle<a href="#script-toggle" class="klar-heading-anchor">#</a></h2>
               <p>By default, JavaScript in your page is disabled in the editor to prevent interference with editing. You
@@ -2435,8 +2423,7 @@
                   <span class="klar-article-nav__label">Previous</span>
                   <span class="klar-article-nav__title">← Quick Start</span>
                 </a>
-                <a href="#" class="klar-article-nav__link klar-article-nav__link--next"
-                  data-nav="page-structured-panel">
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="page-structured-panel">
                   <span class="klar-article-nav__label">Next</span>
                   <span class="klar-article-nav__title">Structured Panel →</span>
                 </a>
@@ -2559,8 +2546,7 @@
                   and live preview.</p>
               </div>
 
-              <h2 id="opening-code-editor">Opening the Code Editor<a href="#opening-code-editor"
-                  class="klar-heading-anchor">#</a></h2>
+              <h2 id="opening-code-editor">Opening the Code Editor<a href="#opening-code-editor" class="klar-heading-anchor">#</a></h2>
               <p>Toggle the code editor from the toolbar. The editor panel can be positioned on the left, right, or
                 bottom of the screen, and you can resize it by dragging the edge.</p>
 
@@ -2640,8 +2626,7 @@
                   <span class="klar-article-nav__label">Previous</span>
                   <span class="klar-article-nav__title">← Code Editor</span>
                 </a>
-                <a href="#" class="klar-article-nav__link klar-article-nav__link--next"
-                  data-nav="page-media-management">
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="page-media-management">
                   <span class="klar-article-nav__label">Next</span>
                   <span class="klar-article-nav__title">Media &amp; Icons →</span>
                 </a>
@@ -2756,8 +2741,7 @@
                   site.</p>
               </div>
 
-              <h2 id="what-are-shared">What Are Shared Sections?<a href="#what-are-shared"
-                  class="klar-heading-anchor">#</a></h2>
+              <h2 id="what-are-shared">What Are Shared Sections?<a href="#what-are-shared" class="klar-heading-anchor">#</a></h2>
               <p>Most websites have elements that appear on every page — a navigation header, a footer, a cookie
                 banner. Shared sections let you edit these once and push the changes to all pages in your repository.
               </p>
@@ -2832,8 +2816,7 @@
                 </div>
               </div>
 
-              <h2 id="shared-sync-on-save">Shared Section Sync<a href="#shared-sync-on-save"
-                  class="klar-heading-anchor">#</a></h2>
+              <h2 id="shared-sync-on-save">Shared Section Sync<a href="#shared-sync-on-save" class="klar-heading-anchor">#</a></h2>
               <p>If you have shared sections configured and auto-sync enabled, any edits to those sections are
                 automatically pushed to all other pages when you save. The success toast shows how many pages were
                 synced.</p>
@@ -2872,8 +2855,7 @@
               </ul>
               <p>Use the "Previous" button to load older commits.</p>
 
-              <h2 id="restoring-version">Restoring a Version<a href="#restoring-version"
-                  class="klar-heading-anchor">#</a></h2>
+              <h2 id="restoring-version">Restoring a Version<a href="#restoring-version" class="klar-heading-anchor">#</a></h2>
               <p>Click any commit to load that version of the page into the editor. You can review the content, then
                 either save it as the new current version or click "Exit history" to return to the latest version.</p>
 
@@ -2882,8 +2864,7 @@
                   <span class="klar-article-nav__label">Previous</span>
                   <span class="klar-article-nav__title">← Save &amp; Publish</span>
                 </a>
-                <a href="#" class="klar-article-nav__link klar-article-nav__link--next"
-                  data-nav="page-project-settings">
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="page-project-settings">
                   <span class="klar-article-nav__label">Next</span>
                   <span class="klar-article-nav__title">Project Settings →</span>
                 </a>
@@ -2967,8 +2948,7 @@
                   <tbody>
                     <tr>
                       <td><strong>Editable Elements</strong></td>
-                      <td>CSS selectors that define which areas of your page are editable. See <a href="#"
-                          data-nav="selectors">Custom Selectors</a>.</td>
+                      <td>CSS selectors that define which areas of your page are editable. See <a href="#" data-nav="selectors">Custom Selectors</a>.</td>
                     </tr>
                     <tr>
                       <td><strong>Sections Selector</strong></td>
@@ -2977,8 +2957,7 @@
                     </tr>
                     <tr>
                       <td><strong>Shared Sections</strong></td>
-                      <td>Selectors for sections that appear on all pages (e.g., <code>nav, footer</code>). See <a
-                          href="#" data-nav="shared-sections">Shared Sections</a>.</td>
+                      <td>Selectors for sections that appear on all pages (e.g., <code>nav, footer</code>). See <a href="#" data-nav="shared-sections">Shared Sections</a>.</td>
                     </tr>
                     <tr>
                       <td><strong>Auto-Sync Shared</strong></td>
@@ -3092,8 +3071,7 @@
                   <span class="klar-article-nav__label">Previous</span>
                   <span class="klar-article-nav__title">← Project Settings</span>
                 </a>
-                <a href="#" class="klar-article-nav__link klar-article-nav__link--next"
-                  data-nav="page-keyboard-shortcuts">
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="page-keyboard-shortcuts">
                   <span class="klar-article-nav__label">Next</span>
                   <span class="klar-article-nav__title">Keyboard Shortcuts →</span>
                 </a>
@@ -3186,8 +3164,7 @@
                   <span class="klar-article-nav__label">Previous</span>
                   <span class="klar-article-nav__title">← Custom Selectors</span>
                 </a>
-                <a href="#" class="klar-article-nav__link klar-article-nav__link--next"
-                  data-nav="page-viewport-preview">
+                <a href="#" class="klar-article-nav__link klar-article-nav__link--next" data-nav="page-viewport-preview">
                   <span class="klar-article-nav__label">Next</span>
                   <span class="klar-article-nav__title">Viewport &amp; Preview →</span>
                 </a>
@@ -3636,5 +3613,5 @@
 
 
 
-  </body>
-</html>
+  
+</body></html>

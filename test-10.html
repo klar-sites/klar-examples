@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L'Aura | Fine Dining</title>
     
     <!-- Google Fonts for elegant typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Montserrat:wght@300;400;500&amp;display=swap" rel="stylesheet">
     
     <style>
         /* =========================================
@@ -618,25 +616,55 @@
     </div>
 
     <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">L'AURA</a>
-            <button class="mobile-menu-btn" id="mobile-toggle">
-                <!-- Hamburger Icon SVG -->
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
-            <ul class="nav-links" id="nav-ul">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="logo.png" alt="Mob Timer" width="28" height="28">
+          <span>Mob Timer</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#mob-programming">Mob Programming 3</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+        </ul>
+        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
+      </div>
+
+      <!-- Mobile menu overlay -->
+      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+      <!-- Mobile menu panel -->
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-links">
+          <li><a href="#mob-programming">Mob Programming</a></li>
+          <li><a href="#break-timer">Break Timer</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Download for Mac
+          </a>
+          <div class="mobile-menu-meta">
+            <span>macOS 13+</span>
+            <span class="meta-dot">·</span>
+            <span>Free</span>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
@@ -657,7 +685,7 @@
                 <p>Every ingredient is carefully sourced, every dish meticulously crafted, and every experience designed to linger in your memory long after the final course.</p>
             </div>
             <div class="about-image glass-panel reveal delay-1">
-                <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Chef preparing fine dining dish">
+                <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="Chef preparing fine dining dish">
             </div>
         </div>
     </section>
@@ -743,16 +771,16 @@
         
         <div class="gallery-grid">
             <div class="gallery-item glass-panel reveal">
-                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Restaurant Interior">
+                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Restaurant Interior">
             </div>
             <div class="gallery-item glass-panel reveal delay-1">
-                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gourmet Dish">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Gourmet Dish">
             </div>
             <div class="gallery-item glass-panel reveal delay-2">
-                <img src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Wine Pouring">
+                <img src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Wine Pouring">
             </div>
             <div class="gallery-item glass-panel reveal">
-                <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Steak Dish">
+                <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Steak Dish">
             </div>
         </div>
     </section>
@@ -781,15 +809,15 @@
             <form class="contact-form glass-panel reveal delay-1" id="reservation-form" onsubmit="event.preventDefault();">
                 <div class="form-group">
                     <label for="name">Full Name</label>
-                    <input type="text" id="name" class="glass-input" placeholder="Enter your name" required>
+                    <input type="text" id="name" class="glass-input" placeholder="Enter your name" required="">
                 </div>
                 <div class="form-group">
                     <label for="email">Email Address</label>
-                    <input type="email" id="email" class="glass-input" placeholder="Enter your email" required>
+                    <input type="email" id="email" class="glass-input" placeholder="Enter your email" required="">
                 </div>
                 <div class="form-group">
-                    <label for="date-time">Reservation Date & Time</label>
-                    <input type="datetime-local" id="date-time" class="glass-input" required>
+                    <label for="date-time">Reservation Date &amp; Time</label>
+                    <input type="datetime-local" id="date-time" class="glass-input" required="">
                 </div>
                 <div class="form-group">
                     <label for="message">Special Requests (Optional)</label>
@@ -806,17 +834,17 @@
             <!-- Instagram -->
             <a href="#" aria-label="Instagram">
                 <svg viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.344 3.608 1.319.975.975 1.257 2.242 1.319 3.608.058 1.266.069 1.646.069 4.85s-.012 3.584-.069 4.85c-.062 1.366-.344 2.633-1.319 3.608-.975.975-2.242 1.257-3.608 1.319-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.344-3.608-1.319-.975-.975-1.257-2.242-1.319-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.344-2.633 1.319-3.608.975-.975 2.242-1.257 3.608-1.319 1.266-.058 1.646-.069 4.85-.069M12 0C8.741 0 8.333.014 7.053.072 5.253.159 3.902.593 2.793 1.703 1.684 2.812 1.25 4.164 1.163 5.964.105 7.243.091 7.652.091 10.91s.014 3.668.072 4.948c.087 1.8.521 3.152 1.63 4.261 1.11 1.11 2.461 1.543 4.261 1.63 1.28.059 1.689.072 4.948.072s3.668-.014 4.948-.072c1.8-.087 3.152-.521 4.261-1.63 1.11-1.11 1.543-2.461 1.63-4.261.059-1.28.072-1.689.072-4.948s-.014-3.668-.072-4.948c-.087-1.8-.521-3.152-1.63-4.261-1.11-1.11-2.461-1.543-4.261-1.63C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.344 3.608 1.319.975.975 1.257 2.242 1.319 3.608.058 1.266.069 1.646.069 4.85s-.012 3.584-.069 4.85c-.062 1.366-.344 2.633-1.319 3.608-.975.975-2.242 1.257-3.608 1.319-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.344-3.608-1.319-.975-.975-1.257-2.242-1.319-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.344-2.633 1.319-3.608.975-.975 2.242-1.257 3.608-1.319 1.266-.058 1.646-.069 4.85-.069M12 0C8.741 0 8.333.014 7.053.072 5.253.159 3.902.593 2.793 1.703 1.684 2.812 1.25 4.164 1.163 5.964.105 7.243.091 7.652.091 10.91s.014 3.668.072 4.948c.087 1.8.521 3.152 1.63 4.261 1.11 1.11 2.461 1.543 4.261 1.63 1.28.059 1.689.072 4.948.072s3.668-.014 4.948-.072c1.8-.087 3.152-.521 4.261-1.63 1.11-1.11 1.543-2.461 1.63-4.261.059-1.28.072-1.689.072-4.948s-.014-3.668-.072-4.948c-.087-1.8-.521-3.152-1.63-4.261-1.11-1.11-2.461-1.543-4.261-1.63C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"></path>
                 </svg>
             </a>
             <!-- Facebook -->
             <a href="#" aria-label="Facebook">
                 <svg viewBox="0 0 24 24">
-                    <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z"/>
+                    <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z"></path>
                 </svg>
             </a>
         </div>
-        <p class="copyright reveal delay-1">&copy; 2023 L'Aura Fine Dining. All Rights Reserved.</p>
+        <p class="copyright reveal delay-1">© 2023 L'Aura Fine Dining. All Rights Reserved.</p>
     </footer>
 
     <!-- JavaScript Interactions -->
@@ -877,5 +905,5 @@
             });
         });
     </script>
-</body>
-</html>
+
+</body></html>
