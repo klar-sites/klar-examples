@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en" data-theme="dark"><head>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lumina — Intelligent Workflow Platform</title>
@@ -1501,8 +1503,8 @@
         }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Page Loader -->
@@ -1511,405 +1513,45 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="nav" id="nav">
-      <style>
-        /* =============================================
-   HAMBURGER TOGGLE BUTTON
-   ============================================= */
+    <nav class="lumina-nav" id="luminaNav">
+        <div class="lumina-nav-inner">
+            <a href="#" class="lumina-nav-logo">
+                <div class="lumina-nav-logo-icon"></div>
+                Lumina
+            </a>
 
-        .nav-toggle {
-          display: none;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid var(--border);
-          cursor: pointer;
-          padding: 0;
-          gap: 5px;
-          z-index: 110;
-          transition: all var(--transition);
-          flex-shrink: 0;
-        }
+            <div class="lumina-nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#testimonials">Testimonials</a>
+            </div>
 
-        .nav-toggle:hover {
-          background: rgba(255, 255, 255, 0.1);
-          border-color: var(--border-hover);
-        }
-
-        .hamburger-line {
-          display: block;
-          width: 18px;
-          height: 2px;
-          background: var(--text);
-          border-radius: 2px;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          transform-origin: center;
-        }
-
-        /* Hamburger → X animation */
-        .nav-toggle.active .hamburger-line:nth-child(1) {
-          transform: translateY(7px) rotate(45deg);
-        }
-
-        .nav-toggle.active .hamburger-line:nth-child(2) {
-          opacity: 0;
-          transform: scaleX(0);
-        }
-
-        .nav-toggle.active .hamburger-line:nth-child(3) {
-          transform: translateY(-7px) rotate(-45deg);
-        }
-
-        /* =============================================
-   MOBILE MENU OVERLAY
-   ============================================= */
-
-        .mobile-menu-overlay {
-          display: none;
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.6);
-          backdrop-filter: blur(4px);
-          -webkit-backdrop-filter: blur(4px);
-          z-index: 98;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-
-        .mobile-menu-overlay.visible {
-          display: block;
-          opacity: 1;
-        }
-
-        /* =============================================
-   MOBILE MENU PANEL
-   ============================================= */
-
-        .mobile-menu {
-          display: none;
-          position: fixed;
-          top: 0;
-          right: 0;
-          width: 300px;
-          max-width: calc(100vw - 48px);
-          height: 100dvh;
-          background: var(--bg-surface);
-          border-left: 1px solid var(--border);
-          z-index: 99;
-          flex-direction: column;
-          padding: 88px 24px 32px;
-          transform: translateX(100%);
-          transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-          overflow-y: auto;
-          -webkit-overflow-scrolling: touch;
-          box-shadow: -20px 0 60px rgba(0, 0, 0, 0.4);
-        }
-
-        .mobile-menu.open {
-          display: flex;
-          transform: translateX(0);
-        }
-
-        /* Slight delay trick: always display:flex when animating out */
-        .mobile-menu.closing {
-          display: flex;
-          transform: translateX(100%);
-        }
-
-        /* =============================================
-   MOBILE MENU LINKS
-   ============================================= */
-
-        .mobile-menu-links {
-          list-style: none;
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-          flex: 1;
-        }
-
-        .mobile-menu-links li {
-          opacity: 0;
-          transform: translateX(20px);
-          animation: mobileMenuSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .mobile-menu-links li:nth-child(1) {
-          animation-delay: 0.05s;
-        }
-
-        .mobile-menu-links li:nth-child(2) {
-          animation-delay: 0.08s;
-        }
-
-        .mobile-menu-links li:nth-child(3) {
-          animation-delay: 0.11s;
-        }
-
-        .mobile-menu-links li:nth-child(4) {
-          animation-delay: 0.14s;
-        }
-
-        .mobile-menu-links li:nth-child(5) {
-          animation-delay: 0.17s;
-        }
-
-        .mobile-menu-links li:nth-child(6) {
-          animation-delay: 0.2s;
-        }
-
-        @keyframes mobileMenuSlideIn {
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        .mobile-menu-links a {
-          display: block;
-          padding: 14px 16px;
-          font-size: 16px;
-          font-weight: 500;
-          color: var(--text-2);
-          border-radius: 12px;
-          transition: all var(--transition);
-          letter-spacing: -0.01em;
-        }
-
-        .mobile-menu-links a:hover,
-        .mobile-menu-links a.nav-active {
-          color: var(--text);
-          background: rgba(255, 255, 255, 0.06);
-        }
-
-        .mobile-menu-links a.nav-active {
-          color: var(--accent);
-        }
-
-        /* =============================================
-   MOBILE MENU FOOTER
-   ============================================= */
-
-        .mobile-menu-footer {
-          padding-top: 24px;
-          border-top: 1px solid var(--border);
-          margin-top: 16px;
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          opacity: 0;
-          animation: mobileMenuSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
-          transform: translateX(20px);
-        }
-
-        .mobile-menu-download {
-          width: 100%;
-          justify-content: center;
-          padding: 14px 24px;
-          font-size: 15px;
-        }
-
-        .mobile-menu-meta {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          font-size: 12px;
-          color: var(--text-3);
-        }
-
-        /* =============================================
-   BODY LOCK WHEN MENU IS OPEN
-   ============================================= */
-
-        body.mobile-menu-open {
-          overflow: hidden;
-        }
-
-        /* =============================================
-   RESPONSIVE — SHOW/HIDE
-   ============================================= */
-
-        @media (max-width: 900px) {
-          .nav-toggle {
-            display: flex;
-          }
-
-          .nav-links {
-            display: none !important;
-          }
-
-          .nav-download-btn {
-            display: none !important;
-          }
-
-          .nav-inner {
-            justify-content: space-between;
-          }
-        }
-
-        /* On large screens, never show mobile menu */
-        @media (min-width: 901px) {
-
-          .mobile-menu,
-          .mobile-menu-overlay {
-            display: none !important;
-          }
-
-          .nav-toggle {
-            display: none !important;
-          }
-        }
-      </style>
-      <div class="nav-inner">
-        <a href="#" class="nav-logo">
-          <img src="logo.png" alt="Mob Timer" width="28" height="28">
-          <span>Mob Timer</span>
-        </a>
-        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-        </button>
-
-        <ul class="nav-links" id="nav-links">
-          <li><a href="#mob-programming">Mob Programming</a></li>
-          <li><a href="#break-timer">Break Timer</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#how-it-works">How it works</a></li>
-          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
-        </ul>
-        <a href="#download" class="btn btn-sm btn-primary nav-download-btn">Download</a>
-      </div>
-
-      <!-- Mobile menu overlay -->
-      <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
-
-      <!-- Mobile menu panel -->
-      <div class="mobile-menu" id="mobile-menu">
-        <ul class="mobile-menu-links">
-          <li><a href="#mob-programming">Mob Programming</a></li>
-          <li><a href="#break-timer">Break Timer</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#how-it-works">How it works</a></li>
-          <li><a href="#why-mob-timer">Why Mob Timer</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <div class="mobile-menu-footer">
-          <a href="#download" class="btn btn-primary btn-lg mobile-menu-download">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-            Download for Mac
-          </a>
-          <div class="mobile-menu-meta">
-            <span>macOS 13+</span>
-            <span class="meta-dot">·</span>
-            <span>Free</span>
-          </div>
+            <div class="lumina-nav-actions">
+                <button class="lumina-theme-toggle" id="luminaThemeToggle" aria-label="Toggle theme">
+                    <svg class="lumina-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="lumina-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="#pricing" class="lumina-nav-cta">Get Started</a>
+                <button class="lumina-mobile-toggle" id="luminaMobileToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
-      </div>
-      <script>
-        // =============================================
-        //  MOBILE MENU
-        // =============================================
-
-        (function() {
-          const toggle = document.getElementById('nav-toggle');
-          const mobileMenu = document.getElementById('mobile-menu');
-          const overlay = document.getElementById('mobile-menu-overlay');
-          const mobileLinks = document.querySelectorAll('.mobile-menu-links a, .mobile-menu-download');
-
-          if (!toggle || !mobileMenu || !overlay) return;
-
-          let isOpen = false;
-
-          function openMenu() {
-            isOpen = true;
-            toggle.classList.add('active');
-            toggle.setAttribute('aria-expanded', 'true');
-            mobileMenu.classList.remove('closing');
-            mobileMenu.classList.add('open');
-            overlay.classList.add('visible');
-            document.body.classList.add('mobile-menu-open');
-          }
-
-          function closeMenu() {
-            if (!isOpen) return;
-            isOpen = false;
-            toggle.classList.remove('active');
-            toggle.setAttribute('aria-expanded', 'false');
-            mobileMenu.classList.add('closing');
-            mobileMenu.classList.remove('open');
-            overlay.classList.remove('visible');
-            document.body.classList.remove('mobile-menu-open');
-
-            // After transition ends, remove closing class
-            setTimeout(() => {
-              if (!isOpen) {
-                mobileMenu.classList.remove('closing');
-              }
-            }, 350);
-          }
-
-          toggle.addEventListener('click', () => {
-            if (isOpen) {
-              closeMenu();
-            } else {
-              openMenu();
-            }
-          });
-
-          overlay.addEventListener('click', closeMenu);
-
-          // Close on link click
-          mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-              closeMenu();
-            });
-          });
-
-          // Close on Escape key
-          document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && isOpen) {
-              closeMenu();
-            }
-          });
-
-          // Close if window resizes past breakpoint
-          window.addEventListener('resize', () => {
-            if (window.innerWidth > 900 && isOpen) {
-              closeMenu();
-            }
-          });
-
-          // Sync active link highlighting in mobile menu
-          const mobileLinkEls = document.querySelectorAll('.mobile-menu-links a');
-          const sectionObserverMobile = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  const id = entry.target.id;
-                  mobileLinkEls.forEach((link) => {
-                    link.classList.toggle(
-                      'nav-active',
-                      link.getAttribute('href') === `#${id}`
-                    );
-                  });
-                }
-              });
-            }, {
-              threshold: 0.4
-            }
-          );
-
-          document.querySelectorAll('section[id]').forEach((s) => sectionObserverMobile.observe(s));
-        })();
-      </script>
     </nav>
 
     <!-- Mobile Menu -->
@@ -2200,7 +1842,7 @@
                         </div>
                         <div class="lumina-pricing-feature">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            SSO &amp; SAML
+                            SSO & SAML
                         </div>
                         <div class="lumina-pricing-feature">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -2349,7 +1991,7 @@
             </div>
 
             <div class="lumina-footer-bottom">
-                <p>© 2025 Lumina. All rights reserved.</p>
+                <p>&copy; 2025 Lumina. All rights reserved.</p>
                 <div class="lumina-footer-social">
                     <a href="#" aria-label="Twitter">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2550,5 +2192,5 @@
 
         })();
     </script>
-
-</body></html>
+</body>
+</html>
