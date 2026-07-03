@@ -1,0 +1,10 @@
+{
+  "pageTypes": [],
+  "pages": [
+    {
+      "name": "test-11.html",
+      "editableElements": ".aurea-hero__bg:style(background-image)"
+    }
+  ],
+  "vocabularies": {}
+}
